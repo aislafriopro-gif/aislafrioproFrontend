@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ❄️ Aislafriopro Frontend
 
-## Getting Started
+Frontend oficial del proyecto **Aislafriopro**, desarrollado con **Next.js**, **React** y **TypeScript**.
 
-First, run the development server:
+El objetivo de este proyecto es proporcionar una interfaz moderna, escalable y de fácil mantenimiento para la gestión y presentación de los servicios y soluciones ofrecidos por Aislafriopro.
+
+---
+
+# 🚀 Tecnologías Utilizadas
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- ESLint
+- Prettier
+- Git
+- GitHub
+
+---
+
+# 📋 Requisitos
+
+Antes de ejecutar el proyecto asegúrate de tener instalado:
+
+- Node.js (versión LTS recomendada)
+- npm o yarn
+- Git
+
+---
+
+# ⚙️ Instalación
+
+Clona el repositorio:
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+```
+
+Ingresa al proyecto:
+
+```bash
+cd aislafriopro-frontend
+```
+
+Instala las dependencias:
+
+```bash
+npm install
+```
+
+---
+
+# ▶️ Ejecución del Proyecto
+
+Iniciar el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Generar la versión de producción:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Ejecutar la versión de producción:
 
-## Learn More
+```bash
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 📁 Estructura General
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+AISLAFRIOPRO/
 
-## Deploy on Vercel
+├── docs/
+├── public/
+├── src/
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+└── README.md
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 📚 Documentación
+
+Toda la documentación técnica del proyecto se encuentra en la carpeta **docs/**.
+
+| Documento | Descripción |
+|-----------|-------------|
+| [📖 Documentación General](./docs/README.md) | Índice de toda la documentación del proyecto. |
+| [🏗️ Frontend Architecture](./docs/Frontend-Architecture.md) | Arquitectura, estructura y estándares técnicos del Frontend. |
+| [🎨 Design System](./docs/Design-System.md) | Reglas visuales, componentes y estándares de diseño. |
+| [🖥️ UI Guidelines](./docs/UI-Guidelines.md) | Guía oficial para la construcción de la interfaz de usuario. |
+| [📝 Documentation Guide](./docs/Documentation-Guide.md) | Reglas para mantener actualizada la documentación del proyecto. |
+
+---
+
+# 🌿 Flujo de Trabajo
+
+El desarrollo del proyecto se realiza mediante el siguiente flujo de ramas:
+
+```text
+Feature Branch
+        │
+        ▼
+     DEVELOP
+        │
+        ▼
+      MAIN
+```
+
+Todo cambio deberá pasar por revisión antes de ser integrado a la rama principal.
+
+---
+
+# 🤝 Contribución
+
+Antes de comenzar un desarrollo:
+
+- # 🤝 Contribución
+
+Antes de comenzar un desarrollo:
+
+- Trabajar sobre la rama asignada a cada desarrollador.
+- Implementar la funcionalidad correspondiente a la actividad asignada en Jira.
+- Realizar pruebas antes de enviar los cambios.
+- Actualizar la documentación únicamente cuando exista un cambio en los estándares del proyecto.
+- Crear un Pull Request hacia la rama `develop`.
+- Esperar la revisión y aprobación del Líder Técnico.
+-  Una vez aprobado el Pull Request y realizado el merge correspondiente, cada desarrollador deberá actualizar su rama local con los cambios de la rama `main` antes de continuar con el siguiente desarrollo.
+---
+
+# 👥 Equipo de Desarrollo
+
+Proyecto desarrollado por el equipo de **Aislafriopro**.
+
+---
+
+# 📄 Licencia
+
+Este proyecto es de uso interno para Aislafriopro.
