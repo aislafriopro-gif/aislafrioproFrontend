@@ -1,6 +1,6 @@
 'use client'
 
-export function error(){
+export default function Error(){
     return (
         <div>error</div>
     )
