@@ -1,9 +1,9 @@
 'use client'
 
-const page = () => {
+const error = () => {
     return (
-        <div>page</div>
+        <div>error</div>
     )
 }
 
-export default page
+export default error

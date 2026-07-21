@@ -1,8 +1,8 @@
 'use client'
-const page = () => {
+const notFound = () => {
   return (
-    <div>page</div>
+    <div>notfound</div>
   )
 }
 
-export default page
+export default notFound

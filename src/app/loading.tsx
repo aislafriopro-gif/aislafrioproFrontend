@@ -1,8 +1,8 @@
 'use client'
-const page = () => {
+const loading = () => {
   return (
-    <div>page</div>
+    <div>loading</div>
   )
 }
 
-export default page
+export default loading
