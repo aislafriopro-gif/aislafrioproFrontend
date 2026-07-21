@@ -1,8 +1,6 @@
 'use client'
-const loading = () => {
+export function loading(){
   return (
     <div>loading</div>
   )
 }
-
-export default loading

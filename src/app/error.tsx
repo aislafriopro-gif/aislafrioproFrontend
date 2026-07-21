@@ -1,9 +1,7 @@
 'use client'
 
-const error = () => {
+export function error(){
     return (
         <div>error</div>
     )
 }
-
-export default error

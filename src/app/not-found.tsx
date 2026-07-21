@@ -1,8 +1,6 @@
 'use client'
-const notFound = () => {
+export function notFound(){
   return (
     <div>notfound</div>
   )
 }
-
-export default notFound
