@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-    export interface User {
+export interface User {
     id: string;
     name: string;
     email: string;
     role?: string;
-    }
+}
 
-    interface AuthState {
+interface AuthState {
     user: User | null;
     token: string | null;
     isAuthenticated: boolean;
@@ -16,9 +16,9 @@ import { persist } from 'zustand/middleware';
     login: (user: User, token: string) => void;
     logout: () => void;
     updateSession: (user: Partial<User>) => void;
-    }
+}
 
-    export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
         user: null,
@@ -27,9 +27,9 @@ import { persist } from 'zustand/middleware';
 
         login: (user, token) => {
             set({
-            user,
-            token,
-            isAuthenticated: true,
+                user,
+                token,
+                isAuthenticated: true,
             });
         },
 
@@ -51,4 +51,4 @@ import { persist } from 'zustand/middleware';
         name: 'auth-storage',
         }
     )
-    );
+);
