@@ -1,33 +1,20 @@
-import { Container } from "@/components/layout/Container/Container";
-import { Section } from "@/components/layout/Section/Section";
-import { Badge } from "@/components/ui/Badge/Badge";
+import { About } from "@/components/home/About/About";
+import { Hero } from "@/components/home/Hero/Hero";
 
-export default function HomePage() {
+export function HomePage() {
   return (
     <>
-      <Section
-        aria-labelledby="home-title"
-        className="bg-gray-100"
-      >
-        <Container>
-          <div className="flex flex-col items-start gap-md">
-            <Badge variant="primary">
-              AislaFrioPro
-            </Badge>
+      <Hero
+        eyebrow="AislaFrioPro"
+        title="Soluciones de refrigeración y aislamiento para tu proyecto"
+        description="Conoce nuestras soluciones y servicios especializados."
+      />
 
-            <h1
-              id="home-title"
-              className="max-w-3xl text-h3 font-semibold text-gray-900 tablet:text-h2 desktop:text-h1"
-            >
-              Soluciones de refrigeración y aislamiento para tu proyecto
-            </h1>
-
-            <p className="max-w-2xl text-body text-gray-700">
-              Conoce nuestras soluciones y servicios especializados.
-            </p>
-          </div>
-        </Container>
-      </Section>
+      <About
+        eyebrow="Nosotros"
+        title="Conoce más sobre AislaFrioPro"
+        description="Esta sección presentará la experiencia, el enfoque de trabajo y el valor que AislaFrioPro ofrece a sus clientes."
+      />
     </>
   );
 }
