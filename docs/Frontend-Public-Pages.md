@@ -1,21 +1,10 @@
-# Arquitectura de páginas públicas
+# Arquitectura de páginas públicas y módulo Home
 
 ## Objetivo
 
-El módulo de páginas públicas organiza las vistas accesibles sin autenticación del proyecto AislaFrioPro.
+Documentar la organización técnica de las páginas públicas y la implementación actual del módulo Home de AislaFrioPro.
 
-Su objetivo es proporcionar una estructura visual reutilizable y consistente, basada en la arquitectura oficial, el Design System y las UI Guidelines.
-
-## Responsabilidades
-
-Las páginas públicas deberán:
-
-- Presentar la información pública del proyecto.
-- Reutilizar los componentes existentes.
-- Compartir un mismo Navbar y Footer.
-- Respetar el enfoque Mobile First.
-- Mantenerse separadas de las páginas de autenticación y administración.
-- No consumir APIs hasta que se definan las integraciones correspondientes.
+La Arquitectura Oficial Frontend V2 es la referencia principal del módulo.
 
 ## Organización de carpetas
 
@@ -23,83 +12,209 @@ Las páginas públicas deberán:
 src/
 ├── app/
 │   ├── layout.tsx
+│   ├── page.tsx
 │   └── (public)/
-│       ├── layout.tsx
-│       └── page.tsx
-├── components/
-│   ├── layout/
-│   ├── home/
-│   └── ui/
-├── constants/
-│   └── routes.ts
-└── styles/
-    ├── globals.css
-    └── variables.css
+│       └── layout.tsx
+└── components/
+    ├── home/
+    │   ├── HomePage.tsx
+    │   ├── Hero/
+    │   │   └── Hero.tsx
+    │   └── About/
+    │       └── About.tsx
+    ├── layout/
+    └── ui/
 ```
 
-### `src/app/(public)/`
+## Página Home
 
-Route Group de Next.js destinado a las páginas públicas. Su nombre no forma parte de la URL.
-
-### `src/components/home/`
-
-Ubicación prevista para futuros componentes específicos del Home. Actualmente no está implementada.
-
-## Layout público
-
-`src/app/(public)/layout.tsx` comparte la siguiente estructura:
+La página Home corresponde a:
 
 ```text
-Navbar
-└── main
-    └── Página pública
-Footer
+src/app/page.tsx
 ```
 
-El Navbar proporciona la navegación principal y el Footer presenta información institucional y navegación secundaria.
+y representa la ruta `/`.
 
-## Componentes utilizados
+Este archivo únicamente consume `HomePage`, manteniendo separadas la definición de la ruta y la composición visual.
 
-| Componente | Ubicación | Responsabilidad | Reutilización |
-|---|---|---|---|
-| Navbar | `src/components/layout/Navbar/Navbar.tsx` | Navegación principal | Todas las páginas públicas |
-| Footer | `src/components/layout/Footer/Footer.tsx` | Pie de página compartido | Todas las páginas públicas |
-| Container | `src/components/layout/Container/Container.tsx` | Centrar y limitar el contenido | Secciones públicas |
-| Section | `src/components/layout/Section/Section.tsx` | Organizar contenido semántico | Secciones públicas |
-| Badge | `src/components/ui/Badge/Badge.tsx` | Mostrar una etiqueta visual | Home y otras interfaces |
+## Route Group público
 
-No se crearon componentes duplicados.
+```text
+src/app/(public)/
+```
 
-## Dependencias
+se utiliza para organizar las demás rutas públicas, como servicios, contacto, proyectos y nosotros.
 
-### Dependencias internas
+El nombre `(public)` no forma parte de las URL.
+
+## Organización del módulo Home
+
+`HomePage` es responsable de organizar las secciones de Home en el siguiente orden:
+
+```text
+HomePage
+├── Hero
+└── About
+```
+
+La lógica visual de cada sección permanece separada dentro de su propio componente.
+
+## Componentes implementados
+
+### Hero
+
+- Objetivo: presentar la sección principal de Home.
+- Responsabilidad: mostrar el mensaje principal y preparar espacios para acciones y contenido gráfico.
+- Ubicación: `src/components/home/Hero/Hero.tsx`.
+- Componentes reutilizados: `Section`, `Container` y `Badge`.
+- Dependencias: ReactNode, componentes de Layout y Design System.
+- Datos: recibe contenido estático mediante props.
+- Integraciones: no consume APIs ni servicios.
+
+### About
+
+- Objetivo: presentar la introducción institucional de AislaFrioPro.
+- Responsabilidad: organizar el título, descripción y contenido complementario de la sección Nosotros.
+- Ubicación: `src/components/home/About/About.tsx`.
+- Componentes reutilizados: `Section`, `Container` y `Badge`.
+- Dependencias: ReactNode, componentes de Layout y Design System.
+- Datos: recibe contenido estático mediante props.
+- Integraciones: no consume APIs ni servicios.
+
+### HomePage
+
+- Objetivo: componer las secciones de la página Home.
+- Responsabilidad: mantener el orden de Hero y About sin duplicar su implementación.
+- Ubicación: `src/components/home/HomePage.tsx`.
+- Dependencias: `Hero` y `About`.
+- Reutilización: es consumido desde `src/app/page.tsx`.
+
+## Componentes compartidos
+
+| Componente | Ubicación | Responsabilidad |
+|---|---|---|
+| Section | `src/components/layout/Section/Section.tsx` | Definir secciones semánticas y espaciado vertical |
+| Container | `src/components/layout/Container/Container.tsx` | Centrar y limitar el ancho del contenido |
+| Badge | `src/components/ui/Badge/Badge.tsx` | Mostrar etiquetas visuales |
+| Navbar | `src/components/layout/Navbar/Navbar.tsx` | Navegación principal |
+| Footer | `src/components/layout/Footer/Footer.tsx` | Pie de página compartido |
+
+## Definiciones pendientes de componentes
+
+### Hero
+
+#### Props
+
+- `eyebrow`: etiqueta opcional.
+- `title`: título principal.
+- `description`: descripción principal.
+- `actions`: espacio opcional para llamadas a la acción.
+- `media`: espacio opcional para contenido gráfico.
+- `className`: clases adicionales.
+
+#### Composición
+
+```text
+Section
+└── Container
+    └── Contenido
+        ├── Badge opcional
+        ├── Título
+        ├── Descripción
+        ├── Acciones opcionales
+        └── Recurso gráfico opcional
+```
+
+#### Criterios de reutilización
+
+El componente debe recibir su contenido mediante props y no contener llamadas a APIs ni lógica de negocio.
+
+### About
+
+#### Props
+
+- `eyebrow`: etiqueta opcional.
+- `title`: título de la sección.
+- `description`: descripción institucional.
+- `additionalContent`: contenido complementario opcional.
+- `media`: recurso gráfico opcional.
+- `className`: clases adicionales.
+
+#### Composición
+
+```text
+Section
+└── Container
+    └── Contenido
+        ├── Badge opcional
+        ├── Título
+        ├── Descripción
+        ├── Contenido adicional opcional
+        └── Recurso gráfico opcional
+```
+
+#### Criterios de reutilización
+
+El componente debe permanecer presentacional y aceptar contenido mediante props.
+
+## Dependencias internas
 
 - `src/app/layout.tsx`
-- `src/constants/routes.ts`
+- `src/components/home/HomePage.tsx`
 - `src/components/layout/`
 - `src/components/ui/`
 - `src/styles/globals.css`
 - `src/styles/variables.css`
 
-### Dependencias compartidas
+## Dependencias compartidas
 
 - Next.js
 - React
 - Tailwind CSS
 
-### Dependencias pendientes
+## Pendiente de definición
 
-- Contenido definitivo del Home.
-- Componentes específicos de `src/components/home/`.
-- Recursos gráficos oficiales.
-- Integraciones con Backend.
-- Demás páginas públicas.
+### Componentes faltantes
+
+Según la Arquitectura V2, todavía están pendientes:
+
+- Services.
+- Projects.
+- FAQ.
+- ContactCTA.
+
+### Información funcional pendiente
+
+- Comportamiento y destino de las llamadas a la acción.
+- Información institucional definitiva.
+- Contenido final de las siguientes secciones.
+
+### Recursos gráficos pendientes
+
+- Imagen oficial del Hero.
+- Imagen o recurso gráfico de About.
+- Recursos optimizados para distintos tamaños de pantalla.
+
+### Contenido pendiente
+
+- Textos definitivos aprobados.
+- Mensajes de llamadas a la acción.
+- Información comercial e institucional validada.
+
+### Integraciones futuras
+
+- Fuentes de contenido dinámico.
+- Servicios y endpoints de Backend.
+- Formularios o acciones interactivas.
 
 ## Observaciones técnicas
 
-- Home corresponde a la ruta `/`.
-- El layout público está anidado dentro del layout raíz.
-- Home funciona como Server Component.
-- Navbar utiliza comportamiento de cliente para el menú móvil.
-- No existe lógica de negocio ni consumo de APIs.
-- Los componentes nuevos deberán documentarse antes de crearse.
+- Home está ubicada en `src/app/page.tsx`, según la Arquitectura V2.
+- `(public)` se reserva para organizar las demás rutas públicas.
+- Hero y About utilizan funciones declaradas y props tipadas.
+- Los componentes permanecen presentacionales.
+- No se consumen APIs ni se implementa lógica de Backend.
+- La implementación utiliza tokens del Design System y enfoque Mobile First.
+- No se incorporaron imágenes porque todavía no existen recursos oficiales.
+- Debe confirmarse cómo compartir Navbar y Footer con Home, ya que la página raíz no hereda automáticamente `src/app/(public)/layout.tsx`.
