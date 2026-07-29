@@ -96,7 +96,7 @@ src/
 │   └── contact.service.ts
 │
 ├── lib/
-│   ├── axios.ts                     # Instancia de Axios
+│   ├── api.ts                     # Instancia de Axios
 │   ├── queryClient.ts               # Configuración TanStack Query
 │   └── env.ts                       # Variables de entorno
 │
