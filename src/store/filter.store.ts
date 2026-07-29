@@ -1,15 +1,13 @@
-import { create } from "zustand";
+    import { create } from 'zustand';
 
-type FilterValue = unknown;
+    interface FilterState {
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
 
-interface FilterState {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-
-  filters: Record<string, FilterValue>;
-  setFilter: (key: string, value: FilterValue) => void;
-  removeFilter: (key: string) => void;
-  resetFilters: () => void;
+    filters: Record<string, unknown>;
+    setFilter: (key: string, value: unknown) => void;
+    removeFilter: (key: string) => void;
+    resetFilters: () => void;
 
   sortBy: string | null;
   sortOrder: "asc" | "desc";
