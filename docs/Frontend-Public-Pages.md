@@ -20,8 +20,12 @@ src/
     │   ├── HomePage.tsx
     │   ├── Hero/
     │   │   └── Hero.tsx
-    │   └── About/
-    │       └── About.tsx
+    │   ├── About/
+    │   │   └── About.tsx
+    │   ├── Services/
+    │   │   └── Services.tsx
+    │   └── FAQ/
+    │       └── FAQ.tsx
     ├── layout/
     └── ui/
 ```
@@ -55,7 +59,9 @@ El nombre `(public)` no forma parte de las URL.
 ```text
 HomePage
 ├── Hero
-└── About
+├── About
+├── Services
+└── FAQ
 ```
 
 La lógica visual de cada sección permanece separada dentro de su propio componente.
@@ -85,9 +91,9 @@ La lógica visual de cada sección permanece separada dentro de su propio compon
 ### HomePage
 
 - Objetivo: componer las secciones de la página Home.
-- Responsabilidad: mantener el orden de Hero y About sin duplicar su implementación.
+- Responsabilidad: mantener el orden de Hero, About, Services y FAQ sin duplicar su implementación.
 - Ubicación: `src/components/home/HomePage.tsx`.
-- Dependencias: `Hero` y `About`.
+- Dependencias: `Hero`, `About`, `Services` y `FAQ`.
 - Reutilización: es consumido desde `src/app/page.tsx`.
 
 ## Componentes compartidos
@@ -99,6 +105,7 @@ La lógica visual de cada sección permanece separada dentro de su propio compon
 | Badge | `src/components/ui/Badge/Badge.tsx` | Mostrar etiquetas visuales |
 | Navbar | `src/components/layout/Navbar/Navbar.tsx` | Navegación principal |
 | Footer | `src/components/layout/Footer/Footer.tsx` | Pie de página compartido |
+| Card | `src/components/ui/Card/Card.tsx` | Presentar contenido dentro de tarjetas reutilizables |
 
 ## Definiciones pendientes de componentes
 
@@ -158,6 +165,71 @@ Section
 
 El componente debe permanecer presentacional y aceptar contenido mediante props.
 
+## Implementación de Services y FAQ
+
+### Services
+
+- Objetivo: presentar una vista inicial de los servicios ofrecidos.
+- Responsabilidad: renderizar una colección de servicios mediante tarjetas reutilizables.
+- Ubicación: `src/components/home/Services/Services.tsx`.
+- Componentes utilizados: `Section`, `Container`, `Badge` y `Card`.
+- Dependencias: tipos `IServiceItem`, componentes de Layout y Design System.
+- Datos: recibe una colección tipada mediante la prop `services`.
+- Integraciones: no consume APIs ni servicios.
+- Información pendiente: nombres, descripciones, iconografía y catálogo definitivo.
+
+#### Props
+
+- `eyebrow`: etiqueta opcional.
+- `title`: título de la sección.
+- `description`: descripción opcional.
+- `services`: colección de servicios.
+- `className`: clases adicionales.
+
+#### Composición
+
+```text
+Section
+└── Container
+    ├── Encabezado
+    └── Grid responsive
+        └── Card por cada servicio
+```
+#### Criterios de reutilización
+
+Services no contiene datos oficiales ni lógica de Backend. Recibe la información mediante props y adapta las tarjetas con un grid Mobile First.
+
+### FAQ
+
+- Objetivo: mostrar preguntas y respuestas frecuentes.
+- Responsabilidad: renderizar una colección desplegable de preguntas predefinidas.
+- Ubicación: `src/components/home/FAQ/FAQ.tsx`.
+- Componentes utilizados: `Section`, `Container`, `Badge` y `Card`.
+- Dependencias: tipos `IFaqItem`, componentes de Layout, Design System y elementos HTML `details` y `summary`.
+- Datos: recibe una colección tipada mediante la prop `faqs`.
+- Integraciones: no consume APIs ni servicios.
+- Información pendiente: cantidad, preguntas, respuestas y fuente de información definitivas.
+
+#### Props
+
+- `eyebrow`: etiqueta opcional.
+- `title`: título de la sección.
+- `description`: descripción opcional.
+- `faqs`: colección de preguntas y respuestas.
+- `className`: clases adicionales.
+
+#### Composición
+
+```text
+Section
+└── Container
+    ├── Encabezado
+    └── Lista de Cards
+        └── details
+            ├── summary
+            └── Respuesta
+```
+
 ## Dependencias internas
 
 - `src/app/layout.tsx`
@@ -179,9 +251,7 @@ El componente debe permanecer presentacional y aceptar contenido mediante props.
 
 Según la Arquitectura V2, todavía están pendientes:
 
-- Services.
 - Projects.
-- FAQ.
 - ContactCTA.
 
 ### Información funcional pendiente
@@ -212,9 +282,13 @@ Según la Arquitectura V2, todavía están pendientes:
 
 - Home está ubicada en `src/app/page.tsx`, según la Arquitectura V2.
 - `(public)` se reserva para organizar las demás rutas públicas.
-- Hero y About utilizan funciones declaradas y props tipadas.
+- Hero, About, Services y FAQ utilizan funciones declaradas y props tipadas.
 - Los componentes permanecen presentacionales.
 - No se consumen APIs ni se implementa lógica de Backend.
 - La implementación utiliza tokens del Design System y enfoque Mobile First.
 - No se incorporaron imágenes porque todavía no existen recursos oficiales.
 - Debe confirmarse cómo compartir Navbar y Footer con Home, ya que la página raíz no hereda automáticamente `src/app/(public)/layout.tsx`.
+- Services y FAQ utilizan contenido temporal definido en `HomePage`.
+- El contenido temporal deberá reemplazarse cuando exista información oficial.
+- FAQ utiliza `details` y `summary` para mantener una interacción accesible sin estado adicional.
+- No existen endpoints ni fuentes de contenido definidas para estas secciones.
