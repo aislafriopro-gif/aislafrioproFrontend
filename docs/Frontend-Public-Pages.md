@@ -292,3 +292,70 @@ Según la Arquitectura V2, todavía están pendientes:
 - El contenido temporal deberá reemplazarse cuando exista información oficial.
 - FAQ utiliza `details` y `summary` para mantener una interacción accesible sin estado adicional.
 - No existen endpoints ni fuentes de contenido definidas para estas secciones.
+
+## Páginas públicas independientes implementadas
+
+| Página | Ruta | Ubicación | Estado |
+|---|---|---|---|
+| Nosotros | `/nosotros` | `src/app/(public)/nosotros/page.tsx` | Estructura visual implementada |
+| Servicios | `/servicios` | `src/app/(public)/servicios/page.tsx` | Estructura visual implementada |
+| Proyectos | `/proyectos` | `src/app/(public)/proyectos/page.tsx` | Estructura visual implementada |
+| Contacto | `/contacto` | `src/app/(public)/contacto/page.tsx` | Estructura visual implementada |
+
+Las páginas utilizan el layout público compartido, Navbar, Footer y componentes del Design System. La implementación es responsive, no consume APIs y utiliza contenido provisional hasta recibir información oficial.
+
+## Propuesta visual implementada
+
+- Nosotros utiliza una composición responsive de contenido e imagen.
+- Servicios reutiliza tarjetas para mostrar icono, título, descripción y acción.
+- Proyectos incorpora categorías visuales, tarjetas provisionales y llamada a la acción.
+- Contacto incorpora canales informativos, formulario visual y espacio reservado para ubicación.
+- Se utilizan tokens oficiales de color, tipografía, espaciado, bordes y breakpoints.
+- Los recursos no disponibles se representan mediante placeholders.
+- Los SVG provisionales de servicios se almacenan en `public/icons/services/`.
+
+## Observaciones y definiciones pendientes
+
+### Layout público de Home
+
+- Sección identificada: Home.
+- Información pendiente: mecanismo oficial para compartir Navbar y Footer con `src/app/page.tsx`.
+- Propuesta Frontend: crear un componente estructural reutilizable `PublicShell` consumido por Home y por `src/app/(public)/layout.tsx`.
+- Justificación técnica: evita duplicación y evita incorporar Navbar y Footer en autenticación y dashboard.
+
+### Navbar público
+
+- Información pendiente: logo oficial, dimensiones y destino definitivo de “Cotizar ahora”.
+- Propuesta Frontend: utilizar las props `brand` y `action` existentes en Navbar.
+- Justificación técnica: mantiene el componente reutilizable y su comportamiento responsive.
+
+### Acciones de navegación
+
+- Se encuentra pendiente definir un componente `ButtonLink`.
+- Actualmente los enlaces con apariencia de botón utilizan `Link` y tokens del Design System.
+- El componente permitiría compartir variantes visuales con `Button` manteniendo la semántica correcta de navegación.
+
+### Contenido empresarial pendiente
+
+- Información institucional definitiva.
+- Misión, visión y valores oficiales.
+- Catálogo definitivo de servicios.
+- Proyectos realizados y fotografías autorizadas.
+- Teléfono, correo y ubicación oficiales.
+- Textos y destinos definitivos de las llamadas a la acción.
+
+### Recursos gráficos pendientes
+
+- Logo oficial.
+- Imágenes del Hero.
+- Imagen institucional de Nosotros.
+- Fotografías oficiales de servicios y proyectos.
+- Recurso o integración oficial para ubicación.
+
+### Integraciones futuras
+
+- Envío del formulario de contacto.
+- Validaciones funcionales del formulario.
+- Fuente de datos para servicios y proyectos.
+- Filtrado funcional de proyectos.
+- Integración de mapa, si es aprobada.
