@@ -5,10 +5,11 @@ import { Badge } from "@/components/ui/Badge/Badge";
 
 export interface IAboutProps {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
   description: string;
   additionalContent?: ReactNode;
   media?: ReactNode;
+  headingLevel?: "h1" | "h2";
   className?: string;
 }
 
@@ -18,8 +19,10 @@ export function About({
   description,
   additionalContent,
   media,
+  headingLevel = "h2",
   className = "",
 }: IAboutProps) {
+    const Heading = headingLevel;
   return (
     <Section
       aria-labelledby="about-title"
@@ -36,12 +39,12 @@ export function About({
               <Badge variant="secondary">{eyebrow}</Badge>
             )}
 
-            <h2
-              id="about-title"
-              className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
+            <Heading
+            id="about-title"
+            className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
             >
-              {title}
-            </h2>
+            {title}
+            </Heading>
 
             <p className="max-w-2xl text-body text-gray-700">
               {description}
