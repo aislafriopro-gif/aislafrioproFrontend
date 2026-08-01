@@ -359,3 +359,76 @@ Las páginas utilizan el layout público compartido, Navbar, Footer y componente
 - Fuente de datos para servicios y proyectos.
 - Filtrado funcional de proyectos.
 - Integración de mapa, si es aprobada.
+
+## Dependencias futuras con Backend 31/07/2026
+
+| Página | Información requerida | Endpoint pendiente | Tipo de información esperada | Observaciones técnicas |
+|---|---|---|---|---|
+| Nosotros | Información institucional, enfoque de trabajo y recurso gráfico | Por definir con Backend | Contenido descriptivo e imagen institucional | Actualmente utiliza contenido provisional y un placeholder visual |
+| Servicios | Catálogo, descripciones, iconos y beneficios | Por definir con Backend | Colección de servicios y beneficios asociados | La interfaz ya recibe una colección tipada mediante `IServiceItem` |
+| Proyectos | Categorías, proyectos, descripciones e imágenes | Por definir con Backend | Colección de categorías y proyectos | Las categorías son actualmente informativas y no ejecutan filtrado |
+| Contacto | Teléfono, correo, ubicación y recurso de mapa | Por definir con Backend | Información pública de contacto | Actualmente se muestran valores pendientes de confirmación |
+| Contacto | Envío del formulario | Por definir con Backend | Datos de nombre, correo y mensaje | El botón utiliza `type="button"` y no realiza solicitudes HTTP |
+
+Esta matriz registra las dependencias de Backend identificadas para la estructura inicial. Podrá ampliarse conforme se incorporen nuevas secciones y se definan los requerimientos funcionales definitivos.
+
+## Arquitectura de las páginas públicas independientes 31/07/2026
+
+### Nosotros
+
+- Objetivo: presentar información institucional de AislaFrioPro.
+- Responsabilidad: organizar contenido descriptivo, puntos institucionales y un recurso gráfico.
+- Ubicación: `src/app/(public)/nosotros/page.tsx`.
+- Layout utilizado: `src/app/(public)/layout.tsx`.
+- Componentes utilizados: `About`.
+- Componentes reutilizados: `Section`, `Container` y `Badge`, utilizados internamente por `About`.
+- Dependencias: React, componentes Home, Layout y Design System.
+- Integraciones: no consume APIs ni servicios.
+- Información pendiente: contenido institucional e imagen oficial.
+
+### Servicios
+
+- Objetivo: presentar el catálogo inicial de servicios.
+- Responsabilidad: mostrar servicios y beneficios mediante colecciones visuales.
+- Ubicación: `src/app/(public)/servicios/page.tsx`.
+- Layout utilizado: `src/app/(public)/layout.tsx`.
+- Componentes utilizados: `Services`, `Section` y `Container`.
+- Componentes reutilizados: `Badge`, `Card` e imágenes SVG.
+- Dependencias: Next.js Image, componentes Home, Layout y Design System.
+- Integraciones: no consume APIs ni servicios.
+- Información pendiente: catálogo, descripciones, iconografía y beneficios definitivos.
+
+### Proyectos
+
+- Objetivo: preparar la presentación de proyectos realizados.
+- Responsabilidad: mostrar categorías, tarjetas provisionales y una llamada a la acción.
+- Ubicación: `src/app/(public)/proyectos/page.tsx`.
+- Layout utilizado: `src/app/(public)/layout.tsx`.
+- Componentes utilizados: `Section`, `Container`, `Badge` y `Card`.
+- Componentes reutilizados: componentes de Layout y Design System.
+- Dependencias: Next.js Link, Layout y Design System.
+- Integraciones: no consume APIs ni servicios.
+- Información pendiente: proyectos reales, categorías, imágenes y comportamiento de filtrado.
+
+### Contacto
+
+- Objetivo: preparar los canales de contacto y el formulario público.
+- Responsabilidad: mostrar información de contacto, formulario visual y espacio para ubicación.
+- Ubicación: `src/app/(public)/contacto/page.tsx`.
+- Layout utilizado: `src/app/(public)/layout.tsx`.
+- Componentes utilizados: `Section`, `Container`, `Badge`, `Card`, `Input`, `Textarea` y `Button`.
+- Componentes reutilizados: componentes de Layout y Design System.
+- Dependencias: React, Layout y Design System.
+- Integraciones: no consume APIs ni envía formularios.
+- Información pendiente: datos oficiales, ubicación, validaciones e integración del formulario.
+
+## Validación técnica 31/07/2026
+
+- ESLint ejecutado sin errores.
+- TypeScript validado mediante `npx tsc --noEmit`.
+- Build de producción generado correctamente.
+- Las cuatro rutas públicas fueron prerenderizadas como contenido estático.
+- Navegación entre páginas verificada.
+- Diseño responsive verificado en móvil, tablet y escritorio.
+- Las páginas reutilizan el layout público y los componentes compartidos.
+- No existen llamadas HTTP ni dependencias actuales con Backend.
