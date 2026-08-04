@@ -122,12 +122,15 @@ export default function Page() {
             </form>
           </Card>
 
-          <div
-            role="img"
-            aria-label="Espacio reservado para el mapa de ubicación"
-            className="flex min-h-80 items-center justify-center rounded-lg border border-gray-200 bg-gray-100 p-lg text-center text-body text-gray-500"
-          >
-            Mapa o imagen de ubicación pendiente
+          <div className="min-h-80 overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+            <iframe
+              title="Mapa provisional de ubicación en Bogotá"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15907.214572355942!2d-74.08949909122771!3d4.629092902830753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9984322e7f45%3A0x802e616dc42360f8!2zQ0lCLCBTYW50YSBGw6ksIEJvZ290w6EsIENvbG9tYmlh!5e0!3m2!1ses-419!2spe!4v1785804827967!5m2!1ses-419!2spe"
+              className="h-full min-h-80 w-full border-0"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
           </div>
         </div>
       </Container>
