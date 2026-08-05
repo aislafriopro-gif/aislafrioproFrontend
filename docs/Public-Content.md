@@ -12,3 +12,13 @@ Este documento detalla el estado de integración y los puntos pendientes corresp
 - **Recomendaciones técnicas para futuras integraciones:**
   - Asegurarse de consumir los recursos a través de la instancia global de Axios (`src/lib/api.ts`).
   - Implementar tipado estricto con TypeScript una vez que se definan los modelos de datos del servidor.
+
+## 3. Actualización Técnica del Sprint
+
+- **Dependencias detectadas:** 
+  - `@tanstack/react-query` para la gestión de estados asíncronos y caché de datos.
+  - Instancia centralizada de Axios (`src/lib/api.ts`) para las peticiones HTTP.
+- **Información pendiente:** 
+  - Definición final de los contratos de API y rutas de endpoints en el servidor.
+- **Observaciones de integración:** 
+  - Se han dejado preparados los servicios y hooks (`useServices`) conectados a la interfaz gráfica manteniendo la estructura visual intacta y sin utilizar mocks locales, listos para recibir datos reales apenas el Backend publique los endpoints.
