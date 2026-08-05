@@ -443,3 +443,20 @@ Esta matriz registra las dependencias de Backend identificadas para la estructur
 - Datos: el componente continuará recibiendo una colección tipada mediante props.
 - Integraciones futuras: el origen dinámico de las preguntas queda pendiente de definición por Backend.
 - Justificación técnica: facilita la lectura, reduce la saturación visual y mantiene el componente reutilizable.
+
+### Observación de integración en Home
+
+Actualmente Home implementa Hero, About, Services y FAQ. La UI Guidelines ubica FAQ después de otras secciones que todavía no han sido desarrolladas. Para no modificar ni crear secciones fuera del alcance de SCRUM-220, FAQ se mantiene después de Services, como última sección disponible. Su posición definitiva deberá ajustarse cuando se incorporen las secciones intermedias.
+
+## Propuesta de interfaz para Benefits y Testimonials 05/08/2026
+
+- Secciones identificadas: Benefits y Testimonials del Home.
+- Benefits se interpretará como la sección “Beneficios técnicos” definida en UI Guidelines.
+- Testimonials se relacionará con la sección “Clientes”, sin reemplazar a “Proyectos realizados”.
+- Benefits utilizará tarjetas reutilizables y recibirá una colección tipada mediante props.
+- Testimonials utilizará tarjetas reutilizables con imagen y datos de autor opcionales.
+- El contenido actual de Benefits y Testimonials es demostrativo y se utiliza para evaluar la composición visual. Deberá reemplazarse cuando exista información oficial validada.
+- No se incorporarán nombres, fotografías ni opiniones atribuidas a clientes sin información oficial.
+- Ambas secciones quedarán preparadas para recibir contenido dinámico cuando se definan contratos de Backend.
+- En el Home actual, Benefits se ubicará después de Services y Testimonials antes de FAQ, conservando el orden relativo definido en UI Guidelines.
+- No se consumirán APIs ni se asumirán endpoints.
