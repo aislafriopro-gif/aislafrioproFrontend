@@ -22,3 +22,12 @@ Este documento detalla el estado de integración y los puntos pendientes corresp
   - Definición final de los contratos de API y rutas de endpoints en el servidor.
 - **Observaciones de integración:** 
   - Se han dejado preparados los servicios y hooks (`useServices`) conectados a la interfaz gráfica manteniendo la estructura visual intacta y sin utilizar mocks locales, listos para recibir datos reales apenas el Backend publique los endpoints.
+
+## 4. Actualización de Módulos: FAQ y Site Settings (SCRUM-176 / SCRUM-177)
+
+- **Información pendiente:** 
+  - Esquemas de datos y estructuras de respuesta para las preguntas frecuentes (`faq.service.ts`) y la configuración general del sitio (`siteSettings.service.ts`).
+- **Endpoints faltantes:** 
+  - Rutas de backend correspondientes para las peticiones de FAQ y Site Settings.
+- **Dependencias identificadas:** 
+  - Uso obligatorio del cliente HTTP global ubicado en `src/lib/api.ts` para ambos servicios.
