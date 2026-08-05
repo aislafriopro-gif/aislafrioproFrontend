@@ -12,11 +12,17 @@ import {
   type IServiceItem,
 } from "@/components/home/Services/Services";
 import Link from "next/link";
+import Image from "next/image";
 
+const HERO_BACKGROUND = {
+    src: "/images/hero/hero1.png",
+    alt: "",
+  } as const;
 const HERO_SLIDES: readonly IHeroSlide[] = [
   {
     id: "hero-main",
     eyebrow: "Soluciones industriales",
+    image: HERO_BACKGROUND,
     title: [
       "Refrigeración y",
       "aislamiento a la medida",
@@ -36,6 +42,7 @@ const HERO_SLIDES: readonly IHeroSlide[] = [
   {
     id: "hero-services",
     eyebrow: "Servicios especializados",
+    image: HERO_BACKGROUND,
     title: [
       "Soluciones para",
       "diferentes",
@@ -55,6 +62,7 @@ const HERO_SLIDES: readonly IHeroSlide[] = [
   {
     id: "hero-experience",
     eyebrow: "AislaFrioPro",
+    image: HERO_BACKGROUND,
     title: [
       "Acompañamiento desde",
       "la planificación",
@@ -149,12 +157,14 @@ export function HomePage() {
           </Link>
         }
         media={
-          <div
-            role="img"
-            aria-label="Espacio reservado para una imagen de AislaFrioPro"
-            className="flex aspect-[4/3] w-full items-center justify-center rounded-lg border border-gray-200 bg-gray-100 text-body text-gray-500"
-          >
-            Imagen corporativa aqui
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+            <Image
+              src="/images/nosotros/about1.png"
+              alt="Instalaciones y soluciones industriales de AislaFrioPro"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
         }
       />

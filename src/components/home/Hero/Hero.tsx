@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
+import Image from "next/image";
 
 
 export interface IHeroAction {
@@ -76,12 +77,36 @@ export function Hero({
         aria-labelledby="hero-title"
         aria-roledescription="carrusel"
         aria-label="Contenido destacado"
-        className={`relative flex min-h-[36rem] items-center overflow-hidden bg-gray-100 py-xxl text-white ${className}`}
+        className={`relative flex min-h-[36rem] items-center overflow-hidden bg-gray-900 py-xxl text-white ${className}`}
     >
+        <div className="absolute inset-0 bg-gray-900/50">
+            {slides.map((slide, index) => {
+                if (!slide.image) {
+                return null;
+                }
+
+                const isActive = index === currentIndex;
+
+                return (
+                <Image
+                    key={slide.id}
+                    src={slide.image.src}
+                    alt={slide.image.alt}
+                    fill
+                    loading="eager"
+                    sizes="100vw"
+                    aria-hidden={!isActive}
+                    className={`object-cover object-center transition-opacity duration-1000 ease-in-out motion-reduce:transition-none ${
+                    isActive ? "opacity-100" : "opacity-0"
+                    }`}
+                />
+                );
+            })}
+        </div>
         <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
-            />
+            className="absolute inset-0 bg-gray-900/50"
+        />
 
         <Container className="relative z-10 w-full">
             <div

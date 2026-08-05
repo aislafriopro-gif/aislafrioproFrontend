@@ -1,9 +1,12 @@
+"use client";
+
 import {
   Services,
   type IServiceItem,
 } from "@/components/home/Services/Services";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
+import { useServices } from "@/hooks/useServices"; // Importamos el hook que creamos
 
 const SERVICES: readonly IServiceItem[] = [
   {
@@ -72,15 +75,29 @@ const BENEFITS = [
 ] as const;
 
 export default function Page() {
+  // Integramente preparado con el hook de TanStack Query
+  const { data, isLoading, error } = useServices();
+
+  // Si el backend responde en un futuro con datos reales, los usará; si no, mantiene la estructura visual intacta
+  const servicesToDisplay = data ? (data as unknown as IServiceItem[]) : SERVICES;
+
   return (
     <>
+      {isLoading && (
+        <div className="py-4 text-center text-sm text-gray-500">Cargando servicios en tiempo real...</div>
+      )}
+
+      {error && (
+        <div className="py-4 text-center text-sm text-red-500">Aviso: Usando versión estática temporalmente.</div>
+      )}
+
       <Services
         headingLevel="h1"
         alignment="left"
         eyebrow="Servicios"
         title="Nuestros servicios"
         description="Conoce las soluciones que AislaFrioPro prepara para diferentes necesidades industriales."
-        services={SERVICES}
+        services={servicesToDisplay}
       />
 
       <Section

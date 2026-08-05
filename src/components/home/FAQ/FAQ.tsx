@@ -52,8 +52,8 @@ export function FAQ({
         <div className="mt-xl flex flex-col gap-sm">
           {faqs.map((faq) => (
             <Card key={faq.id}>
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-md text-body font-semibold text-gray-900 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <details name="faq-accordion" className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-md rounded-sm text-body font-semibold text-gray-900 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:text-secondary group-open:text-primary">
                   <span>{faq.question}</span>
 
                   <span
