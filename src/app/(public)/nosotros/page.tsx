@@ -1,4 +1,5 @@
 import { About } from "@/components/home/About/About";
+import Image from "next/image";
 
 const ABOUT_POINTS = [
   {
@@ -62,12 +63,14 @@ export default function Page() {
             className="absolute inset-lg rotate-3 rounded-xl border border-dashed border-secondary"
           />
 
-          <div
-            role="img"
-            aria-label="Espacio reservado para una imagen de AislaFrioPro"
-            className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl bg-gray-100 p-lg text-center text-body text-gray-500 shadow-md"
-          >
-            Imagen corporativa pendiente
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-100 shadow-md">
+            <Image
+              src="/images/nosotros/about1.png"
+              alt="Instalaciones y soluciones industriales de AislaFrioPro"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
       }

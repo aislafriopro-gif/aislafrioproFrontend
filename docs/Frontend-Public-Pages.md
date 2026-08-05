@@ -432,3 +432,14 @@ Esta matriz registra las dependencias de Backend identificadas para la estructur
 - Diseño responsive verificado en móvil, tablet y escritorio.
 - Las páginas reutilizan el layout público y los componentes compartidos.
 - No existen llamadas HTTP ni dependencias actuales con Backend.
+
+## Propuesta de interfaz para FAQ 04/08/2026
+
+- Sección identificada: Preguntas frecuentes del Home.
+- Interfaz propuesta: acordeón accesible con preguntas expandibles y colapsables.
+- Estado inicial: todas las preguntas cerradas.
+- Comportamiento: mantener una sola pregunta abierta a la vez.
+- Estilos: utilizar colores, espaciados, tipografía y estados de foco definidos en el Design System.
+- Datos: el componente continuará recibiendo una colección tipada mediante props.
+- Integraciones futuras: el origen dinámico de las preguntas queda pendiente de definición por Backend.
+- Justificación técnica: facilita la lectura, reduce la saturación visual y mantiene el componente reutilizable.

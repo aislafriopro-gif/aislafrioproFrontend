@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
@@ -17,21 +18,37 @@ const PROJECTS = [
     id: "project-1",
     title: "Proyecto industrial",
     category: "Cortinas industriales",
+    image: {
+      src: "/images/proyectos/pr1.jpeg",
+      alt: "Cortina industrial transparente de tiras de PVC instalada en un acceso",
+    },
   },
   {
     id: "project-2",
     title: "Área de almacenamiento",
     category: "Aislamiento térmico",
+    image: {
+      src: "/images/proyectos/pr2.jpeg",
+      alt: "Cortina de tiras de PVC instalada junto a una puerta aislante",
+    },
   },
   {
     id: "project-3",
     title: "Zona de acceso controlado",
     category: "Puertas frigoríficas",
+    image: {
+      src: "/images/proyectos/pr3.jpeg",
+      alt: "Acceso con puerta aislante y cortina transparente de tiras de PVC",
+    },
   },
   {
     id: "project-4",
     title: "Espacio de producción",
     category: "Instalaciones",
+    image: {
+      src: "/images/proyectos/pr4.jpeg",
+      alt: "Cortina transparente de tiras de PVC instalada en un espacio refrigerado",
+    },
   },
 ] as const;
 
@@ -83,12 +100,14 @@ export default function Page() {
                 variant="elevated"
                 className="flex h-full flex-col"
               >
-                <div
-                  role="img"
-                  aria-label={`Imagen pendiente para ${project.title}`}
-                  className="flex aspect-[4/3] items-center justify-center rounded-md bg-gray-100 p-md text-center text-small text-gray-500"
-                >
-                  Imagen del proyecto
+                <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-gray-100">
+                  <Image
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
 
                 <h2 className="mt-md text-h6 font-semibold text-gray-900">
