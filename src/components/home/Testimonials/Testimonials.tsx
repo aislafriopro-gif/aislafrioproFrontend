@@ -45,7 +45,7 @@ export function Testimonials({
           </h2>
 
           {description && (
-            <p className="max-w-2xl text-body text-gray-700">
+            <p className="max-w-2xl text-body leading-relaxed text-gray-700">
               {description}
             </p>
           )}
@@ -56,6 +56,7 @@ export function Testimonials({
             <article key={testimonial.id}>
               <Card
                 variant="elevated"
+                animated
                 className="flex h-full flex-col"
               >
                 <blockquote className="flex-1 text-h5 font-medium leading-relaxed text-gray-900">
@@ -81,7 +82,7 @@ export function Testimonials({
                     {testimonial.company.name}
                   </cite>
 
-                  <p className="mt-xs text-small text-gray-500">
+                  <p className="mt-xs text-small leading-relaxed text-gray-500">
                     {testimonial.company.description}
                   </p>
                   </footer>

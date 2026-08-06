@@ -460,3 +460,16 @@ Actualmente Home implementa Hero, About, Services y FAQ. La UI Guidelines ubica 
 - Ambas secciones quedarán preparadas para recibir contenido dinámico cuando se definan contratos de Backend.
 - En el Home actual, Benefits se ubicará después de Services y Testimonials antes de FAQ, conservando el orden relativo definido en UI Guidelines.
 - No se consumirán APIs ni se asumirán endpoints.
+
+## Propuesta de animaciones suaves 06/08/2026
+
+- Alcance: componentes y secciones del Home.
+- Cards: animación reutilizable y opcional mediante la prop `animated`.
+- Movimiento de cards: duración de 700 ms con curva progresiva y transformación acelerada por GPU.
+- Botones y enlaces: transiciones breves de color, sombra y desplazamiento.
+- Acordeón: transición de color y rotación del indicador.
+- Hero: conserva transiciones suaves entre slides y controles.
+- Rendimiento: se priorizan transformaciones y opacidad, evitando animaciones pesadas.
+- Accesibilidad: las animaciones respetan `prefers-reduced-motion`.
+- Dependencias: no se incorporaron librerías externas.
+- Estado: propuesta pendiente de incorporación formal al Design System.

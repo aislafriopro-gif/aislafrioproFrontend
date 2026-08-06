@@ -68,7 +68,7 @@ export function Services({
 
           {description && (
             <p
-              className={`max-w-2xl text-body ${
+              className={`max-w-2xl text-body leading-relaxed ${
                 isDark ? "text-gray-300" : "text-gray-700"
               }`}
             >
@@ -82,6 +82,7 @@ export function Services({
             <article key={service.id}>
               <Card
                 variant={isDark ? "dark" : "elevated"}
+                animated
                 className="flex h-full items-start gap-lg text-left"
               >
                 <div className="flex size-xxl shrink-0 items-center justify-center rounded-md border-2 border-primary">
@@ -103,7 +104,7 @@ export function Services({
                     </h3>
 
                     <p
-                      className={`mt-sm flex-1 text-body ${
+                      className={`mt-sm flex-1 text-body leading-relaxed ${
                         isDark ? "text-gray-300" : "text-gray-700"
                       }`}
                     >
@@ -113,7 +114,7 @@ export function Services({
                     <Link
                         href={service.href}
                         aria-label={`Ver más sobre ${service.title}`}
-                        className={`mt-lg inline-flex w-fit items-center gap-sm rounded-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+                        className={`mt-lg inline-flex w-fit items-center gap-sm rounded-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 motion-reduce:transition-none ${
                           isDark
                             ? "text-secondary hover:text-accent focus-visible:ring-accent focus-visible:ring-offset-gray-700"
                             : "text-primary hover:text-secondary focus-visible:ring-primary focus-visible:ring-offset-white"

@@ -46,7 +46,7 @@ export function About({
             {title}
             </Heading>
 
-            <p className="max-w-2xl text-body text-gray-700">
+            <p className="max-w-2xl text-body leading-relaxed text-gray-700">
               {description}
             </p>
 
