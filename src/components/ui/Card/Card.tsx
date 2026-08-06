@@ -3,15 +3,16 @@ import { Loader } from "../Loader/Loader";
 
 export interface ICardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
-  variant?: "default" | "outlined" | "elevated";
+  variant?: "default" | "outlined" | "elevated" | "dark";
   interactive?: boolean;
   loading?: boolean;
 }
 
 const variantClasses = {
-  default: "border border-gray-200 bg-white",
-  outlined: "border-2 border-primary bg-white",
-  elevated: "border border-gray-100 bg-white shadow-md",
+  default: "border border-gray-200 bg-white text-gray-900",
+  outlined: "border-2 border-primary bg-white text-gray-900",
+  elevated: "border border-gray-100 bg-white text-gray-900 shadow-md",
+  dark: "bg-gray-700 text-white shadow-md",
 } as const;
 
 export function Card({
@@ -28,7 +29,7 @@ export function Card({
       {...props}
       tabIndex={interactive ? (tabIndex ?? 0) : tabIndex}
       aria-busy={loading}
-      className={`rounded-lg p-lg text-gray-900 ${
+      className={`rounded-lg p-lg ${
         variantClasses[variant]
       } ${
         interactive

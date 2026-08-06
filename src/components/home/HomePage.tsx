@@ -13,6 +13,14 @@ import {
 } from "@/components/home/Services/Services";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Benefits,
+  type IBenefitItem,
+} from "@/components/home/Benefits/Benefits";
+import {
+  Testimonials,
+  type ITestimonialItem,
+} from "@/components/home/Testimonials/Testimonials";
 
 const HERO_BACKGROUND = {
     src: "/images/hero/hero1.png",
@@ -117,6 +125,72 @@ const TEMPORARY_SERVICES: readonly IServiceItem[] = [
   },
 ];
 
+const TEMPORARY_BENEFITS: readonly IBenefitItem[] = [
+    {
+      id: "benefit-1",
+      title: "Separación de ambientes",
+      description:
+        "Alternativas orientadas a organizar y separar diferentes espacios de trabajo.",
+      icon: {
+        src: "/icons/services/industrial-curtains.svg",
+        alt: "",
+      },
+    },
+    {
+      id: "benefit-2",
+      title: "Control térmico",
+      description:
+        "Soluciones preparadas para contribuir al manejo de las condiciones térmicas.",
+      icon: {
+        src: "/icons/services/thermal-insulation.svg",
+        alt: "",
+      },
+    },
+    {
+      id: "benefit-3",
+      title: "Orientación técnica",
+      description:
+        "Acompañamiento inicial para identificar alternativas según cada proyecto.",
+      icon: {
+        src: "/icons/services/project-consulting.svg",
+        alt: "",
+      },
+    },
+  ];
+
+  const TEMPORARY_TESTIMONIALS: readonly ITestimonialItem[] = [
+    {
+      id: "testimonial-1",
+      quote:
+        "El acompañamiento facilitó la definición de una alternativa acorde con las necesidades del espacio.",
+      company: {
+        name: "Empresa industrial",
+        description:
+          "Organización del sector productivo. Identidad e información pendientes de validación.",
+      },
+    },
+    {
+      id: "testimonial-2",
+      quote:
+        "La instalación se desarrolló de manera ordenada y considerando las condiciones particulares del área.",
+      company: {
+        name: "Centro logístico",
+        description:
+          "Operación dedicada al almacenamiento. Identidad e información pendientes de validación.",
+      },
+    },
+    {
+      id: "testimonial-3",
+      quote:
+        "La solución contribuyó a mejorar la separación y el funcionamiento del entorno de trabajo.",
+      company: {
+        name: "Empresa del sector alimentario",
+        description:
+          "Organización con espacios de conservación. Identidad e información pendientes de validación.",
+      },
+    },
+  ];
+
 const TEMPORARY_FAQS: readonly IFaqItem[] = [
   {
     id: "faq-1",
@@ -170,10 +244,25 @@ export function HomePage() {
       />
 
       <Services
+        theme="dark"
         eyebrow="Servicios"
         title="Soluciones para diferentes necesidades"
         description="Explora una vista inicial de las soluciones que formarán parte de nuestro catálogo."
         services={TEMPORARY_SERVICES}
+      />
+
+      <Benefits
+        eyebrow="Beneficios técnicos"
+        title="Soluciones pensadas para cada entorno"
+        description="Conoce algunos beneficios generales."
+        benefits={TEMPORARY_BENEFITS}
+      />
+
+      <Testimonials
+        eyebrow="Testimonios"
+        title="Experiencias de nuestros clientes"
+        description="Explora los testimonios de algunos de nuestros clientes que demuestran la calidad de nuestro servicio."
+        testimonials={TEMPORARY_TESTIMONIALS}
       />
 
       <FAQ
