@@ -33,6 +33,7 @@ Este documento detalla el estado de integración y los puntos pendientes corresp
   - Uso obligatorio del cliente HTTP global ubicado en `src/lib/api.ts` para ambos servicios.
 
 
+
 ## 5. Dependencias de Hooks (SCRUM-180 / SCRUM-181)
 
 - **Dependencias detectadas:**
