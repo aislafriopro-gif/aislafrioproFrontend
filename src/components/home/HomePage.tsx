@@ -224,7 +224,7 @@ export function HomePage() {
         additionalContent={
           <Link
             href="/nosotros"
-            className="inline-flex items-center gap-sm rounded-md border-2 border-primary px-lg py-sm font-medium text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-sm rounded-md border-2 border-primary px-lg py-sm font-medium text-primary transition-[color,background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-xs hover:bg-primary hover:text-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
           >
             Conoce más
             <span aria-hidden="true">→</span>

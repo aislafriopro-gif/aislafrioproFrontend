@@ -47,7 +47,7 @@ export function Benefits({
           </h2>
 
           {description && (
-            <p className="max-w-2xl text-body text-gray-700">
+            <p className="max-w-2xl text-body leading-relaxed text-gray-700">
               {description}
             </p>
           )}
@@ -58,6 +58,7 @@ export function Benefits({
             <article key={benefit.id}>
               <Card
                 variant="elevated"
+                animated
                 className="flex h-full items-start gap-md text-left"
               >
                 {benefit.icon && (
@@ -76,7 +77,7 @@ export function Benefits({
                     {benefit.title}
                   </h3>
 
-                  <p className="mt-xs text-small text-gray-700">
+                  <p className="mt-xs text-small leading-relaxed text-gray-700">
                     {benefit.description}
                   </p>
                 </div>
