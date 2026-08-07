@@ -31,3 +31,10 @@ Este documento detalla el estado de integración y los puntos pendientes corresp
   - Rutas de backend correspondientes para las peticiones de FAQ y Site Settings.
 - **Dependencias identificadas:** 
   - Uso obligatorio del cliente HTTP global ubicado en `src/lib/api.ts` para ambos servicios.
+
+
+## 5. Dependencias de Hooks (SCRUM-180 / SCRUM-181)
+
+- **Dependencias detectadas:**
+  - `@tanstack/react-query`: Se ha extendido el uso de esta librería para la gestión centralizada de datos asíncronos en los nuevos hooks `useFaq` y `useSiteSettings`.
+  - Conexión con `faq.service.ts` y `siteSettings.service.ts`: Los hooks actúan como la capa intermedia desacoplando la lógica de datos de los componentes de la interfaz.
