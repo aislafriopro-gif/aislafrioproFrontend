@@ -78,7 +78,6 @@ export default function Page() {
   // Integramente preparado con el hook de TanStack Query
   const { data, isLoading, error } = useServices();
 
-  // Si el backend responde en un futuro con datos reales, los usará; si no, mantiene la estructura visual intacta
   const servicesToDisplay = data ? (data as unknown as IServiceItem[]) : SERVICES;
 
   return (
