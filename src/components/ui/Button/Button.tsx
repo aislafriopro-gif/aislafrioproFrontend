@@ -6,6 +6,7 @@ export interface IButtonProps
   children: ReactNode;
   variant?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
+  animated?: boolean;
   loading?: boolean;
 }
 
@@ -26,6 +27,7 @@ export function Button({
   children,
   variant = "primary",
   size = "md",
+  animated = false,
   loading = false,
   disabled = false,
   type = "button",
@@ -40,7 +42,11 @@ export function Button({
       type={type}
       disabled={isDisabled}
       aria-busy={loading}
-      className={`inline-flex items-center justify-center gap-sm rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-sm rounded-md font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:translate-y-0 disabled:scale-100 disabled:opacity-50 disabled:shadow-none ${
+        animated
+          ? "transform-gpu will-change-transform transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-sm hover:scale-[1.01] motion-reduce:transform-none motion-reduce:transition-none"
+          : "transition-colors duration-200 motion-reduce:transition-none"
+      } ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
     >
       {loading && (
         <Loader size="md" variant="light" label="Cargando" />

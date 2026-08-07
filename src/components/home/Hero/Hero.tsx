@@ -158,14 +158,14 @@ export function Hero({
                         </span>
                         </h1>
 
-                        <p className="max-w-2xl text-body text-gray-200">
+                        <p className="max-w-2xl text-body leading-relaxed text-gray-200">
                         {slide.description}
                         </p>
 
                         <div className="flex w-full flex-col gap-sm tablet:w-auto tablet:flex-row">
                         <a
                             href={slide.primaryAction.href}
-                            className="inline-flex items-center justify-center rounded-md bg-accent px-lg py-md font-medium text-gray-900 transition-colors hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                            className="inline-flex items-center justify-center rounded-md bg-accent px-lg py-md font-medium text-gray-900 transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-xs hover:bg-accent/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
                         >
                             {slide.primaryAction.label}
                         </a>
@@ -173,7 +173,7 @@ export function Hero({
                         {slide.secondaryAction && (
                             <a
                             href={slide.secondaryAction.href}
-                            className="inline-flex items-center justify-center rounded-md border border-white px-lg py-md font-medium text-white transition-colors hover:bg-white hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                            className="inline-flex items-center justify-center rounded-md border border-white px-lg py-md font-medium text-white transition-[color,background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-xs hover:bg-white hover:text-gray-900 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
                             >
                             {slide.secondaryAction.label}
                             </a>
@@ -189,7 +189,7 @@ export function Hero({
             type="button"
             onClick={showPreviousSlide}
             aria-label="Mostrar diapositiva anterior"
-            className="absolute left-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-colors hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white tablet:left-md desktop:left-lg"
+            className="absolute left-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:left-md desktop:left-lg"
             >
             <svg
                 aria-hidden="true"
@@ -207,7 +207,7 @@ export function Hero({
             type="button"
             onClick={showNextSlide}
             aria-label="Mostrar diapositiva siguiente"
-            className="absolute right-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-colors hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white tablet:right-md desktop:right-lg"
+            className="absolute right-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:right-md desktop:right-lg"
             >
             <svg
                 aria-hidden="true"
@@ -231,7 +231,7 @@ export function Hero({
                 onClick={() => showSlide(index)}
                 aria-label={`Mostrar ${slide.title.join(" ")}`}
                 aria-current={index === currentIndex ? "true" : undefined}
-                className={`h-sm rounded-full transition-all ${
+                className={`h-sm rounded-full transition-all duration-200 motion-reduce:transition-none ${
                     index === currentIndex
                     ? "w-xl bg-accent"
                     : "w-sm bg-white/50 hover:bg-white"
