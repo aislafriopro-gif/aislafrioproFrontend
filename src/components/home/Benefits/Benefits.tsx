@@ -36,12 +36,12 @@ export function Benefits({
       className={`bg-white ${className}`}
     >
       <Container>
-        <div className="flex flex-col items-center gap-sm text-center">
+        <div className="flex flex-col items-center gap-md text-center">
           {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}
 
           <h2
             id="benefits-title"
-            className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
+            className="max-w-3xl break-words text-h4 font-semibold leading-tight text-gray-900 tablet:text-h3 desktop:text-h2"
           >
             {title}
           </h2>
@@ -53,7 +53,7 @@ export function Benefits({
           )}
         </div>
 
-        <div className="mt-lg grid gap-md tablet:grid-cols-2 desktop:grid-cols-3">
+        <div className="mt-xl grid gap-md tablet:grid-cols-2 tablet:gap-lg desktop:grid-cols-3">
           {benefits.map((benefit) => (
             <article key={benefit.id}>
               <Card
@@ -72,7 +72,7 @@ export function Benefits({
                   </div>
                 )}
 
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-body font-semibold text-gray-900">
                     {benefit.title}
                   </h3>
