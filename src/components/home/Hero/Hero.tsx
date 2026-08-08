@@ -77,7 +77,7 @@ export function Hero({
         aria-labelledby="hero-title"
         aria-roledescription="carrusel"
         aria-label="Contenido destacado"
-        className={`relative flex min-h-[36rem] items-center overflow-hidden bg-gray-900 py-xxl text-white ${className}`}
+        className={`relative flex min-h-[40rem] items-center overflow-hidden bg-gray-900 py-xl text-white tablet:min-h-[36rem] tablet:py-xxl ${className}`}
     >
         <div className="absolute inset-0 bg-gray-900/50">
             {slides.map((slide, index) => {
@@ -111,7 +111,7 @@ export function Hero({
         <Container className="relative z-10 w-full">
             <div
                 aria-live="polite"
-                className="relative min-h-[24rem] w-full"
+                className="relative min-h-[30rem] w-full tablet:min-h-[24rem]"
             >
                 {slides.map((slide, index) => {
                 const isActive = index === currentIndex;
@@ -143,7 +143,7 @@ export function Hero({
 
                         <h1
                         id={isActive ? "hero-title" : undefined}
-                        className="text-h3 font-semibold tablet:text-h2 desktop:text-h1"
+                        className="break-words text-h3 font-semibold leading-tight tablet:text-h2 desktop:text-h1"
                         >
                         <span className="text-white">
                             {slide.title[0]}{" "}
@@ -189,7 +189,7 @@ export function Hero({
             type="button"
             onClick={showPreviousSlide}
             aria-label="Mostrar diapositiva anterior"
-            className="absolute left-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:left-md desktop:left-lg"
+            className="absolute left-xs top-1/2 z-20 hidden -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:left-md tablet:block desktop:left-lg"
             >
             <svg
                 aria-hidden="true"
@@ -207,7 +207,7 @@ export function Hero({
             type="button"
             onClick={showNextSlide}
             aria-label="Mostrar diapositiva siguiente"
-            className="absolute right-xs top-1/2 z-20 -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:right-md desktop:right-lg"
+            className="absolute right-xs top-1/2 z-20 hidden -translate-y-1/2 rounded-sm p-xs text-white/60 transition-[color,background-color,transform] duration-200 hover:scale-105 hover:bg-black/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-95 motion-reduce:transition-none tablet:right-md tablet:block desktop:right-lg"
             >
             <svg
                 aria-hidden="true"

@@ -59,7 +59,7 @@ export function Services({
 
           <Heading
             id="services-title"
-            className={`max-w-3xl text-h4 font-semibold tablet:text-h3 desktop:text-h2 ${
+            className={`max-w-3xl break-words text-h4 font-semibold leading-tight tablet:text-h3 desktop:text-h2 ${
               isDark ? "text-white" : "text-gray-900"
             }`}
             >
@@ -77,7 +77,7 @@ export function Services({
           )}
         </div>
 
-        <div className="mt-xl grid gap-lg tablet:grid-cols-2 desktop:grid-cols-3">
+        <div className="mt-xl grid gap-md tablet:grid-cols-2 tablet:gap-lg desktop:grid-cols-3">
           {services.map((service) => (
             <article key={service.id}>
               <Card
@@ -94,9 +94,9 @@ export function Services({
                     />
                 </div>
 
-                <div className="flex min-h-full flex-1 flex-col">
+                <div className="flex min-h-full min-w-0 flex-1 flex-col">
                     <h3
-                      className={`text-h5 font-semibold ${
+                      className={`break-words text-h5 font-semibold leading-tight ${
                         isDark ? "text-white" : "text-gray-900"
                       }`}
                     >
