@@ -39,7 +39,7 @@ export function Testimonials({
 
           <h2
             id="testimonials-title"
-            className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
+            className="max-w-3xl break-words text-h4 font-semibold leading-tight text-gray-900 tablet:text-h3 desktop:text-h2"
           >
             {title}
           </h2>
@@ -51,7 +51,7 @@ export function Testimonials({
           )}
         </div>
 
-        <div className="mt-xl grid gap-lg tablet:grid-cols-2 desktop:grid-cols-3">
+        <div className="mt-xl grid gap-md tablet:grid-cols-2 tablet:gap-lg desktop:grid-cols-3">
           {testimonials.map((testimonial) => (
             <article key={testimonial.id}>
               <Card
@@ -59,7 +59,7 @@ export function Testimonials({
                 animated
                 className="flex h-full flex-col"
               >
-                <blockquote className="flex-1 text-h5 font-medium leading-relaxed text-gray-900">
+                <blockquote className="min-w-0 flex-1 break-words text-body font-medium leading-relaxed text-gray-900 tablet:text-h5">
                   <p>
                     <span
                       aria-hidden="true"

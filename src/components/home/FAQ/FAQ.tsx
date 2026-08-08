@@ -37,7 +37,7 @@ export function FAQ({
 
           <h2
             id="faq-title"
-            className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
+            className="max-w-3xl break-words text-h4 font-semibold leading-tight text-gray-900 tablet:text-h3 desktop:text-h2"
           >
             {title}
           </h2>
@@ -53,12 +53,12 @@ export function FAQ({
           {faqs.map((faq) => (
             <Card key={faq.id} animated>
               <details name="faq-accordion" className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-md rounded-sm text-body font-semibold text-gray-900 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:text-secondary group-open:text-primary motion-reduce:transition-none">
-                  <span>{faq.question}</span>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-md rounded-sm text-left text-body font-semibold text-gray-900 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:text-secondary group-open:text-primary motion-reduce:transition-none">
+                  <span className="min-w-0 break-words">{faq.question}</span>
 
                   <span
                     aria-hidden="true"
-                    className="text-h5 text-primary transition-transform duration-200 ease-out group-open:rotate-45 motion-reduce:transition-none"
+                    className="shrink-0 text-h5 text-primary transition-transform duration-200 ease-out group-open:rotate-45 motion-reduce:transition-none"
                   >
                     +
                   </span>

@@ -30,18 +30,18 @@ export function About({
     >
       <Container>
         <div
-          className={`grid items-center gap-xl ${
+          className={`grid items-center gap-lg tablet:gap-xl ${
             media ? "desktop:grid-cols-2" : ""
           }`}
         >
-          <div className="flex flex-col items-start gap-md">
+          <div className="flex min-w-0 flex-col items-start gap-md">
             {eyebrow && (
               <Badge variant="secondary">{eyebrow}</Badge>
             )}
 
             <Heading
             id="about-title"
-            className="max-w-3xl text-h4 font-semibold text-gray-900 tablet:text-h3 desktop:text-h2"
+            className="max-w-3xl break-words text-h4 font-semibold leading-tight text-gray-900 tablet:text-h3 desktop:text-h2"
             >
             {title}
             </Heading>
