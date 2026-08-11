@@ -1,9 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
-import { Card } from "@/components/ui/Card/Card";
+import {
+  ProjectGrid,
+} from "@/components/projects/ProjectGrid/ProjectGrid";
+import type {
+  IProjectCardData,
+} from "@/components/projects/ProjectCard/ProjectCard";
+
 
 const PROJECT_CATEGORIES = [
   "Todos",
@@ -13,44 +18,92 @@ const PROJECT_CATEGORIES = [
   "Instalaciones",
 ] as const;
 
-const PROJECTS = [
+const PROJECTS: readonly IProjectCardData[] = [
   {
     id: "project-1",
-    title: "Proyecto industrial",
-    category: "Cortinas industriales",
+    name: "Proyecto industrial",
+    description:
+      "Instalación orientada a mejorar la separación y el control de un acceso industrial.",
     image: {
       src: "/images/proyectos/pr1.jpeg",
       alt: "Cortina industrial transparente de tiras de PVC instalada en un acceso",
     },
+    relevantInfo: [
+      {
+        label: "Servicio",
+        value: "Cortinas industriales",
+      },
+      {
+        label: "Aplicación",
+        value: "Separación de ambientes",
+      },
+    ],
+    href: "/contacto",
   },
   {
     id: "project-2",
-    title: "Área de almacenamiento",
-    category: "Aislamiento térmico",
+    name: "Área de almacenamiento",
+    description:
+      "Solución preparada para contribuir al control térmico de un espacio de almacenamiento.",
     image: {
       src: "/images/proyectos/pr2.jpeg",
       alt: "Cortina de tiras de PVC instalada junto a una puerta aislante",
     },
+    relevantInfo: [
+      {
+        label: "Servicio",
+        value: "Aislamiento térmico",
+      },
+      {
+        label: "Aplicación",
+        value: "Almacenamiento",
+      },
+    ],
+    href: "/contacto",
   },
   {
     id: "project-3",
-    title: "Zona de acceso controlado",
-    category: "Puertas frigoríficas",
+    name: "Zona de acceso controlado",
+    description:
+      "Adecuación visual de un acceso para apoyar la separación de espacios con condiciones diferentes.",
     image: {
       src: "/images/proyectos/pr3.jpeg",
       alt: "Acceso con puerta aislante y cortina transparente de tiras de PVC",
     },
+    relevantInfo: [
+      {
+        label: "Servicio",
+        value: "Puertas frigoríficas",
+      },
+      {
+        label: "Aplicación",
+        value: "Control de acceso",
+      },
+    ],
+    href: "/contacto",
   },
   {
     id: "project-4",
-    title: "Espacio de producción",
-    category: "Instalaciones",
+    name: "Espacio de producción",
+    description:
+      "Separación de un área productiva mediante una solución adaptable al entorno de trabajo.",
     image: {
       src: "/images/proyectos/pr4.jpeg",
       alt: "Cortina transparente de tiras de PVC instalada en un espacio refrigerado",
     },
+    relevantInfo: [
+      {
+        label: "Servicio",
+        value: "Instalaciones",
+      },
+      {
+        label: "Aplicación",
+        value: "Área productiva",
+      },
+    ],
+    href: "/contacto",
   },
-] as const;
+];
 
 export default function Page() {
   return (
@@ -93,42 +146,8 @@ export default function Page() {
           ))}
         </div>
 
-        <div className="mt-lg grid gap-lg tablet:grid-cols-2 desktop:grid-cols-4">
-          {PROJECTS.map((project) => (
-            <article key={project.id}>
-              <Card
-                variant="elevated"
-                className="flex h-full flex-col"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-gray-100">
-                  <Image
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <h2 className="mt-md text-h6 font-semibold text-gray-900">
-                  {project.title}
-                </h2>
-
-                <p className="mt-xs flex-1 text-small text-gray-500">
-                  {project.category}
-                </p>
-
-                <Link
-                  href="/contacto"
-                  aria-label={`Consultar sobre ${project.title}`}
-                  className="mt-md inline-flex items-center gap-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  Consultar
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </Card>
-            </article>
-          ))}
+        <div className="mt-lg">
+          <ProjectGrid projects={PROJECTS} />
         </div>
 
         <div className="mt-xl flex flex-col gap-md rounded-lg bg-secondary/10 p-lg tablet:flex-row tablet:items-center tablet:justify-between">
