@@ -19,15 +19,20 @@ src/
 │   ├── not-found.tsx                # Página 404
 │   │
 │   ├── (public)/                    # Organización de rutas públicas
+│   │   ├── layout.tsx
+│   │   ├── page.tsx                 # Home (/)
 │   │   ├── servicios/
 │   │   │   └── page.tsx
 │   │   ├── contacto/
 │   │   │   └── page.tsx
 │   │   ├── proyectos/
-│   │   │   └── page.tsx
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
 │   │   └── nosotros/
 │   │       └── page.tsx
 │   │
+|   |
 │   ├── (auth)/                      # Login, Recuperar contraseña
 │   │   ├── login/
 │   │   └── recuperar-password/
