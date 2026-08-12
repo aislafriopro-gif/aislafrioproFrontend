@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card/Card";
 export interface IProjectCardData {
   id: string;
   name: string;
-  description: string;
+  summary: string;
   image: {
     src: string;
     alt: string;
@@ -44,7 +44,7 @@ export function ProjectCard({ project }: IProjectCardProps) {
         </h2>
 
         <p className="mt-xs text-small leading-relaxed text-gray-700">
-          {project.description}
+          {project.summary}
         </p>
 
         <dl className="mt-md flex flex-col gap-xs">
@@ -66,10 +66,10 @@ export function ProjectCard({ project }: IProjectCardProps) {
 
         <Link
           href={project.href}
-          aria-label={`Consultar sobre ${project.name}`}
+          aria-label={`Ver detalle de ${project.name}`}
           className="mt-auto inline-flex w-fit items-center gap-sm pt-md font-medium text-secondary transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-          Consultar
+          Ver detalle
           <span aria-hidden="true">→</span>
         </Link>
       </Card>
