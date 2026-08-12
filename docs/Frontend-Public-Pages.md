@@ -473,3 +473,14 @@ Actualmente Home implementa Hero, About, Services y FAQ. La UI Guidelines ubica 
 - Accesibilidad: las animaciones respetan `prefers-reduced-motion`.
 - Dependencias: no se incorporaron librerías externas.
 - Estado: propuesta pendiente de incorporación formal al Design System.
+
+## Propuesta de integración de Home con el layout público 11/08/2026
+
+- Situación identificada: Home no heredaba Navbar y Footer porque su ruta se encontraba en `src/app/page.tsx`.
+- Propuesta Frontend: trasladar únicamente la ruta Home a `src/app/(public)/page.tsx`.
+- La composición visual permanece en `src/components/home/HomePage.tsx`.
+- La ruta pública continúa siendo `/` porque `(public)` es un Route Group.
+- Beneficio: Home reutiliza el mismo Navbar y Footer de las demás páginas públicas sin duplicar código.
+- Auth y Dashboard conservan sus layouts independientes.
+- Estado: implementado en la rama `miguel`, pendiente de Code Review y aprobación del PR.
+- Evolución: incorporar esta definición en la siguiente actualización oficial de la arquitectura o en la Arquitectura V3.
