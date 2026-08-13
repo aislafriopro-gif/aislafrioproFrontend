@@ -11,7 +11,7 @@ export default function Page() {
       </h2>
 
       <p className="mt-sm max-w-2xl text-body leading-relaxed text-gray-700">
-        Vista general provisional del panel. 
+        Vista general provisional del panel.
       </p>
 
       <div className="mt-lg grid gap-md tablet:grid-cols-2 desktop:grid-cols-3">
