@@ -1,4 +1,5 @@
 import { MetricCard } from "@/components/dashboard/MetricCard/MetricCard";
+import { PageHeader } from "@/components/dashboard/PageHeader/PageHeader";
 
 const dashboardMetrics = [
   {
@@ -27,28 +28,23 @@ const dashboardMetrics = [
 export default function Page() {
   return (
     <section aria-labelledby="dashboard-content-title">
-      <h2
+      <PageHeader
         id="dashboard-content-title"
-        className="text-h4 font-semibold text-gray-900 tablet:text-h3"
-      >
-        Resumen
-      </h2>
-
-      <p className="mt-sm max-w-2xl text-body leading-relaxed text-gray-700">
-        Vista general de las métricas principales del panel.
-      </p>
+        title="Resumen"
+        description="Vista general de las métricas principales del panel."
+        />
 
       <div className="mt-lg grid gap-md tablet:grid-cols-2 desktop:grid-cols-3">
         {dashboardMetrics.map((metric) => (
-          <MetricCard
+            <MetricCard
             key={metric.id}
             label={metric.label}
             value={metric.value}
             description={metric.description}
             status={metric.status}
-          />
+            />
         ))}
-      </div>
+        </div>
     </section>
   );
 }
