@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosResponse, type AxiosError } from "axios";
+import Cookies from "js-cookie";
 
 export const api: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,6 +11,13 @@ export const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
+        const token = Cookies.get("token"); 
+
+        if (token && config.headers) {
+            config.headers.Authorization = `Bearer ${token}`;
+        } else {
+        }
+
         return config;
     },
     (error: AxiosError) => {
@@ -25,6 +33,7 @@ api.interceptors.response.use(
         if (error.response) {
             const { status } = error.response;
             if (status === 401) {
+                Cookies.remove("token");
             } else if (status === 403) {
             } else if (status >= 500) {
             }

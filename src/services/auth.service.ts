@@ -1,4 +1,6 @@
+// src/services/auth.service.ts
 import { api } from "@/lib/api";
+import Cookies from "js-cookie";
 
 export interface LoginCredentials {
   email: string;
@@ -12,7 +14,8 @@ export interface RegisterCredentials {
 }
 
 export interface AuthResponse {
-  token: string;
+  token?: string;
+  accessToken?: string;
   refreshToken?: string;
   user: {
     id: string;
@@ -23,48 +26,67 @@ export interface AuthResponse {
 }
 
 export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
-  const response = await api.post<AuthResponse>("/auth/login", credentials);
-  const data = response.data;
+  try {
+    const response = await api.post<AuthResponse>("/auth/login", credentials);
+    const data = response.data;
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    if (data.refreshToken) {
-      localStorage.setItem("refreshToken", data.refreshToken);
+    // Soportamos tanto accessToken (del backend) como token por compatibilidad
+    const token = data.accessToken || data.token;
+
+    if (token) {
+      Cookies.set("token", token, { expires: 7, secure: false, sameSite: "lax" });
+      
+      if (data.refreshToken) {
+        Cookies.set("refreshToken", data.refreshToken, { expires: 7, secure: false, sameSite: "lax" });
+      }
+    } else {
     }
-  }
 
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function register(credentials: RegisterCredentials): Promise<AuthResponse> {
-  const response = await api.post<AuthResponse>("/users", credentials);
-  const data = response.data;
+  try {
+    const response = await api.post<AuthResponse>("/users", credentials);
+    const data = response.data;
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    if (data.refreshToken) {
-      localStorage.setItem("refreshToken", data.refreshToken);
+    const token = data.accessToken || data.token;
+
+    if (token) {
+      Cookies.set("token", token, { expires: 7, secure: false, sameSite: "lax" });
+      
+      if (data.refreshToken) {
+        Cookies.set("refreshToken", data.refreshToken, { expires: 7, secure: false, sameSite: "lax" });
+      }
     }
-  }
 
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function logout(): Promise<void> {
-  localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
+  Cookies.remove("token");
+  Cookies.remove("refreshToken");
 }
 
 export async function refreshToken(): Promise<AuthResponse> {
-  const currentRefreshToken = localStorage.getItem("refreshToken");
-  
+  const currentRefreshToken = Cookies.get("refreshToken");
+
   const response = await api.post<AuthResponse>("/auth/refresh", {
     refreshToken: currentRefreshToken,
   });
 
-  if (response.data.token) {
-    localStorage.setItem("token", response.data.token);
+  const data = response.data;
+  const token = data.accessToken || data.token;
+
+  if (token) {
+    Cookies.set("token", token, { expires: 7, secure: false, sameSite: "lax" });
   }
 
-  return response.data;
+  return data;
 }
