@@ -1,10 +1,8 @@
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
-import { Button } from "@/components/ui/Button/Button";
 import { Card } from "@/components/ui/Card/Card";
-import { Input } from "@/components/ui/Input/Input";
-import { Textarea } from "@/components/ui/Textarea/Textarea";
+import { QuoteRequestForm } from "@/components/quote-requests/QuoteRequestForm/QuoteRequestForm";
 
 const CONTACT_CHANNELS = [
   {
@@ -47,7 +45,11 @@ export default function Page() {
           </p>
         </div>
 
-        <div className="mt-xl grid gap-lg desktop:grid-cols-[0.8fr_1.2fr_1.2fr]">
+        <div className="mt-xl">
+          <QuoteRequestForm />
+        </div>
+
+        <div className="mt-xl grid gap-lg desktop:grid-cols-[0.8fr_2.2fr]">
           <div className="flex flex-col gap-md">
             {CONTACT_CHANNELS.map((channel) => (
               <Card key={channel.id} variant="default">
@@ -70,57 +72,6 @@ export default function Page() {
               </Card>
             ))}
           </div>
-
-          <Card variant="elevated">
-            <h2 className="text-h5 font-semibold text-gray-900">
-              Envíanos un mensaje
-            </h2>
-
-            <form
-              aria-describedby="contact-form-status"
-              className="mt-lg flex flex-col gap-md"
-            >
-              <div className="grid gap-md tablet:grid-cols-2">
-                <Input
-                  label="Nombre"
-                  name="name"
-                  autoComplete="name"
-                  placeholder="Tu nombre"
-                />
-
-                <Input
-                  label="Correo"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="tu@correo.com"
-                />
-              </div>
-
-              <Textarea
-                label="Mensaje"
-                name="message"
-                rows={5}
-                placeholder="Cuéntanos sobre tu proyecto..."
-              />
-
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-full"
-                aria-describedby="contact-form-status"
-              >
-                Enviar mensaje →
-              </Button>
-
-              <p
-                id="contact-form-status"
-                className="text-small text-gray-500"
-              >
-                El envío estará disponible cuando se defina la integración.
-              </p>
-            </form>
-          </Card>
 
           <div className="min-h-80 overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
             <iframe
