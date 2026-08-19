@@ -168,10 +168,9 @@ Componentes reutilizables de la interfaz. No deben contener lógica de negocio p
 ---
 
 ## features/
-
 Agrupa la lógica específica de cada módulo del sistema.
 
----
+Gestión de Cotizaciones (features/quote-requests/): Módulo encargado de la lógica de negocio, tipos y funciones auxiliares para la gestión de solicitudes de cotización.
 
 ## hooks/
 
@@ -339,3 +338,20 @@ projects.service.ts
 ## Cambio 4
 
 Los Route Groups `(public)`, `(auth)` y `(dashboard)` se utilizarán exclusivamente para organizar rutas y agrupar lógicas/layouts similares, y no para duplicar páginas raíz.
+
+Cambio 5
+Se ha añadido el módulo quote-requests para dar soporte a la funcionalidad de gestión de cotizaciones:
+
+src/components/quote-requests/: Contiene la interfaz visual para la gestión de cotizaciones.
+
+src/features/quote-requests/: Módulo de lógica de negocio para cotizaciones.
+
+src/app/(dashboard)/cotizaciones/: Ruta administrativa para visualizar y gestionar las solicitudes de cotización.
+
+
+---
+
+### **Notas de implementación para el equipo:**
+1. He registrado el módulo en las secciones de `features` y estructura del proyecto.
+2. He añadido la nueva ruta `src/app/(dashboard)/cotizaciones/`.
+3. He documentado que `quote-requests` es el módulo responsable de toda la funcionalidad relacionada con la gestión y el flujo de cotizaciones del sistema.
