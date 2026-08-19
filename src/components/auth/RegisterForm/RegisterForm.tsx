@@ -6,6 +6,7 @@ import { isAxiosError } from "axios";
 import { register, RegisterCredentials } from "@/services/auth.service";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
+import { showAlertSuccess, showAlertError } from "@/lib/sweetalert";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterCredentials>({
@@ -14,8 +15,6 @@ export function RegisterForm() {
     password: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,21 +28,20 @@ export function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-    setSuccess(false);
 
     try {
       await register(formData);
-      setSuccess(true);
-      // Redirigir después de un registro exitoso
-      setTimeout(() => {
-        router.push("/");
-      }, 1500);
+      await showAlertSuccess("¡Registro exitoso!", "Tu cuenta ha sido creada correctamente.");
+      router.push("/");
     } catch (err) {
-      const errorMessage = isAxiosError<{ message?: string }>(err)
-        ? err.response?.data?.message || "Ocurrió un error al intentar registrar la cuenta."
-        : "Ocurrió un error al intentar registrar la cuenta.";
-      setError(errorMessage);
+      if (isAxiosError(err) && err.response?.status === 409) {
+        showAlertError("Usuario duplicado", "El correo electrónico ya está registrado. Por favor, inicia sesión.");
+      } else {
+        const errorMessage = isAxiosError<{ message?: string }>(err)
+          ? err.response?.data?.message || "Ocurrió un error al intentar registrar la cuenta."
+          : "Ocurrió un error al intentar registrar la cuenta.";
+        showAlertError("Oops...", errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -61,18 +59,6 @@ export function RegisterForm() {
               Ingresa tus datos para registrarte en la plataforma
             </p>
           </div>
-
-          {error && (
-            <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200">
-              {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="mb-4 rounded-md bg-emerald-50 p-3 text-sm text-emerald-600 border border-emerald-200">
-              ¡Registro exitoso! Iniciando sesión...
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
