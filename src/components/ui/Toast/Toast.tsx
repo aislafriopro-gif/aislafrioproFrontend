@@ -49,7 +49,7 @@ export function Toast({
   return (
     <div
       role={variant === "warning" ? "alert" : "status"}
-      className={`fixed right-md top-md z-50 flex max-w-sm items-center gap-sm rounded-lg px-md py-sm shadow-md ${variantClasses[variant]} ${className}`}
+      className={`fixed right-md top-md z-50 flex w-[min(24rem,90vw)] items-center gap-sm rounded-lg px-md py-sm shadow-md ${variantClasses[variant]} ${className}`}
     >
       {variant === "loading" && (
         <Loader
@@ -59,14 +59,16 @@ export function Toast({
         />
       )}
 
-      <span className="flex-1 text-body">{message}</span>
+      <span className="min-w-0 flex-1 break-words text-body">
+        {message}
+      </span>
 
       {onClose && variant !== "loading" && (
         <button
           type="button"
           onClick={onClose}
           aria-label="Cerrar notificación"
-          className="rounded-sm px-xs text-h6 opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:opacity-60"
+          className="shrink-0 rounded-sm px-xs text-h6 opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:opacity-60"
         >
           <span aria-hidden="true">×</span>
         </button>
