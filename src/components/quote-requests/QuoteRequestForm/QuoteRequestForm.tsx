@@ -14,6 +14,9 @@ import { Button } from "@/components/ui/Button/Button";
 import { Card } from "@/components/ui/Card/Card";
 import { Input } from "@/components/ui/Input/Input";
 import { Textarea } from "@/components/ui/Textarea/Textarea";
+import { isAxiosError } from "axios";
+import { Toast } from "@/components/ui/Toast/Toast";
+import { createQuoteRequest } from "@/services/quote-requests.service";
 
 const QUOTE_STEPS = [
   { id: 1, label: "Datos" },
@@ -73,45 +76,52 @@ export function QuoteRequestForm() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [errors, setErrors] = useState<QuoteRequestErrors>({});
   const [statusMessage, setStatusMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const selectedPreview =
     PREVIEW_IMAGES.find((image) => image.id === selectedPreviewId) ??
     PREVIEW_IMAGES[0];
 
-  function validateForm(form: HTMLFormElement) {
-    const formData = new FormData(form);
-    const materialDetails = String(
-      formData.get("materials") ?? "",
-    ).trim();
+  function validateForm(
+        form: HTMLFormElement,
+        ): QuoteRequestFormValues | null {
+        const formData = new FormData(form);
+        const materialDetails = String(
+            formData.get("materials") ?? "",
+        ).trim();
 
-    const result = quoteRequestSchema.safeParse({
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      description: formData.get("description"),
-      materials: [selectedMaterial, materialDetails]
-        .filter(Boolean)
-        .join(" — "),
-    });
+        const result = quoteRequestSchema.safeParse({
+            name: formData.get("name"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            description: formData.get("description"),
+            materials: [selectedMaterial, materialDetails]
+            .filter(Boolean)
+            .join(" — "),
+        });
 
-    if (!result.success) {
-      const fieldErrors = result.error.flatten().fieldErrors;
+        if (!result.success) {
+            const fieldErrors = result.error.flatten().fieldErrors;
 
-      setErrors({
-        name: fieldErrors.name?.[0],
-        email: fieldErrors.email?.[0],
-        phone: fieldErrors.phone?.[0],
-        description: fieldErrors.description?.[0],
-        materials: fieldErrors.materials?.[0],
-      });
+            setErrors({
+            name: fieldErrors.name?.[0],
+            email: fieldErrors.email?.[0],
+            phone: fieldErrors.phone?.[0],
+            description: fieldErrors.description?.[0],
+            materials: fieldErrors.materials?.[0],
+            });
 
-      setStatusMessage("Revisa los campos indicados antes de continuar.");
-      return false;
+            setStatusMessage(
+            "Revisa los campos indicados antes de continuar.",
+            );
+
+            return null;
+        }
+
+        setErrors({});
+        return result.data;
     }
-
-    setErrors({});
-    return true;
-  }
 
   function handleNext(event: MouseEvent<HTMLButtonElement>) {
     const form = event.currentTarget.form;
@@ -124,19 +134,59 @@ export function QuoteRequestForm() {
     setCurrentStep(2);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleSubmit(
+        event: FormEvent<HTMLFormElement>,
+        ) {
+        event.preventDefault();
 
-    if (!validateForm(event.currentTarget)) {
-      return;
+        const form = event.currentTarget;
+        const values = validateForm(form);
+
+        if (!values) {
+            return;
+        }
+
+        setIsSubmitting(true);
+        setErrorMessage("");
+        setStatusMessage("Enviando cotización...");
+
+        try {
+            await createQuoteRequest(values);
+
+            form.reset();
+            setSelectedMaterial("");
+            setCurrentStep(1);
+
+            setStatusMessage(
+            "Tu cotización fue enviada. Te contactaremos pronto.",
+            );
+        } catch (error) {
+            const backendMessage = isAxiosError<{
+            message?: string | string[];
+            }>(error)
+            ? error.response?.data?.message
+            : undefined;
+
+            const message = Array.isArray(backendMessage)
+            ? backendMessage.join(" ")
+            : backendMessage ??
+                "No fue posible enviar la cotización. Inténtalo nuevamente.";
+
+            setErrorMessage(message);
+            setStatusMessage("");
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
-    setStatusMessage(
-      "Los datos son válidos. El envío estará disponible cuando se integre el Backend.",
-    );
-  }
-
   return (
+    <>
+    <Toast
+      open={Boolean(errorMessage)}
+      message={errorMessage}
+      variant="warning"
+      onClose={() => setErrorMessage("")}
+    />
     <Card variant="dark" className="overflow-hidden !p-0">
       <div className="grid desktop:grid-cols-[0.9fr_1.1fr]">
         <div className="relative min-h-[28rem] overflow-hidden desktop:min-h-full">
@@ -421,8 +471,9 @@ export function QuoteRequestForm() {
                     type="submit"
                     variant="primary"
                     animated
+                    loading={isSubmitting}
                   >
-                    Validar solicitud
+                    Enviar solicitud
                   </Button>
                 </div>
               </div>
@@ -440,5 +491,6 @@ export function QuoteRequestForm() {
         </div>
       </div>
     </Card>
+    </>
   );
 }
