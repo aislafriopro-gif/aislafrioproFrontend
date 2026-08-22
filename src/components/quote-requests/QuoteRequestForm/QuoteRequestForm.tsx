@@ -78,7 +78,7 @@ export function QuoteRequestForm() {
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState("");
   const selectedPreview =
     PREVIEW_IMAGES.find((image) => image.id === selectedPreviewId) ??
     PREVIEW_IMAGES[0];
@@ -148,11 +148,13 @@ export function QuoteRequestForm() {
 
         setIsSubmitting(true);
         setErrorMessage("");
+        setSuccessMessage("");
         setStatusMessage("Enviando cotización...");
-
         try {
             await createQuoteRequest(values);
-
+            setSuccessMessage(
+            "Tu cotización fue enviada. Te contactaremos pronto.",
+            );
             form.reset();
             setSelectedMaterial("");
             setCurrentStep(1);
@@ -187,6 +189,12 @@ export function QuoteRequestForm() {
       variant="warning"
       onClose={() => setErrorMessage("")}
     />
+    <Toast
+        open={Boolean(successMessage)}
+        message={successMessage}
+        variant="success"
+        onClose={() => setSuccessMessage("")}
+     />
     <Card variant="dark" className="overflow-hidden !p-0">
       <div className="grid desktop:grid-cols-[0.9fr_1.1fr]">
         <div className="relative min-h-[28rem] overflow-hidden desktop:min-h-full">
