@@ -21,9 +21,11 @@ src/
 │   ├── error.tsx                    # Error global
 │   ├── not-found.tsx                # Página 404
 │   │
-│   ├── (public)/                    # Organización de rutas públicas
+│   ├── (public)/                   # Organizacion de las rutas publicas
 │   │   ├── layout.tsx
-│   │   ├── page.tsx                 # Home (/)
+│   │   ├── page.tsx                #Home/
+│   │   ├── nosotros/
+│   │   │   └── page.tsx
 │   │   ├── servicios/
 │   │   │   └── page.tsx
 │   │   ├── contacto/
@@ -31,9 +33,14 @@ src/
 │   │   ├── proyectos/
 │   │   │   ├── page.tsx
 │   │   │   └── [id]/
-│   │   │       └── page.tsx
-│   │   └── nosotros/
-│   │       └── page.tsx
+│   │   │       ├── page.tsx
+│   │   │       ├── loading.tsx
+│   │   │       ├── error.tsx
+│   │   │       └── not-found.tsx
+│   │   └── tienda/
+│   │       ├── page.tsx
+│   │       └── [slug]/
+│   │           └── page.tsx
 │   │
 │   ├── (auth)/                      # Rutas relacionadas con autenticación
 │   │   ├── login/
@@ -43,10 +50,16 @@ src/
 │   │   └── recuperar-password/
 │   │       └── page.tsx
 │   │
-│   └── (dashboard)/                 # Panel administrativo
+│   └── (dashboard)/                # Panel administrativo
+│       ├── layout.tsx
 │       ├── dashboard/
+│       │   └── page.tsx
 │       ├── usuarios/
-│       └── configuracion/
+│       │   └── page.tsx
+│       ├── configuracion/
+│       │   └── page.tsx
+│       └── cotizaciones/
+│           └── page.tsx
 │
 ├── components/
 │   ├── auth/                        # UI de autenticación
@@ -71,7 +84,8 @@ src/
 │   │   ├── FAQ/
 │   │   └── ContactCTA/
 │   │
-│   ├── services/
+    └── services/
+        └── quote-requests.service.ts
 │   │
 │   ├── contact/
 │   │
@@ -80,6 +94,14 @@ src/
 │   │   ├── Pagination/
 │   │   ├── ErrorMessage/
 │   │   └── EmptyState/
+│   │
+│   ├── products/
+│   │   ├── ProductGrid/
+│   │   └── ProductCard/
+│   │
+│   ├── quote-requests/
+│   │   └── QuoteRequestForm/
+│   │       └── QuoteRequestForm.tsx
 │   │
 │   └── ui/
 │       ├── Button/
@@ -103,14 +125,18 @@ src/
 │   ├── useForm.ts
 │   ├── useModal.ts
 │   ├── usePagination.ts
-│   └── useWindowSize.ts
+│   ├── useWindowSize.ts
+│   ├── useProducts.ts
+│   ├── useProduct.ts
 │
 ├── services/
 │   ├── auth.service.ts
 │   ├── users.service.ts
 │   ├── services.service.ts
 │   ├── projects.service.ts
-│   └── contact.service.ts
+│   ├── contact.service.ts
+│   ├── products.service.ts
+│   ├── quote-requests.service.ts
 │
 ├── lib/
 │   ├── api.ts                       # Instancia de Axios
@@ -135,6 +161,7 @@ src/
 ├── constants/
 │
 ├── schemas/
+│   └── quote-request.schema.ts
 │
 ├── utils/
 │
