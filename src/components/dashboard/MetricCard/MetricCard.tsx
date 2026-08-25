@@ -23,6 +23,7 @@ export function MetricCard({
   return (
     <Card
       variant="elevated"
+      animated
       loading={isLoading}
       aria-live="polite"
       className="min-h-40"
