@@ -5,6 +5,8 @@ import { useQuoteRequests } from "@/hooks/useQuoteRequests";
 import { QuoteRequest } from "@/services/quote-requests.service";
 import Link from "next/link";
 
+type NoteItem = string | { note?: string; content?: string; [key: string]: unknown };
+
 export function QuoteRequestsTable() {
   const { data: responseData, isLoading, isError, error } = useQuoteRequests();
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,9 +36,10 @@ export function QuoteRequestsTable() {
     );
   }
 
+  const quotesContainer = responseData as { data?: QuoteRequest[]; results?: QuoteRequest[] } | null | undefined;
   const quotes: QuoteRequest[] = Array.isArray(responseData)
     ? responseData
-    : (responseData as any)?.data || (responseData as any)?.results || [];
+    : quotesContainer?.data || quotesContainer?.results || [];
 
   if (quotes.length === 0) {
     return (
@@ -69,17 +72,17 @@ export function QuoteRequestsTable() {
     }
   };
 
-  // Función segura para extraer texto de las notas sin importar si es array, string u objeto
-  const renderNotesSummary = (notes: any) => {
+  const renderNotesSummary = (notes: unknown) => {
     if (!notes) return "Sin notas";
     if (Array.isArray(notes)) {
       if (notes.length === 0) return "Sin notas";
-      const lastNote = notes[notes.length - 1];
+      const lastNote = notes[notes.length - 1] as NoteItem;
       if (typeof lastNote === "string") return lastNote;
       return lastNote?.note || lastNote?.content || "Nota registrada";
     }
-    if (typeof notes === "object") {
-      return notes?.note || notes?.content || "Nota registrada";
+    if (typeof notes === "object" && notes !== null) {
+      const noteObj = notes as NoteItem;
+      return typeof noteObj === "string" ? noteObj : noteObj.note || noteObj.content || "Nota registrada";
     }
     return String(notes);
   };

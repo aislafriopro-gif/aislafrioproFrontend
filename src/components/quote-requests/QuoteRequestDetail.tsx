@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { AxiosError } from "axios";
 import { useQuoteRequest } from "@/hooks/useQuoteRequests";
 import { quoteRequestsService } from "@/services/quote-requests.service";
 import { QuoteRequestNotes } from "@/components/quote-requests/QuoteRequestNotes";
@@ -12,15 +13,18 @@ interface QuoteRequestDetailProps {
 
 export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
   const { data: quote, isLoading, isError, error, mutate } = useQuoteRequest(id);
+
+  // Derivación de estado local e inicialización
   const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [prevQuoteStatus, setPrevQuoteStatus] = useState<string | undefined>(undefined);
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateMessage, setUpdateMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  useEffect(() => {
-    if (quote?.status) {
-      setSelectedStatus(quote.status);
-    }
-  }, [quote]);
+  // Sincronización declarativa durante el render en vez de useEffect
+  if (quote?.status && quote.status !== prevQuoteStatus) {
+    setPrevQuoteStatus(quote.status);
+    setSelectedStatus(quote.status);
+  }
 
   if (isLoading) {
     return (
@@ -61,10 +65,14 @@ export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
       await quoteRequestsService.updateStatus({ id, status: selectedStatus });
       setUpdateMessage({ type: "success", text: "Estado actualizado exitosamente." });
       if (mutate) mutate();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      let errorMessage = "Ocurrió un error al actualizar el estado.";
+      if (err instanceof AxiosError && err.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      }
       setUpdateMessage({
         type: "error",
-        text: err?.response?.data?.message || "Ocurrió un error al actualizar el estado.",
+        text: errorMessage,
       });
     } finally {
       setIsUpdating(false);
@@ -108,9 +116,9 @@ export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
               className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="NEW">NEW</option>
-  <option value="IN_PROGRESS">IN_PROGRESS</option>
-  <option value="RESOLVED">RESOLVED</option>
-  <option value="REJECTED">REJECTED</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="RESOLVED">RESOLVED</option>
+              <option value="REJECTED">REJECTED</option>
             </select>
             <button
               onClick={handleStatusUpdate}

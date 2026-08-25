@@ -16,7 +16,7 @@ export interface ClientMeResponse {
     phone: string;
   };
   quoteRequests: QuoteRequestItem[];
-  workOrders?: any[];
+  workOrders?: unknown[];
 }
 
 export const clientsService = {
