@@ -3,10 +3,10 @@
 import React from "react";
 import { useClientMe } from "@/hooks/useClientMe";
 import { ClientProfile } from "@/components/clients/ClientProfile";
-import { ClientServicesList } from "@/components/clients/ClientServicesList";
+import { ClientServicesList, ServiceItem } from "@/components/clients/ClientServicesList";
 
 export default function MisServiciosPage() {
-  const { data: client, isLoading, isError, error } = useClientMe();
+  const { data: clientData, isLoading, isError, error } = useClientMe();
 
   if (isLoading) {
     return (
@@ -16,7 +16,7 @@ export default function MisServiciosPage() {
     );
   }
 
-  if (isError || !client) {
+  if (isError || !clientData) {
     return (
       <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-700">
         <p className="font-semibold">Error al cargar la información</p>
@@ -24,6 +24,30 @@ export default function MisServiciosPage() {
       </div>
     );
   }
+
+  const { client, quoteRequests = [], workOrders = [] } = clientData;
+
+  // Mapeo seguro de solicitudes de cotización a ServiceItem
+  const quotesList: ServiceItem[] = quoteRequests.map((q) => ({
+    id: q.id,
+    type: "cotizacion",
+    title: q.serviceName || `Cotización #${q.id}`,
+    description: q.message,
+    status: q.status,
+    detailUrl: `/cotizaciones/${q.id}`,
+  }));
+
+  // Mapeo seguro de Órdenes de Trabajo a ServiceItem
+  const workOrdersList: ServiceItem[] = workOrders.map((w) => {
+    const item = w as { id?: string; title?: string; description?: string; status?: string };
+    return {
+      id: item.id || "N/A",
+      type: "ot",
+      title: item.title || `OT #${item.id}`,
+      description: item.description,
+      status: item.status || "Pendiente",
+    };
+  });
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -37,7 +61,7 @@ export default function MisServiciosPage() {
 
       <div className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold text-gray-800">Listado de Servicios / OTs</h2>
-        <ClientServicesList services={client.services || []} />
+        <ClientServicesList quotes={quotesList} workOrders={workOrdersList} />
       </div>
     </div>
   );

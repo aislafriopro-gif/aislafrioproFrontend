@@ -24,4 +24,8 @@ export const clientsService = {
     const { data } = await api.get<ClientMeResponse>("/clients/me");
     return data;
   },
+
+  async updateClient(id: string, payload: Record<string, unknown>) {
+    return api.patch(`/api/v1/clients/${id}`, payload);
+  },
 };

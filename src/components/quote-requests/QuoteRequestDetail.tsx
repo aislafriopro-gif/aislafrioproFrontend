@@ -12,7 +12,7 @@ interface QuoteRequestDetailProps {
 }
 
 export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
-  const { data: quote, isLoading, isError, error, mutate } = useQuoteRequest(id);
+  const { data: quote, isLoading, isError, error, refetch } = useQuoteRequest(id);
 
   // Derivación de estado local e inicialización
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -64,7 +64,7 @@ export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
     try {
       await quoteRequestsService.updateStatus({ id, status: selectedStatus });
       setUpdateMessage({ type: "success", text: "Estado actualizado exitosamente." });
-      if (mutate) mutate();
+      if (refetch) refetch();
     } catch (err: unknown) {
       let errorMessage = "Ocurrió un error al actualizar el estado.";
       if (err instanceof AxiosError && err.response?.data?.message) {
@@ -158,7 +158,7 @@ export function QuoteRequestDetail({ id }: QuoteRequestDetailProps) {
               quoteId={quote.id}
               notes={quote.notes}
               onNoteAdded={() => {
-                if (mutate) mutate();
+                if (refetch) refetch();
               }}
             />
           </div>

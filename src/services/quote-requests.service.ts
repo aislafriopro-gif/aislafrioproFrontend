@@ -1,11 +1,26 @@
 import api from "@/lib/api";
 
-    export interface QuoteRequest {
+    export interface QuoteRequestNote {
+    id?: string;
+    note?: string;
+    content?: string;
+    createdAt?: string;
+    author?: string;
+    [key: string]: unknown;
+    }
+
+export interface QuoteRequest {
     id: string;
     status: string;
-    notes?: string;
     createdAt: string;
-    }
+    updatedAt: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+    materials?: string;
+    message?: string;
+    notes?: (string | QuoteRequestNote)[];
+}
 
     export const quoteRequestsService = {
     getAll: async (): Promise<QuoteRequest[]> => {
