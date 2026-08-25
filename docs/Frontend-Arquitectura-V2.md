@@ -10,6 +10,18 @@
 
 ---
 
+# Arquitectura Oficial Frontend - V2
+
+> **Versión:** V2
+>
+> **Proyecto:** AislafrioPro Frontend
+>
+> **Framework:** Next.js 16 (App Router)
+>
+> **Última actualización:** Sprint 1
+
+---
+
 # Estructura Oficial del Proyecto
 
 ```text
@@ -46,7 +58,15 @@ src/
 │   └── (dashboard)/                 # Panel administrativo
 │       ├── dashboard/
 │       ├── usuarios/
-│       └── configuracion/
+│       ├── cotizaciones/
+│       ├── mis-servicios/
+│       ├── configuracion/
+│       ├── work-orders/             # Gestión administrativa de OTs (NUEVO)
+│       │   ├── page.tsx
+│       │   └── nueva/
+│       │       └── page.tsx
+│       └── mis-ots/                 # Vista simplificada para técnicos (NUEVO)
+│           └── page.tsx
 │
 ├── components/
 │   ├── auth/                        # UI de autenticación
@@ -54,6 +74,17 @@ src/
 │   │   │   └── LoginForm.tsx
 │   │   └── RegisterForm/
 │   │       └── RegisterForm.tsx
+│   │
+│   ├── clients/                     # UI de clientes
+│   │   └── ClientServicesList.tsx
+│   │
+│   ├── quote-requests/              # UI de cotizaciones
+│   │   ├── QuoteRequestDetail.tsx
+│   │   ├── QuoteRequestNotes.tsx
+│   │   └── QuoteRequestsTable.tsx
+│   │
+│   ├── work-orders/                 # Componentes visuales de OTs (NUEVO)
+│   │   └── WorkOrderCard.tsx
 │   │
 │   ├── layout/
 │   │   ├── Navbar/
@@ -95,7 +126,11 @@ src/
 │   ├── users/
 │   ├── services/
 │   ├── projects/
-│   └── contact/
+│   ├── contact/
+│   ├── quote-requests/              # Lógica del módulo de Cotizaciones
+│   ├── clients/                     # Lógica del módulo de Clientes
+│   ├── products/                    # Lógica del módulo de Productos y Tienda
+│   └── work-orders/                 # Lógica del módulo de OTs (NUEVO)
 │
 ├── hooks/
 │   ├── useAuth.ts
@@ -103,14 +138,24 @@ src/
 │   ├── useForm.ts
 │   ├── useModal.ts
 │   ├── usePagination.ts
-│   └── useWindowSize.ts
+│   ├── useWindowSize.ts
+│   ├── useQuoteRequests.ts          # Hook para gestión de cotizaciones
+│   ├── useClientMe.ts               # Hook para datos del cliente autenticado
+│   ├── useProducts.ts               # Hook TanStack Query para productos
+│   ├── useWorkOrders.ts             # Hook para listado y mutaciones de OTs (NUEVO)
+│   ├── useWorkOrder.ts              # Hook para obtención individual de OT (NUEVO)
+│   └── useMyWorkOrders.ts           # Hook para OTs asignadas al técnico (NUEVO)
 │
 ├── services/
 │   ├── auth.service.ts
 │   ├── users.service.ts
 │   ├── services.service.ts
 │   ├── projects.service.ts
-│   └── contact.service.ts
+│   ├── contact.service.ts
+│   ├── quote-requests.service.ts    # Servicio API de cotizaciones
+│   ├── clients.service.ts           # Servicio API de clientes
+│   ├── products.service.ts          # Servicio API de productos
+│   └── work-orders.service.ts       # Servicio API de Órdenes de Trabajo (NUEVO)
 │
 ├── lib/
 │   ├── api.ts                       # Instancia de Axios
@@ -129,12 +174,16 @@ src/
 │   └── index.ts
 │
 ├── interfaces/
+│   ├── IQuoteRequest.ts             # Interface para cotizaciones
+│   ├── IProduct.ts                  # Interface para productos
+│   └── IWorkOrder.ts                # Interface para Órdenes de Trabajo (NUEVO)
 │
 ├── types/
 │
 ├── constants/
 │
 ├── schemas/
+│   └── register.schema.ts           # Validación Zod para registro
 │
 ├── utils/
 │
