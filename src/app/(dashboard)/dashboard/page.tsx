@@ -34,7 +34,7 @@ export default function Page() {
         description="Vista general de las métricas principales del panel."
         />
 
-      <div className="mt-lg grid gap-md tablet:grid-cols-2 desktop:grid-cols-3">
+      <div className="mt-lg grid grid-cols-1 gap-md tablet:grid-cols-2 desktop:grid-cols-4">
         {dashboardMetrics.map((metric) => (
             <MetricCard
             key={metric.id}
