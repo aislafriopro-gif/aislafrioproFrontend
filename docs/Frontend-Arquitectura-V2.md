@@ -68,6 +68,14 @@ src/
 │   │   └── RegisterForm/
 │   │       └── RegisterForm.tsx
 │   │
+│   ├── dashboard/
+│   │   ├── DataTable/
+│   │   │   └── DataTable.tsx
+│   │   ├── MetricCard/
+│   │   │   └── MetricCard.tsx
+│   │   └── PageHeader/
+│   │       └── PageHeader.tsx
+│   │
 │   ├── layout/
 │   │   ├── Navbar/
 │   │   ├── Footer/
@@ -128,6 +136,7 @@ src/
 │   ├── useWindowSize.ts
 │   ├── useProducts.ts
 │   ├── useProduct.ts
+│   └── useDashboardStats.ts
 │
 ├── services/
 │   ├── auth.service.ts
@@ -137,6 +146,7 @@ src/
 │   ├── contact.service.ts
 │   ├── products.service.ts
 │   ├── quote-requests.service.ts
+│   └── dashboard.service.ts
 │
 ├── lib/
 │   ├── api.ts                       # Instancia de Axios
