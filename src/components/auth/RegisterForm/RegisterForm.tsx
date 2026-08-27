@@ -11,6 +11,7 @@ export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterCredentials>({
     name: "",
     email: "",
+    phone: "",
     password: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +36,6 @@ export function RegisterForm() {
     try {
       await register(formData);
       setSuccess(true);
-      // Redirigir después de un registro exitoso
       setTimeout(() => {
         router.push("/");
       }, 1500);
@@ -54,7 +54,7 @@ export function RegisterForm() {
       <Navbar />
 
       <main className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="w-200 rounded-xl bg-white p-8 shadow-lg border border-gray-200">
+        <div className="w-full max-200 rounded-xl bg-white p-8 shadow-lg border border-gray-200">
           <div className="mb-8 flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold text-gray-900">Crear cuenta</h1>
             <p className="mt-2 text-base text-gray-500">
@@ -102,6 +102,22 @@ export function RegisterForm() {
                 required
                 placeholder="ejemplo@correo.com"
                 value={formData.email}
+                onChange={handleChange}
+                className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-900" htmlFor="phone">
+                Teléfono
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                required
+                placeholder="+54 9 11 1234-5678"
+                value={formData.phone}
                 onChange={handleChange}
                 className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
