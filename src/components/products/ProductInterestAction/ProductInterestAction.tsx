@@ -1,4 +1,9 @@
+"use client";
+
+import { ProductInquiryForm } from "@/components/products/ProductInquiryForm/ProductInquiryForm";
 import { Button } from "@/components/ui/Button/Button";
+import { Modal } from "@/components/ui/Modal/Modal";
+import { useModal } from "@/hooks/useModal";
 
 export interface IProductInterestActionProps {
   productSlug: string;
@@ -11,26 +16,27 @@ export function ProductInterestAction({
   label = "Me interesa",
   className = "",
 }: IProductInterestActionProps) {
-  return (
-    <form
-      action="/contacto"
-      method="get"
-      className={className}
-    >
-      <input
-        type="hidden"
-        name="producto"
-        value={productSlug}
-      />
+  const { isOpen, openModal, closeModal } = useModal();
 
+  return (
+    <div className={className}>
       <Button
-        type="submit"
+        type="button"
         variant="primary"
         size="lg"
         animated
+        onClick={openModal}
       >
         {label}
       </Button>
-    </form>
+
+      <Modal
+        open={isOpen}
+        onClose={closeModal}
+        title="Consultar sobre este producto"
+      >
+        <ProductInquiryForm productSlug={productSlug} />
+      </Modal>
+    </div>
   );
 }
