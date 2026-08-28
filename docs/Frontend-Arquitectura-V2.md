@@ -105,7 +105,8 @@ src/
 │   │
 │   ├── products/
 │   │   ├── ProductGrid/
-│   │   └── ProductCard/
+│   │   ├── ProductCard/
+│   │   └── ProductInquiryForm/
 │   │
 │   ├── quote-requests/
 │   │   └── QuoteRequestForm/
