@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/Container/Container";
@@ -20,6 +21,53 @@ export function generateStaticParams() {
   return TEMPORARY_PRODUCTS.map((product) => ({
     slug: product.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: IProductDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = findTemporaryProductBySlug(slug);
+
+  if (!product) {
+    return {
+      title: "Producto no encontrado",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const url = `/tienda/${product.slug}`;
+
+  return {
+    title: product.name,
+    description: product.shortDescription,
+    keywords: [
+      product.name,
+      "cortinas industriales",
+      "cortinas de PVC",
+      "AislaFrioPro",
+    ],
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${product.name} | AislaFrioPro`,
+      description: product.shortDescription,
+      url,
+      siteName: "AislaFrioPro",
+      locale: "es_CO",
+      type: "website",
+      images: [
+        {
+          url: product.image.src,
+          alt: product.image.alt,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({

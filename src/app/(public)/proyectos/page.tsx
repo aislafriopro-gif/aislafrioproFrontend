@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
@@ -9,7 +10,37 @@ import {
   TEMPORARY_PROJECTS,
 } from "@/features/projects/data/temporaryProjects";
 
+const title = "Proyectos de instalación de cortinas industriales";
+const description =
+  "Conoce proyectos de instalación de cortinas industriales de PVC para separación de espacios y aislamiento térmico.";
 
+export const metadata: Metadata = {
+  title,
+  description,
+  keywords: [
+    "cortinas industriales",
+    "instalación de cortinas industriales",
+    "cortinas de PVC",
+    "aislamiento térmico con cortinas industriales",
+  ],
+  alternates: {
+    canonical: "/proyectos",
+  },
+  openGraph: {
+    title: `${title} | AislaFrioPro`,
+    description,
+    url: "/proyectos",
+    siteName: "AislaFrioPro",
+    locale: "es_CO",
+    type: "website",
+    images: [
+      {
+        url: "/images/proyectos/pr1.jpeg",
+        alt: "Proyectos industriales de AislaFrioPro",
+      },
+    ],
+  },
+};
 const PROJECT_CATEGORIES = [
   "Todos",
   "Cortinas industriales",
