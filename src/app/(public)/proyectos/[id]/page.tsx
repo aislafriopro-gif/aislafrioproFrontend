@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/Container/Container";
@@ -21,6 +22,53 @@ export function generateStaticParams() {
   return TEMPORARY_PROJECTS.map((project) => ({
     id: project.id,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: IProjectDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const project = findTemporaryProjectById(id);
+
+  if (!project) {
+    return {
+      title: "Proyecto no encontrado",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const url = `/proyectos/${project.id}`;
+
+  return {
+    title: project.name,
+    description: project.summary,
+    keywords: [
+      project.name,
+      "proyectos de cortinas industriales",
+      "instalación de cortinas de PVC",
+      "AislaFrioPro",
+    ],
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${project.name} | AislaFrioPro`,
+      description: project.summary,
+      url,
+      siteName: "AislaFrioPro",
+      locale: "es_CO",
+      type: "website",
+      images: [
+        {
+          url: project.image.src,
+          alt: project.image.alt,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({

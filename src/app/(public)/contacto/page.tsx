@@ -1,8 +1,41 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
 import { Card } from "@/components/ui/Card/Card";
 import { QuoteRequestForm } from "@/components/quote-requests/QuoteRequestForm/QuoteRequestForm";
+
+const title = "Cotización de cortinas industriales";
+const description =
+  "Solicita asesoría y una cotización para la instalación de cortinas industriales de PVC con AislaFrioPro.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  keywords: [
+    "cotización de cortinas industriales",
+    "instalación de cortinas de PVC",
+    "asesoría para cortinas industriales",
+    "contacto AislaFrioPro",
+  ],
+  alternates: {
+    canonical: "/contacto",
+  },
+  openGraph: {
+    title: `${title} | AislaFrioPro`,
+    description,
+    url: "/contacto",
+    siteName: "AislaFrioPro",
+    locale: "es_CO",
+    type: "website",
+    images: [
+      {
+        url: "/images/cotizador/cot1.png",
+        alt: "Cotizador de cortinas industriales de AislaFrioPro",
+      },
+    ],
+  },
+};
 
 const CONTACT_CHANNELS = [
   {
