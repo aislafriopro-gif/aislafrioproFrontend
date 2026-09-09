@@ -1,5 +1,38 @@
+import type { Metadata } from "next";
 import { About } from "@/components/home/About/About";
 import Image from "next/image";
+
+const title = "Sobre AislaFrioPro";
+const description =
+  "Conoce el enfoque de AislaFrioPro para la instalación y mantenimiento de cortinas industriales de PVC.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  keywords: [
+    "AislaFrioPro",
+    "empresa de cortinas industriales",
+    "instalación de cortinas de PVC",
+    "mantenimiento de cortinas industriales",
+  ],
+  alternates: {
+    canonical: "/nosotros",
+  },
+  openGraph: {
+    title: `${title} | AislaFrioPro`,
+    description,
+    url: "/nosotros",
+    siteName: "AislaFrioPro",
+    locale: "es_CO",
+    type: "website",
+    images: [
+      {
+        url: "/images/nosotros/about1.png",
+        alt: "Instalaciones industriales de AislaFrioPro",
+      },
+    ],
+  },
+};
 
 const ABOUT_POINTS = [
   {

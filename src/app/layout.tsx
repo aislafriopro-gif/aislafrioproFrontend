@@ -9,8 +9,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AislafrioPro",
-  description: "Your go-to source for everything related to refrigeration and air conditioning",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
+  title: {
+    default: "Cortinas industriales de PVC | AislaFrioPro",
+    template: "%s | AislaFrioPro",
+  },
+  description:
+    "Instalación de cortinas industriales de PVC para separación de espacios y aislamiento térmico.",
 };
 
 export default function RootLayout({
@@ -20,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${inter.variable} h-full antialiased`}
       suppressHydrationWarning
     >
