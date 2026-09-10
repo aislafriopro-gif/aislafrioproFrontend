@@ -29,7 +29,7 @@ export function EmptyState({
 
       <h3 className="text-body font-semibold text-gray-900">{title}</h3>
 
-      <p className="mt-sm max-w-md text-small leading-relaxed text-gray-600">
+      <p className="mt-sm w-full text-left text-small leading-relaxed text-gray-600">
         {description}
       </p>
 

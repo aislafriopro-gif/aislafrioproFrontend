@@ -34,7 +34,7 @@ export default function Page() {
           emptyState={
             <EmptyState
               title="No hay usuarios para mostrar"
-              description="El listado estará disponible cuando se implemente la integración correspondiente."
+              description="Listado pendiente de integración."
             />
           }
         />

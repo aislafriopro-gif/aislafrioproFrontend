@@ -90,7 +90,7 @@ export function Navbar({
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((current) => !current)}
-            className="inline-flex size-xxl items-center justify-center rounded-md text-white transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:bg-gray-200 tablet:hidden"
+            className="inline-flex size-xxl items-center justify-center rounded-md text-white transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent active:bg-gray-700 tablet:hidden"
           >
             <span aria-hidden="true" className="text-h4">
               {open ? "×" : "☰"}

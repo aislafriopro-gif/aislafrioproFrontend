@@ -83,11 +83,18 @@ export default function Page() {
   return (
     <>
       {isLoading && (
-        <div className="py-4 text-center text-sm text-gray-500">Cargando servicios en tiempo real...</div>
+        <div className="py-md text-center text-small text-gray-500">
+          Cargando servicios en tiempo real...
+        </div>
       )}
 
       {error && (
-        <div className="py-4 text-center text-sm text-red-500">Aviso: Usando versión estática temporalmente.</div>
+        <div
+          role="status"
+          className="py-md text-center text-small text-accent-strong"
+        >
+          Aviso: Usando versión estática temporalmente.
+        </div>
       )}
 
       <Services
