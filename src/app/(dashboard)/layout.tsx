@@ -39,6 +39,7 @@ export default function DashboardLayout({
             role: user?.role ?? "Rol no definido",
           }}
           onMenuOpen={() => setSidebarOpen(true)}
+          menuOpen={sidebarOpen}
         />
 
         <main className="p-md tablet:p-lg desktop:p-xl">

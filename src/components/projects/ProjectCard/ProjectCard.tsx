@@ -67,7 +67,7 @@ export function ProjectCard({ project }: IProjectCardProps) {
         <Link
           href={project.href}
           aria-label={`Ver detalle de ${project.name}`}
-          className="mt-auto inline-flex w-fit items-center gap-sm pt-md font-medium text-secondary transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="mt-auto inline-flex w-fit items-center gap-sm pt-md font-medium text-secondary-strong transition-colors hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           Ver detalle
           <span aria-hidden="true">→</span>

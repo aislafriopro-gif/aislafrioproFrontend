@@ -37,7 +37,7 @@ export default function LoginForm() {
       <Navbar />
 
       <main className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="w-200 rounded-xl bg-white p-8 shadow-lg border border-gray-200">
+        <div className="w-full max-w-200 rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
           <div className="mb-8 flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold text-gray-900">Iniciar Sesión</h1>
             <p className="mt-2 text-base text-gray-500">
@@ -93,7 +93,7 @@ export default function LoginForm() {
 
           <div className="my-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-gray-300" />
-            <span className="text-sm text-gray-400">o</span>
+            <span className="text-sm text-gray-500">o</span>
             <div className="h-px flex-1 bg-gray-300" />
           </div>
 

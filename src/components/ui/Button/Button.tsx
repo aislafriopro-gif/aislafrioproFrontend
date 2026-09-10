@@ -14,7 +14,7 @@ const variantClasses = {
   primary:
     "bg-primary text-white hover:bg-primary/90 active:bg-primary/80 focus-visible:ring-primary",
   secondary:
-    "bg-secondary text-white hover:bg-secondary/90 active:bg-secondary/80 focus-visible:ring-secondary",
+    "bg-secondary-strong text-white hover:bg-secondary-strong/90 active:bg-secondary-strong/80 focus-visible:ring-secondary",
 } as const;
 
 const sizeClasses = {

@@ -89,7 +89,7 @@ export default async function Page({
       <Container>
         <Link
           href="/proyectos"
-          className="inline-flex items-center gap-sm font-medium text-primary transition-colors hover:text-secondary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="inline-flex items-center gap-sm font-medium text-primary transition-colors hover:text-secondary-strong focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <span aria-hidden="true">←</span>
           Volver a proyectos
