@@ -484,3 +484,19 @@ Actualmente Home implementa Hero, About, Services y FAQ. La UI Guidelines ubica 
 - Auth y Dashboard conservan sus layouts independientes.
 - Estado: implementado en la rama `miguel`, pendiente de Code Review y aprobación del PR.
 - Evolución: incorporar esta definición en la siguiente actualización oficial de la arquitectura o en la Arquitectura V3.
+
+## Propuesta de interfaz para el cotizador 18/08/2026
+
+- Página afectada: Contacto (`/contacto`).
+- Componente propuesto: `src/components/quote-requests/QuoteRequestForm/QuoteRequestForm.tsx`.
+- Validación: `src/schemas/quote-request.schema.ts`, utilizando Zod y mensajes en español.
+- El formulario contempla nombre, correo, teléfono, descripción y materiales u observaciones técnicas.
+- La interfaz se organiza inicialmente en dos pasos: Datos y Materiales.
+- La numeración de los pasos se genera desde una colección para permitir su futura ampliación.
+- La sección izquierda presenta una vista previa con tres ángulos seleccionables mediante imágenes locales.
+- El paso Materiales utiliza opciones visuales provisionales y conserva un textarea para detalles técnicos.
+- Las opciones y nombres de materiales requieren validación oficial por parte de la empresa.
+- La selección de materiales todavía no modifica automáticamente la vista previa.
+- No se realizan solicitudes HTTP ni se asumen endpoints o contratos del Backend.
+- Propuesta arquitectónica: incorporar `quote-requests` como módulo funcional y registrar `quote-request.schema.ts` en una futura actualización aprobada de la Arquitectura V2 o V3.
+- Estado: implementado en la rama `miguel`, pendiente de Code Review y aprobación.

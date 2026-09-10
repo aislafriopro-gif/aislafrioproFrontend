@@ -61,7 +61,7 @@ export function Modal({
         aria-modal="true"
         aria-label={title}
         aria-busy={loading}
-        className={`max-h-[90vh] w-full max-w-lg overflow-auto rounded-xl bg-white p-lg text-gray-900 shadow-lg ${className}`}
+        className={`max-h-[90vh] w-full max-w-[36rem] overflow-auto rounded-xl bg-white p-lg text-gray-900 shadow-lg ${className}`}
       >
         <header className="mb-md flex items-center justify-between gap-md">
           <h2 className="text-h5 font-semibold">{title}</h2>
