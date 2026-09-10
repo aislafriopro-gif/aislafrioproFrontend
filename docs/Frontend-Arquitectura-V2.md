@@ -404,3 +404,13 @@ src/app/(dashboard)/cotizaciones/: Ruta administrativa para visualizar y gestion
 1. He registrado el módulo en las secciones de `features` y estructura del proyecto.
 2. He añadido la nueva ruta `src/app/(dashboard)/cotizaciones/`.
 3. He documentado que `quote-requests` es el módulo responsable de toda la funcionalidad relacionada con la gestión y el flujo de cotizaciones del sistema.
+
+### ** Módulo de Órdenes de Trabajo (Diligenciamiento)**
+
+Componentes UI (src/components/work-orders/):
+
+DiligenceForm.tsx: Campos de texto para la descripción del trabajo realizado y observaciones operativas.
+
+MaterialList.tsx: Ítems dinámicos (nombre y cantidad) con lógica interactiva de adición/eliminación y un mínimo obligatorio de una fila.
+
+Ruta de Acceso (src/app/(dashboard)/mis-ots/[id]/diligenciar/page.tsx): Página contenedora protegida para técnicos que unifica ambos componentes bajo el ID dinámico de la orden.

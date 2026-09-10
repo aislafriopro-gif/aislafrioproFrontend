@@ -1,8 +1,14 @@
 export interface IProduct {
     id: string;
-    name: string;
-    description: string;
-    price: number;
-    images: string[];
-    slug: string;
+    _id?: string;
+    name?: string;
+    description?: string;
+    price?: number;
+    stock?: number;
+    published?: boolean;
+    images?: string[];
+    imageUrl?: string;
+    slug?: string;
+    deletedAt?: string | null;
+    [key: string]: unknown;
 }

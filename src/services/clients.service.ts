@@ -8,6 +8,14 @@ export interface QuoteRequestItem {
   createdAt: string;
 }
 
+export interface IClient {
+    id: string;
+    name: string;
+    email?: string;
+    phone?: string;
+    [key: string]: unknown;
+}
+
 export interface ClientMeResponse {
   client: {
     id: string;
@@ -25,7 +33,12 @@ export const clientsService = {
     return data;
   },
 
+  async getAll(): Promise<IClient[]> {
+    const { data } = await api.get("/clients");
+    return Array.isArray(data) ? data : data.data || data.clients || [];
+  },
+
   async updateClient(id: string, payload: Record<string, unknown>) {
-    return api.patch(`/api/v1/clients/${id}`, payload);
+    return api.patch(`/clients/${id}`, payload);
   },
 };

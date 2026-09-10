@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Loading } from "@/components/common/Loading/Loading";
 import { ErrorMessage } from "@/components/common/ErrorMessage/ErrorMessage";
 import { EmptyState } from "@/components/common/EmptyState/EmptyState";
+import  PDFDownloadButton  from "@/components/work-orders/PDFDownloadButton";
 
 export interface ServiceItem {
   id: string;
@@ -116,14 +117,9 @@ export function ClientServicesList({
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      {item.detailUrl && (
-                        <Link
-                          href={item.detailUrl}
-                          className="font-medium text-primary hover:underline"
-                        >
-                          Ver detalle
-                        </Link>
-                      )}
+                      <div className="inline-flex justify-end">
+                        <PDFDownloadButton workOrderId={item.id} />
+                      </div>
                     </td>
                   </tr>
                 ))}

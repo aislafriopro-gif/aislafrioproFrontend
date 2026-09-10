@@ -1,68 +1,70 @@
-"use client";
-
 import React from "react";
-import { useClientMe } from "@/hooks/useClientMe";
-import { ClientProfile } from "@/components/clients/ClientProfile";
-import { ClientServicesList, ServiceItem } from "@/components/clients/ClientServicesList";
+import PDFDownloadButton from "@/components/work-orders/PDFDownloadButton";
 
-export default function MisServiciosPage() {
-  const { data: clientData, isLoading, isError, error } = useClientMe();
+export interface ServiceItem {
+  id: string;
+  type: "cotizacion" | "ot";
+  title: string;
+  description?: string;
+  status: string;
+  detailUrl?: string;
+}
 
-  if (isLoading) {
+interface ClientServicesListProps {
+  quotes?: ServiceItem[];
+  workOrders?: ServiceItem[];
+}
+
+export default function ClientServicesList({ quotes = [], workOrders = [] }: ClientServicesListProps) {
+  const safeQuotes = Array.isArray(quotes) ? quotes : [];
+  const safeWorkOrders = Array.isArray(workOrders) ? workOrders : [];
+  const allServices = [...safeQuotes, ...safeWorkOrders];
+
+  if (allServices.length === 0) {
     return (
-      <div className="flex h-64 w-full items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-500 bg-white">
+        No se encontraron cotizaciones ni órdenes de trabajo (OTs) disponibles.
       </div>
     );
   }
-
-  if (isError || !clientData) {
-    return (
-      <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-700">
-        <p className="font-semibold">Error al cargar la información</p>
-        <p className="text-sm">{error instanceof Error ? error.message : "No se pudo obtener el perfil del cliente."}</p>
-      </div>
-    );
-  }
-
-  const { client, quoteRequests = [], workOrders = [] } = clientData;
-
-  // Mapeo seguro de solicitudes de cotización a ServiceItem
-  const quotesList: ServiceItem[] = quoteRequests.map((q) => ({
-    id: q.id,
-    type: "cotizacion",
-    title: q.serviceName || `Cotización #${q.id}`,
-    description: q.message,
-    status: q.status,
-    detailUrl: `/cotizaciones/${q.id}`,
-  }));
-
-  // Mapeo seguro de Órdenes de Trabajo a ServiceItem
-  const workOrdersList: ServiceItem[] = workOrders.map((w) => {
-    const item = w as { id?: string; title?: string; description?: string; status?: string };
-    return {
-      id: item.id || "N/A",
-      type: "ot",
-      title: item.title || `OT #${item.id}`,
-      description: item.description,
-      status: item.status || "Pendiente",
-    };
-  });
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <h1 className="text-2xl font-bold text-gray-900">Mis Servicios</h1>
-      
-      <ClientProfile 
-        name={client.name} 
-        email={client.email} 
-        phone={client.phone} 
-      />
-
-      <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-semibold text-gray-800">Listado de Servicios / OTs</h2>
-        <ClientServicesList quotes={quotesList} workOrders={workOrdersList} />
-      </div>
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="border-b border-gray-100 bg-gray-50 text-xs font-semibold text-gray-500 uppercase">
+            <th className="p-4">ID / OT</th>
+            <th className="p-4">Descripción</th>
+            <th className="p-4">Estado</th>
+            <th className="p-4 text-right">Acción</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100 text-sm">
+          {allServices.map((service) => (
+            <tr key={service.id} className="hover:bg-gray-50/50">
+              <td className="p-4 font-medium text-gray-900">
+                {service.type === "ot" ? `OT #${service.id.slice(0, 8)}...` : service.title}
+              </td>
+              <td className="p-4 text-gray-600">
+                {service.description || "Sin descripción"}
+              </td>
+              <td className="p-4">
+                <span className="inline-block px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-700">
+                  {service.status}
+                </span>
+              </td>
+              {/* Celda de acción con el botón de descarga */}
+              <td className="p-4 text-right">
+                {service.type === "ot" && (
+                  <div className="inline-flex justify-end">
+                    <PDFDownloadButton workOrderId={service.id} />
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
