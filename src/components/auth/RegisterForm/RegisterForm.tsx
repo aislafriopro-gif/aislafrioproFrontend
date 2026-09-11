@@ -6,15 +6,17 @@ import { isAxiosError } from "axios";
 import { register, RegisterCredentials } from "@/services/auth.service";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
-import { showAlertSuccess, showAlertError } from "@/lib/sweetalert";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterCredentials>({
     name: "",
     email: "",
+    phone: "",
     password: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,20 +30,20 @@ export function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+    setSuccess(false);
 
     try {
       await register(formData);
-      await showAlertSuccess("¡Registro exitoso!", "Tu cuenta ha sido creada correctamente.");
-      router.push("/");
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     } catch (err) {
-      if (isAxiosError(err) && err.response?.status === 409) {
-        showAlertError("Usuario duplicado", "El correo electrónico ya está registrado. Por favor, inicia sesión.");
-      } else {
-        const errorMessage = isAxiosError<{ message?: string }>(err)
-          ? err.response?.data?.message || "Ocurrió un error al intentar registrar la cuenta."
-          : "Ocurrió un error al intentar registrar la cuenta.";
-        showAlertError("Oops...", errorMessage);
-      }
+      const errorMessage = isAxiosError<{ message?: string }>(err)
+        ? err.response?.data?.message || "Ocurrió un error al intentar registrar la cuenta."
+        : "Ocurrió un error al intentar registrar la cuenta.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -52,13 +54,25 @@ export function RegisterForm() {
       <Navbar />
 
       <main className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="w-200 rounded-xl bg-white p-8 shadow-lg border border-gray-200">
+        <div className="w-full max-200 rounded-xl bg-white p-8 shadow-lg border border-gray-200">
           <div className="mb-8 flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold text-gray-900">Crear cuenta</h1>
             <p className="mt-2 text-base text-gray-500">
               Ingresa tus datos para registrarte en la plataforma
             </p>
           </div>
+
+          {error && (
+            <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 rounded-md bg-emerald-50 p-3 text-sm text-emerald-600 border border-emerald-200">
+              ¡Registro exitoso! Iniciando sesión...
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
@@ -88,6 +102,22 @@ export function RegisterForm() {
                 required
                 placeholder="ejemplo@correo.com"
                 value={formData.email}
+                onChange={handleChange}
+                className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-900" htmlFor="phone">
+                Teléfono
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                required
+                placeholder="+54 9 11 1234-5678"
+                value={formData.phone}
                 onChange={handleChange}
                 className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />

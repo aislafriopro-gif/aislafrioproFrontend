@@ -1,16 +1,25 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
-import {
-  productsService,
-  type IProductsQuery,
-} from "@/services/products.service";
+import { productsService } from "@/services/products.service";
 
-export function useProducts(
-  params: IProductsQuery = {},
-) {
-  return useQuery({
-    queryKey: ["products", params],
-    queryFn: () => productsService.getAll(params),
-  });
-}
+export const useProducts = () => {
+    return useQuery({
+    queryKey: ["products"],
+    queryFn: () => productsService.getAll(),
+    });
+};
+
+export const useProduct = (id: string) => {
+    return useQuery({
+    queryKey: ["products", id],
+    queryFn: () => productsService.getById(id),
+    enabled: !!id,
+    });
+};
+
+export const useProductBySlug = (slug: string) => {
+    return useQuery({
+    queryKey: ["products", "slug", slug],
+    queryFn: () => productsService.getBySlug(slug),
+    enabled: !!slug,
+    });
+};

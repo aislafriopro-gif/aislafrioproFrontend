@@ -10,6 +10,18 @@
 
 ---
 
+# Arquitectura Oficial Frontend - V2
+
+> **Versión:** V2
+>
+> **Proyecto:** AislafrioPro Frontend
+>
+> **Framework:** Next.js 16 (App Router)
+>
+> **Última actualización:** Sprint 1
+
+---
+
 # Estructura Oficial del Proyecto
 
 ```text
@@ -21,11 +33,9 @@ src/
 │   ├── error.tsx                    # Error global
 │   ├── not-found.tsx                # Página 404
 │   │
-│   ├── (public)/                   # Organizacion de las rutas publicas
+│   ├── (public)/                    # Organización de rutas públicas
 │   │   ├── layout.tsx
-│   │   ├── page.tsx                #Home/
-│   │   ├── nosotros/
-│   │   │   └── page.tsx
+│   │   ├── page.tsx                 # Home (/)
 │   │   ├── servicios/
 │   │   │   └── page.tsx
 │   │   ├── contacto/
@@ -33,14 +43,9 @@ src/
 │   │   ├── proyectos/
 │   │   │   ├── page.tsx
 │   │   │   └── [id]/
-│   │   │       ├── page.tsx
-│   │   │       ├── loading.tsx
-│   │   │       ├── error.tsx
-│   │   │       └── not-found.tsx
-│   │   └── tienda/
-│   │       ├── page.tsx
-│   │       └── [slug]/
-│   │           └── page.tsx
+│   │   │       └── page.tsx
+│   │   └── nosotros/
+│   │       └── page.tsx
 │   │
 │   ├── (auth)/                      # Rutas relacionadas con autenticación
 │   │   ├── login/
@@ -50,15 +55,17 @@ src/
 │   │   └── recuperar-password/
 │   │       └── page.tsx
 │   │
-│   └── (dashboard)/                # Panel administrativo
-│       ├── layout.tsx
+│   └── (dashboard)/                 # Panel administrativo
 │       ├── dashboard/
-│       │   └── page.tsx
 │       ├── usuarios/
-│       │   └── page.tsx
+│       ├── cotizaciones/
+│       ├── mis-servicios/
 │       ├── configuracion/
-│       │   └── page.tsx
-│       └── cotizaciones/
+│       ├── work-orders/             # Gestión administrativa de OTs (NUEVO)
+│       │   ├── page.tsx
+│       │   └── nueva/
+│       │       └── page.tsx
+│       └── mis-ots/                 # Vista simplificada para técnicos (NUEVO)
 │           └── page.tsx
 │
 ├── components/
@@ -68,13 +75,16 @@ src/
 │   │   └── RegisterForm/
 │   │       └── RegisterForm.tsx
 │   │
-│   ├── dashboard/
-│   │   ├── DataTable/
-│   │   │   └── DataTable.tsx
-│   │   ├── MetricCard/
-│   │   │   └── MetricCard.tsx
-│   │   └── PageHeader/
-│   │       └── PageHeader.tsx
+│   ├── clients/                     # UI de clientes
+│   │   └── ClientServicesList.tsx
+│   │
+│   ├── quote-requests/              # UI de cotizaciones
+│   │   ├── QuoteRequestDetail.tsx
+│   │   ├── QuoteRequestNotes.tsx
+│   │   └── QuoteRequestsTable.tsx
+│   │
+│   ├── work-orders/                 # Componentes visuales de OTs (NUEVO)
+│   │   └── WorkOrderCard.tsx
 │   │
 │   ├── layout/
 │   │   ├── Navbar/
@@ -92,8 +102,7 @@ src/
 │   │   ├── FAQ/
 │   │   └── ContactCTA/
 │   │
-    └── services/
-        └── quote-requests.service.ts
+│   ├── services/
 │   │
 │   ├── contact/
 │   │
@@ -102,15 +111,6 @@ src/
 │   │   ├── Pagination/
 │   │   ├── ErrorMessage/
 │   │   └── EmptyState/
-│   │
-│   ├── products/
-│   │   ├── ProductGrid/
-│   │   ├── ProductCard/
-│   │   └── ProductInquiryForm/
-│   │
-│   ├── quote-requests/
-│   │   └── QuoteRequestForm/
-│   │       └── QuoteRequestForm.tsx
 │   │
 │   └── ui/
 │       ├── Button/
@@ -126,7 +126,11 @@ src/
 │   ├── users/
 │   ├── services/
 │   ├── projects/
-│   └── contact/
+│   ├── contact/
+│   ├── quote-requests/              # Lógica del módulo de Cotizaciones
+│   ├── clients/                     # Lógica del módulo de Clientes
+│   ├── products/                    # Lógica del módulo de Productos y Tienda
+│   └── work-orders/                 # Lógica del módulo de OTs (NUEVO)
 │
 ├── hooks/
 │   ├── useAuth.ts
@@ -135,9 +139,12 @@ src/
 │   ├── useModal.ts
 │   ├── usePagination.ts
 │   ├── useWindowSize.ts
-│   ├── useProducts.ts
-│   ├── useProduct.ts
-│   └── useDashboardStats.ts
+│   ├── useQuoteRequests.ts          # Hook para gestión de cotizaciones
+│   ├── useClientMe.ts               # Hook para datos del cliente autenticado
+│   ├── useProducts.ts               # Hook TanStack Query para productos
+│   ├── useWorkOrders.ts             # Hook para listado y mutaciones de OTs (NUEVO)
+│   ├── useWorkOrder.ts              # Hook para obtención individual de OT (NUEVO)
+│   └── useMyWorkOrders.ts           # Hook para OTs asignadas al técnico (NUEVO)
 │
 ├── services/
 │   ├── auth.service.ts
@@ -145,9 +152,10 @@ src/
 │   ├── services.service.ts
 │   ├── projects.service.ts
 │   ├── contact.service.ts
-│   ├── products.service.ts
-│   ├── quote-requests.service.ts
-│   └── dashboard.service.ts
+│   ├── quote-requests.service.ts    # Servicio API de cotizaciones
+│   ├── clients.service.ts           # Servicio API de clientes
+│   ├── products.service.ts          # Servicio API de productos
+│   └── work-orders.service.ts       # Servicio API de Órdenes de Trabajo (NUEVO)
 │
 ├── lib/
 │   ├── api.ts                       # Instancia de Axios
@@ -166,13 +174,16 @@ src/
 │   └── index.ts
 │
 ├── interfaces/
+│   ├── IQuoteRequest.ts             # Interface para cotizaciones
+│   ├── IProduct.ts                  # Interface para productos
+│   └── IWorkOrder.ts                # Interface para Órdenes de Trabajo (NUEVO)
 │
 ├── types/
 │
 ├── constants/
 │
 ├── schemas/
-│   └── quote-request.schema.ts
+│   └── register.schema.ts           # Validación Zod para registro
 │
 ├── utils/
 │
@@ -393,3 +404,13 @@ src/app/(dashboard)/cotizaciones/: Ruta administrativa para visualizar y gestion
 1. He registrado el módulo en las secciones de `features` y estructura del proyecto.
 2. He añadido la nueva ruta `src/app/(dashboard)/cotizaciones/`.
 3. He documentado que `quote-requests` es el módulo responsable de toda la funcionalidad relacionada con la gestión y el flujo de cotizaciones del sistema.
+
+### ** Módulo de Órdenes de Trabajo (Diligenciamiento)**
+
+Componentes UI (src/components/work-orders/):
+
+DiligenceForm.tsx: Campos de texto para la descripción del trabajo realizado y observaciones operativas.
+
+MaterialList.tsx: Ítems dinámicos (nombre y cantidad) con lógica interactiva de adición/eliminación y un mínimo obligatorio de una fila.
+
+Ruta de Acceso (src/app/(dashboard)/mis-ots/[id]/diligenciar/page.tsx): Página contenedora protegida para técnicos que unifica ambos componentes bajo el ID dinámico de la orden.
