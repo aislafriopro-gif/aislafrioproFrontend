@@ -10,6 +10,7 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   name: string;
   email: string;
+  phone: string;
   password: string;
 }
 
@@ -30,7 +31,6 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
     const response = await api.post<AuthResponse>("/auth/login", credentials);
     const data = response.data;
 
-    // Soportamos tanto accessToken (del backend) como token por compatibilidad
     const token = data.accessToken || data.token;
 
     if (token) {
@@ -39,7 +39,6 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
       if (data.refreshToken) {
         Cookies.set("refreshToken", data.refreshToken, { expires: 7, secure: false, sameSite: "lax" });
       }
-    } else {
     }
 
     return data;
@@ -50,7 +49,7 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
 
 export async function register(credentials: RegisterCredentials): Promise<AuthResponse> {
   try {
-    const response = await api.post<AuthResponse>("/users", credentials);
+    const response = await api.post<AuthResponse>("/auth/register", credentials);
     const data = response.data;
 
     const token = data.accessToken || data.token;
