@@ -1,8 +1,10 @@
+// src/components/auth/LoginForm/LoginForm.tsx
 "use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "@/services/auth.service";
+import { login as loginService } from "@/services/auth.service";
+import { useAuthStore } from "@/store/auth.store";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
 
@@ -12,6 +14,7 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+  const setAuthLogin = useAuthStore((state) => state.login);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,9 +22,17 @@ export default function LoginForm() {
     setErrorMessage("");
 
     try {
-      await login({ email, password });
-      router.push("/");
-    } catch (error: unknown) {
+      const response = await loginService({ email, password });
+      
+      if (!response.token || !response.user) {
+        throw new Error("Respuesta de autenticación inválida");
+      }
+
+      // Guardamos el usuario y token en el store global de Zustand y en las cookies
+      setAuthLogin(response.user, response.token);
+
+      router.push("/dashboard");
+    } catch {
       setErrorMessage("Ocurrió un error al iniciar sesión. Verifica tus credenciales.");
     } finally {
       setIsLoading(false);
@@ -37,7 +48,7 @@ export default function LoginForm() {
       <Navbar />
 
       <main className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="w-full max-w-200 rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
+        <div className="w-[500px] rounded-xl bg-white p-8 shadow-lg border border-gray-200">
           <div className="mb-8 flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold text-gray-900">Iniciar Sesión</h1>
             <p className="mt-2 text-base text-gray-500">
@@ -93,7 +104,7 @@ export default function LoginForm() {
 
           <div className="my-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-gray-300" />
-            <span className="text-sm text-gray-500">o</span>
+            <span className="text-sm text-gray-400">o</span>
             <div className="h-px flex-1 bg-gray-300" />
           </div>
 

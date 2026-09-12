@@ -1,11 +1,12 @@
+// src/components/layout/Sidebar/Sidebar.tsx
 "use client";
 
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
-
+import Cookies from "js-cookie";
 
 export interface ISidebarItem {
     id: string;
@@ -14,18 +15,17 @@ export interface ISidebarItem {
     disabled?: boolean;
 }
 
-
 const MENU_BY_ROLE: Record<string, readonly ISidebarItem[]> = {
     ADMIN: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
         { id: "users", label: "Usuarios", href: "/usuarios" },
         { id: "quotes", label: "Cotizaciones", href: "/cotizaciones" },
-        { id: "products", label: "Tienda / Productos", href: "/tienda" },
+        { id: "products", label: "Productos", href: "/productos" },
         { id: "settings", label: "Configuración", href: "/configuracion" },
     ],
     TECHNICIAN: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
-        { id: "work-orders", label: "Mis OTs", disabled: true },
+        { id: "work-orders", label: "Mis OTs", href: "/mis-ots" },
     ],
     CLIENT: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
@@ -37,6 +37,7 @@ const MENU_BY_ROLE: Record<string, readonly ISidebarItem[]> = {
 const DEFAULT_MENU: readonly ISidebarItem[] = [
     { id: "dashboard", label: "Resumen", href: "/dashboard" },
 ];
+
 export interface ISidebarProps {
     open?: boolean;
     onNavigate?: () => void;
@@ -48,11 +49,16 @@ export function Sidebar({
     onNavigate,
     onClose,
 }: ISidebarProps) {
-
+    const [isMounted, setIsMounted] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
     const user = useAuthStore((state) => state.user);
-    const role = user?.role?.toUpperCase();
-    const items = role ? (MENU_BY_ROLE[role] ?? DEFAULT_MENU) : DEFAULT_MENU;
+    const logoutStore = useAuthStore((state) => state.logout);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsMounted(true);
+    }, []);
 
     useEffect(() => {
         if (!open) return;
@@ -68,6 +74,21 @@ export function Sidebar({
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, [onClose, open]);
 
+    if (!isMounted) {
+        return null;
+    }
+
+    const handleLogout = () => {
+        Cookies.remove("token");
+        if (logoutStore) {
+            logoutStore();
+        }
+        router.push("/login");
+    };
+
+    const role = user?.role?.toUpperCase();
+    const items = role ? (MENU_BY_ROLE[role] ?? DEFAULT_MENU) : DEFAULT_MENU;
+
     return (
         <>
             {open && (
@@ -82,8 +103,9 @@ export function Sidebar({
             <aside
                 id="dashboard-sidebar"
                 aria-label="Navegación del panel"
-                className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-gray-900 text-white transition-transform duration-200 motion-reduce:transition-none desktop:!translate-x-0 desktop:visible ${open ? "visible translate-x-0" : "invisible -translate-x-full"
-                    }`}
+                className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-gray-900 text-white transition-transform duration-200 motion-reduce:transition-none desktop:!translate-x-0 desktop:visible ${
+                    open ? "visible translate-x-0" : "invisible -translate-x-full"
+                }`}
             >
                 <div className="flex min-h-20 items-center justify-between gap-md border-b border-gray-700 px-lg">
                     <Link
@@ -152,10 +174,11 @@ export function Sidebar({
                                 href={item.href}
                                 onClick={onNavigate}
                                 aria-current={isActive ? "page" : undefined}
-                                className={`rounded-md px-md py-sm text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${isActive
+                                className={`rounded-md px-md py-sm text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                                    isActive
                                         ? "bg-primary text-white"
                                         : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                                    }`}
+                                }`}
                             >
                                 {item.label}
                             </Link>
@@ -163,9 +186,16 @@ export function Sidebar({
                     })}
                 </nav>
 
-                <div className="border-t border-gray-700 p-md">
-                    <p className="text-small text-gray-400">
-                        Menú preparado para permisos por rol.
+                <div className="border-t border-gray-700 p-md flex flex-col gap-2">
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="w-full rounded-md bg-red-600/20 px-4 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-600 hover:text-white text-center"
+                    >
+                        Cerrar sesión
+                    </button>
+                    <p className="text-small text-gray-400 text-center">
+                        Rol: {user?.role || "Desconocido"}
                     </p>
                 </div>
             </aside>
