@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 export const api: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     timeout: 10000,
+    withCredentials: true, // Necesario para cookies cross-origin/puertos distintos
     headers: {
         "Content-Type": "application/json",
     },
@@ -15,7 +16,6 @@ api.interceptors.request.use(
 
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
-        } else {
         }
 
         return config;
@@ -34,8 +34,9 @@ api.interceptors.response.use(
             const { status } = error.response;
             if (status === 401) {
                 Cookies.remove("token");
-            } else if (status === 403) {
-            } else if (status >= 500) {
+                if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
+                    window.location.href = "/login";
+                }
             }
         }
         return Promise.reject(error);
