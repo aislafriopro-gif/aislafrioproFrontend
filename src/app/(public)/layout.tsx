@@ -26,9 +26,7 @@ export default function PublicLayout({
   return (
     <>
       <Navbar links={NAVIGATION_LINKS} />
-
       <main className="flex-1">{children}</main>
-
       <Footer
         description="Soluciones especializadas en refrigeración y aislamiento."
         sections={FOOTER_SECTIONS}

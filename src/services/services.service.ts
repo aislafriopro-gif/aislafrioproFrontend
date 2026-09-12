@@ -1,4 +1,4 @@
-import api from "@/lib/api";
+import _api from "@/lib/api";
 
 export const servicesService = {
     getAll: async () => {

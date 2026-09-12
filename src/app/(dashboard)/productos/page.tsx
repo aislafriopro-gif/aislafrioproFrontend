@@ -85,7 +85,7 @@ export default function ProductsPage() {
     };
 
     return (
-        <ProtectedRoute allowedRoles={PERMISSIONS.dashboard}>
+        <ProtectedRoute allowedRoles={["ADMIN"]}>
             <div className="max-w-6xl mx-auto p-6 space-y-6">
                 <div className="flex justify-between items-center">
                     <div>

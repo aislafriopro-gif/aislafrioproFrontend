@@ -26,6 +26,7 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: false,
 
         login: (user, token) => {
+            document.cookie = `token=${token}; path=/; max-age=86400; SameSite=Lax`;
             set({
                 user,
                 token,
@@ -34,10 +35,11 @@ export const useAuthStore = create<AuthState>()(
         },
 
         logout: () => {
+            document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
             set({
-            user: null,
-            token: null,
-            isAuthenticated: false,
+                user: null,
+                token: null,
+                isAuthenticated: false,
             });
         },
 

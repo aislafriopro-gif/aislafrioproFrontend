@@ -8,7 +8,7 @@ export default function WorkOrdersLayout({
     children: React.ReactNode;
 }) {
     return (
-        <ProtectedRoute allowedRoles={PERMISSIONS.projectManagement}>
+        <ProtectedRoute allowedRoles={["ADMIN"]}>
             {children}
         </ProtectedRoute>
     );

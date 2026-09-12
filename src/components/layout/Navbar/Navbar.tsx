@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode, useEffect } from "react";
 import { Container } from "../Container/Container";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 export interface INavbarLink {
   label: string;
@@ -29,20 +30,10 @@ export function Navbar({
         priority
         className="block size-14 shrink-0 rounded-full object-contain object-center"
       />
-
-      <span
-        aria-label="AislaFrioPro"
-        className="inline-flex"
-      >
-        <span aria-hidden="true" className="text-secondary">
-          Aisla
-        </span>
-        <span aria-hidden="true" className="text-primary">
-          Frio
-        </span>
-        <span aria-hidden="true" className="text-white">
-          Pro
-        </span>
+      <span aria-label="AislaFrioPro" className="inline-flex">
+        <span aria-hidden="true" className="text-secondary">Aisla</span>
+        <span aria-hidden="true" className="text-primary">Frio</span>
+        <span aria-hidden="true" className="text-white">Pro</span>
       </span>
     </span>
   ),
@@ -52,7 +43,17 @@ export function Navbar({
   className = "",
 }: INavbarProps) {
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const menuId = useId();
+
+  const token = typeof window !== "undefined" ? Cookies.get("token") : null;
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
+  const isLoggedIn = isMounted && Boolean(token);
 
   return (
     <header
@@ -83,6 +84,15 @@ export function Navbar({
             ))}
 
             {action}
+
+            {isMounted && !isLoggedIn && (
+              <Link
+                href="/login"
+                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                Loguearse
+              </Link>
+            )}
           </nav>
 
           <button
@@ -116,7 +126,19 @@ export function Navbar({
               </Link>
             ))}
 
-            {action && <div className="p-md">{action}</div>}
+            {action}
+
+            {isMounted && !isLoggedIn && (
+              <div className="p-md">
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="block rounded-md bg-primary px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-primary/90"
+                >
+                  Loguearse
+                </Link>
+              </div>
+            )}
           </nav>
         )}
       </Container>
