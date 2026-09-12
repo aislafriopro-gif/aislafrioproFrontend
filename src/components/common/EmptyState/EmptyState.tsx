@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 export interface IEmptyStateProps {
   title: string;
   description: string;
+  descriptionAlign?: "left" | "center";
   icon?: ReactNode;
   action?: ReactNode;
 }
@@ -10,6 +11,7 @@ export interface IEmptyStateProps {
 export function EmptyState({
   title,
   description,
+  descriptionAlign = "center",
   icon,
   action,
 }: IEmptyStateProps) {
@@ -29,7 +31,11 @@ export function EmptyState({
 
       <h3 className="text-body font-semibold text-gray-900">{title}</h3>
 
-      <p className="mt-sm w-full text-left text-small leading-relaxed text-gray-600">
+      <p
+        className={`mt-sm w-full text-small leading-relaxed text-gray-600 ${
+          descriptionAlign === "left" ? "text-left" : "text-center"
+        }`}
+      >
         {description}
       </p>
 

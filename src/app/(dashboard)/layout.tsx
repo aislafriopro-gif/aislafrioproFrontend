@@ -12,6 +12,11 @@ import { PERMISSIONS } from "@/config/permissions";
 const PAGE_TITLES: Record<string, string> = {
   "/dashboard": "Panel de control",
   "/usuarios": "Usuarios",
+  "/cotizaciones": "Cotizaciones",
+  "/productos": "Productos",
+  "/mis-ots": "Mis órdenes de trabajo",
+  "/mis-servicios": "Mis servicios",
+  "/work-orders": "Órdenes de trabajo",
   "/configuracion": "Configuración",
 };
 
@@ -24,7 +29,10 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
 
-  const title = PAGE_TITLES[pathname] ?? "Panel de control";
+  const title =
+    Object.entries(PAGE_TITLES).find(
+      ([route]) => pathname === route || pathname.startsWith(`${route}/`),
+    )?.[1] ?? "Panel de control";
 
   return (
     <ProtectedRoute allowedRoles={PERMISSIONS.dashboard}>

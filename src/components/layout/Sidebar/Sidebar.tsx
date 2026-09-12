@@ -29,7 +29,7 @@ const MENU_BY_ROLE: Record<string, readonly ISidebarItem[]> = {
     ],
     CLIENT: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
-        { id: "services", label: "Mis Servicios", href: "/servicios" },
+        { id: "services", label: "Mis Servicios", href: "/mis-servicios" },
         { id: "account", label: "Mi Cuenta", disabled: true },
     ],
 };
