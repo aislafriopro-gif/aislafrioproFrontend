@@ -29,7 +29,7 @@ const MENU_BY_ROLE: Record<string, readonly ISidebarItem[]> = {
     ],
     CLIENT: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
-        { id: "services", label: "Mis Servicios", href: "/servicios" },
+        { id: "services", label: "Mis Servicios", href: "/mis-servicios" },
         { id: "account", label: "Mi Cuenta", disabled: true },
     ],
 };
@@ -60,6 +60,20 @@ export function Sidebar({
         setIsMounted(true);
     }, []);
 
+    useEffect(() => {
+        if (!open) return;
+
+        function handleKeyDown(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                onClose?.();
+            }
+        }
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [onClose, open]);
+
     if (!isMounted) {
         return null;
     }
@@ -87,9 +101,10 @@ export function Sidebar({
             )}
 
             <aside
+                id="dashboard-sidebar"
                 aria-label="Navegación del panel"
-                className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-gray-900 text-white transition-transform duration-200 motion-reduce:transition-none desktop:!translate-x-0 ${
-                    open ? "translate-x-0" : "-translate-x-full"
+                className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-gray-900 text-white transition-transform duration-200 motion-reduce:transition-none desktop:!translate-x-0 desktop:visible ${
+                    open ? "visible translate-x-0" : "invisible -translate-x-full"
                 }`}
             >
                 <div className="flex min-h-20 items-center justify-between gap-md border-b border-gray-700 px-lg">
@@ -107,7 +122,7 @@ export function Sidebar({
                         />
 
                         <span aria-label="AislaFrioPro">
-                            <span aria-hidden="true" className="text-secondary">
+                            <span aria-hidden="true" className="text-secondary-light">
                                 Aisla
                             </span>
                             <span aria-hidden="true" className="text-primary">

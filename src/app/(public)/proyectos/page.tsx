@@ -81,7 +81,7 @@ export default function Page() {
               key={category}
               className={`rounded-full border px-md py-xs text-small font-medium ${
                 index === 0
-                  ? "border-secondary bg-secondary text-white"
+                  ? "border-secondary-strong bg-secondary-strong text-white"
                   : "border-gray-200 bg-white text-gray-700"
               }`}
             >
@@ -108,7 +108,7 @@ export default function Page() {
 
           <Link
             href="/contacto"
-            className="inline-flex items-center justify-center gap-sm rounded-md bg-secondary px-lg py-md font-medium text-white transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-sm rounded-md bg-secondary-strong px-lg py-md font-medium text-white transition-colors hover:bg-secondary-strong/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
           >
             Cotiza tu proyecto
             <span aria-hidden="true">→</span>

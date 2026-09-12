@@ -14,7 +14,7 @@ export interface IToastProps {
 
 const variantClasses = {
   info: "bg-primary text-white",
-  success: "bg-secondary text-white",
+  success: "bg-secondary-strong text-white",
   warning: "bg-accent text-black",
   loading: "bg-primary text-white",
 } as const;

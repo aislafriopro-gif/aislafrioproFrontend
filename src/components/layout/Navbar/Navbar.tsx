@@ -31,7 +31,7 @@ export function Navbar({
         className="block size-14 shrink-0 rounded-full object-contain object-center"
       />
       <span aria-label="AislaFrioPro" className="inline-flex">
-        <span aria-hidden="true" className="text-secondary">Aisla</span>
+        <span aria-hidden="true" className="text-secondary-light">Aisla</span>
         <span aria-hidden="true" className="text-primary">Frio</span>
         <span aria-hidden="true" className="text-white">Pro</span>
       </span>
@@ -101,7 +101,7 @@ export function Navbar({
             aria-expanded={open}
             aria-controls={menuId}
             onClick={() => setOpen((current) => !current)}
-            className="inline-flex size-xxl items-center justify-center rounded-md text-white transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:bg-gray-200 tablet:hidden"
+            className="inline-flex size-xxl items-center justify-center rounded-md text-white transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent active:bg-gray-700 tablet:hidden"
           >
             <span aria-hidden="true" className="text-h4">
               {open ? "×" : "☰"}
@@ -109,11 +109,16 @@ export function Navbar({
           </button>
         </div>
 
-        {open && (
-          <nav
+        <nav
             id={menuId}
             aria-label="Navegación móvil"
-            className="flex flex-col gap-xs border-t border-gray-700 py-sm tablet:hidden"
+            aria-hidden={!open}
+            inert={!open}
+            className={`absolute inset-x-0 top-full flex flex-col gap-xs border-t border-gray-700 bg-gray-900 px-md py-sm shadow-md transition-[opacity,transform,visibility] duration-400 ease-out motion-reduce:transition-none tablet:hidden ${
+              open
+                ? "visible translate-y-0 opacity-100"
+                : "invisible pointer-events-none -translate-y-sm opacity-0"
+            }`}
           >
             {links.map((link) => (
               <Link
@@ -139,8 +144,7 @@ export function Navbar({
                 </Link>
               </div>
             )}
-          </nav>
-        )}
+        </nav>
       </Container>
     </header>
   );

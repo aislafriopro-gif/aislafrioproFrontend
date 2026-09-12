@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { IProduct } from "@/interfaces/IProduct";
+import { Badge } from "@/components/ui/Badge/Badge";
 
 interface ProductTableProps {
     products: IProduct[];
@@ -13,21 +13,102 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
     const productList = Array.isArray(products) ? products : [];
 
     return (
-        <div className="overflow-x-auto bg-white rounded-xl border border-gray-200 shadow-sm">
-            <table className="w-full text-left border-collapse text-sm">
+        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+            <div className="divide-y divide-gray-200 tablet:hidden">
+                {productList.length === 0 ? (
+                    <p className="p-lg text-center text-small text-gray-500">
+                        No hay productos registrados.
+                    </p>
+                ) : (
+                    productList.map((product, index) => {
+                        const isDeleted = Boolean(product.deletedAt);
+                        const productId = product.id || (product._id as string);
+
+                        return (
+                            <article key={productId || index} className="p-sm">
+                                <dl className="grid grid-cols-4 items-start gap-xs text-small">
+                                    <div className="min-w-0">
+                                        <dt className="font-semibold text-gray-700">Producto</dt>
+                                        <dd className="mt-xs break-words font-semibold text-gray-900">
+                                            {product.name}
+                                        </dd>
+                                    </div>
+                                    <div className="min-w-0 text-center">
+                                        <dt className="font-semibold text-gray-700">Precio</dt>
+                                        <dd className="mt-xs whitespace-nowrap text-gray-900">
+                                            ${product.price ?? 0}
+                                        </dd>
+                                    </div>
+                                    <div className="min-w-0 text-center">
+                                        <dt className="font-semibold text-gray-700">Stock</dt>
+                                        <dd className="mt-xs text-gray-900">{product.stock ?? 0}</dd>
+                                    </div>
+                                    <div className="min-w-0 text-center">
+                                        <dt className="font-semibold text-gray-700">Estado</dt>
+                                        <dd className="mt-xs">
+                                            <Badge
+                                                className="max-w-full justify-center px-xs"
+                                                variant={
+                                                    isDeleted
+                                                        ? "neutral"
+                                                        : product.published
+                                                          ? "secondary"
+                                                          : "accent"
+                                                }
+                                            >
+                                                {isDeleted
+                                                    ? "Eliminado"
+                                                    : product.published
+                                                      ? "Publicado"
+                                                      : "Borrador"}
+                                            </Badge>
+                                        </dd>
+                                    </div>
+                                </dl>
+
+                                <div className="mt-sm flex flex-wrap justify-end gap-md border-t border-gray-200 pt-sm">
+                                    {!isDeleted ? (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => onEdit(product)}
+                                                className="rounded-sm font-medium text-primary transition-colors hover:text-secondary-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                                            >
+                                                Editar
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => onDelete(productId)}
+                                                className="rounded-sm font-medium text-accent-strong transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <span className="text-small italic text-gray-500">Sin acciones</span>
+                                    )}
+                                </div>
+                            </article>
+                        );
+                    })
+                )}
+            </div>
+
+            <div className="hidden overflow-x-auto tablet:block">
+            <table className="w-full min-w-[40rem] border-collapse text-left text-small">
                 <thead>
-                    <tr className="bg-gray-50 border-b border-gray-200 text-gray-700">
-                        <th className="p-4 font-semibold">Producto</th>
-                        <th className="p-4 font-semibold">Precio</th>
-                        <th className="p-4 font-semibold">Stock</th>
-                        <th className="p-4 font-semibold">Estado</th>
-                        <th className="p-4 font-semibold text-end">Acciones</th>
+                    <tr className="border-b border-gray-200 bg-gray-100 text-gray-700">
+                        <th className="p-md font-semibold">Producto</th>
+                        <th className="p-md font-semibold">Precio</th>
+                        <th className="p-md font-semibold">Stock</th>
+                        <th className="p-md font-semibold">Estado</th>
+                        <th className="p-md text-end font-semibold">Acciones</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                     {productList.length === 0 ? (
                         <tr key="empty-row">
-                            <td colSpan={5} className="p-6 text-center text-gray-500">
+                            <td colSpan={5} className="p-lg text-center text-gray-500">
                                 No hay productos registrados.
                             </td>
                         </tr>
@@ -37,41 +118,37 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
                             const productId = product.id || (product._id as string);
 
                             return (
-                                <tr key={productId || index} className="hover:bg-gray-50/50">
-                                    <td className="p-4 font-medium text-gray-900">{product.name}</td>
-                                    <td className="p-4 text-gray-600">${product.price ?? 0}</td>
-                                    <td className="p-4 text-gray-600">{product.stock ?? 0}</td>
-                                    <td className="p-4">
-                                        <span
-                                            className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                                                isDeleted
-                                                    ? "bg-red-100 text-red-800"
-                                                    : product.published
-                                                    ? "bg-green-100 text-green-800"
-                                                    : "bg-yellow-100 text-yellow-800"
-                                            }`}
+                                <tr key={productId || index} className="transition-colors hover:bg-gray-100">
+                                    <td className="p-md font-medium text-gray-900">{product.name}</td>
+                                    <td className="p-md text-gray-700">${product.price ?? 0}</td>
+                                    <td className="p-md text-gray-700">{product.stock ?? 0}</td>
+                                    <td className="p-md">
+                                        <Badge
+                                            variant={isDeleted ? "neutral" : product.published ? "secondary" : "accent"}
                                         >
                                             {isDeleted ? "Eliminado" : product.published ? "Publicado" : "Borrador"}
-                                        </span>
+                                        </Badge>
                                     </td>
-                                    <td className="p-4 text-end space-x-2">
+                                    <td className="space-x-sm p-md text-end">
                                         {!isDeleted ? (
                                             <>
                                                 <button
+                                                    type="button"
                                                     onClick={() => onEdit(product)}
-                                                    className="text-primary hover:underline font-medium"
+                                                    className="rounded-sm font-medium text-primary transition-colors hover:text-secondary-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                                                 >
                                                     Editar
                                                 </button>
                                                 <button
+                                                    type="button"
                                                     onClick={() => onDelete(productId)}
-                                                    className="text-red-600 hover:underline font-medium"
+                                                    className="rounded-sm font-medium text-accent-strong transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                                 >
                                                     Eliminar
                                                 </button>
                                             </>
                                         ) : (
-                                            <span className="text-xs text-gray-400 italic">Sin acciones</span>
+                                            <span className="text-small italic text-gray-500">Sin acciones</span>
                                         )}
                                     </td>
                                 </tr>
@@ -80,6 +157,7 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
                     )}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 }
