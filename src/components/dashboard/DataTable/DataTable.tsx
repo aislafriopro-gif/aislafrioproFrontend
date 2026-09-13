@@ -29,7 +29,34 @@ export function DataTable({
       {rows.length === 0 ? (
         <div className="p-md tablet:p-lg">{emptyState}</div>
       ) : (
-        <div className="overflow-x-auto">
+        <>
+          <div className="divide-y divide-gray-200 tablet:hidden">
+            {rows.map((row) => (
+              <article
+                key={row.id}
+                aria-label={`${caption}: ${row.id}`}
+                className="p-md"
+              >
+                <dl className="flex flex-col gap-sm">
+                  {columns.map((column) => (
+                    <div
+                      key={column.id}
+                      className="grid grid-cols-[minmax(6rem,0.4fr)_minmax(0,1fr)] gap-sm"
+                    >
+                      <dt className="text-small font-semibold text-gray-700">
+                        {column.label}
+                      </dt>
+                      <dd className="min-w-0 break-words text-small text-gray-900">
+                        {row.cells[column.id] ?? "—"}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto tablet:block">
           <table className="w-full min-w-[40rem] border-collapse text-left">
             <caption className="sr-only">{caption}</caption>
 
@@ -62,7 +89,8 @@ export function DataTable({
               ))}
             </tbody>
           </table>
-        </div>
+          </div>
+        </>
       )}
     </Card>
   );

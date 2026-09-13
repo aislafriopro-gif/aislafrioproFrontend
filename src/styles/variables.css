@@ -2,7 +2,10 @@
     /* Colores corporativos */
     --color-primary: #0350BA;
     --color-secondary: #4A8C04;
+    --color-secondary-strong: #407A03;
+    --color-secondary-light: #80C342;
     --color-accent: #F69608;
+    --color-accent-strong: #A45A00;
 
     /*Colores base*/
     --color-white: #ffffff;

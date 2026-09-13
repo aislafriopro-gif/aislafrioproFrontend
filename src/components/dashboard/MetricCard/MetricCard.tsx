@@ -43,7 +43,7 @@ export function MetricCard({
           )}
 
           {status === "error" && (
-            <p className="mt-sm text-body text-accent">
+            <p className="mt-sm text-body text-accent-strong">
               No se pudo cargar la información
             </p>
           )}

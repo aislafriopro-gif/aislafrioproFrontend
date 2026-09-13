@@ -116,8 +116,8 @@ export function Services({
                         aria-label={`Ver más sobre ${service.title}`}
                         className={`mt-lg inline-flex w-fit items-center gap-sm rounded-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 motion-reduce:transition-none ${
                           isDark
-                            ? "text-secondary hover:text-accent focus-visible:ring-accent focus-visible:ring-offset-gray-700"
-                            : "text-primary hover:text-secondary focus-visible:ring-primary focus-visible:ring-offset-white"
+                            ? "text-secondary-light hover:text-accent focus-visible:ring-accent focus-visible:ring-offset-gray-700"
+                            : "text-primary hover:text-secondary-strong focus-visible:ring-primary focus-visible:ring-offset-white"
                         }`}
                     >
                         Más información

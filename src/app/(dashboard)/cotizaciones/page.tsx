@@ -1,11 +1,19 @@
 
-import QuoteRequestsView from '@/components/quote-requests/QuoteRequestsView';
+import QuoteRequestsView from "@/components/quote-requests/QuoteRequestsView";
+import { PageHeader } from "@/components/dashboard/PageHeader/PageHeader";
 
 export default function CotizacionesPage() {
-    return (
-    <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Gestión de Cotizaciones</h1>
+  return (
+    <section aria-labelledby="quotes-content-title">
+      <PageHeader
+        id="quotes-content-title"
+        title="Cotizaciones"
+        description="Consulta las solicitudes de cotización registradas en el sistema."
+      />
+
+      <div className="mt-lg">
         <QuoteRequestsView />
-    </div>
-    );
+      </div>
+    </section>
+  );
 }

@@ -11,7 +11,7 @@ export default function NotFound() {
     >
       <Container>
         <Card className="mx-auto max-w-2xl text-center">
-          <p className="text-small font-semibold uppercase tracking-wider text-secondary">
+          <p className="text-small font-semibold uppercase tracking-wider text-secondary-strong">
             Proyecto no encontrado
           </p>
 
