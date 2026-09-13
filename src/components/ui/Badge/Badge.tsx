@@ -8,7 +8,7 @@ export interface IBadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 const variantClasses = {
   primary: "bg-primary/10 text-primary",
-  secondary: "bg-secondary/10 text-secondary",
+  secondary: "bg-secondary-strong text-white",
   accent: "bg-accent/15 text-gray-900",
   neutral: "bg-gray-100 text-gray-700",
 } as const;

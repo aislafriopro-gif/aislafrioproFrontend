@@ -27,7 +27,7 @@ export function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`fixed bottom-lg right-md z-40 inline-flex items-center justify-center whitespace-nowrap rounded-full bg-secondary px-md py-sm font-medium text-white shadow-lg transition-colors hover:bg-secondary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:bg-secondary/80 tablet:right-lg desktop:right-xl ${className}`}
+      className={`fixed bottom-lg right-md z-40 inline-flex items-center justify-center whitespace-nowrap rounded-full bg-secondary-strong px-md py-sm font-medium text-white shadow-lg transition-colors hover:bg-secondary-strong/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:bg-secondary-strong/80 tablet:right-lg desktop:right-xl ${className}`}
     >
       WhatsApp
     </a>

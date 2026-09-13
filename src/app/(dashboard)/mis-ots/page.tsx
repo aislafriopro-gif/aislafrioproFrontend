@@ -1,9 +1,10 @@
 //src/app/(dashboard)/mis-ots/page.tsx
 "use client";
 
-import React from "react";
 import { useMyWorkOrders } from "@/hooks/useMyWorkOrders";
 import { WorkOrderCard } from "@/components/work-orders/WorkOrderCard";
+import { PageHeader } from "@/components/dashboard/PageHeader/PageHeader";
+import { EmptyState } from "@/components/common/EmptyState/EmptyState";
 
 interface IWorkOrder {
     id: string;
@@ -41,24 +42,27 @@ export default function MisOtsPage() {
     });
 
     return (
-        <div className="flex flex-col gap-6 p-6">
-            <div>
-                <h1 className="text-2xl font-bold text-gray-900">Mis Órdenes de Trabajo</h1>
-                <p className="text-sm text-gray-500">Panel operativo asignado a tus tareas técnicas.</p>
-            </div>
+        <section aria-labelledby="my-work-orders-title">
+            <PageHeader
+                id="my-work-orders-title"
+                title="Mis órdenes de trabajo"
+                description="Consulta las tareas técnicas que tienes asignadas."
+            />
 
-            {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="mt-lg">
+              {isLoading ? (
+                <div className="grid grid-cols-1 gap-md tablet:grid-cols-2 desktop:grid-cols-3">
                     {[1, 2, 3].map((i) => (
-                        <div key={i} className="h-44 rounded-xl bg-gray-100 animate-pulse" />
+                        <div key={i} className="h-44 animate-pulse rounded-lg bg-gray-200" />
                     ))}
                 </div>
             ) : workOrders.length === 0 ? (
-                <div className="rounded-xl border border-gray-200 bg-white p-6 text-center text-gray-500 shadow-sm">
-                    No se encontraron órdenes de trabajo asignadas.
-                </div>
+                <EmptyState
+                    title="No hay órdenes de trabajo asignadas"
+                    description="Las nuevas tareas aparecerán aquí."
+                />
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-md tablet:grid-cols-2 desktop:grid-cols-3">
                     {workOrders.map((order) => (
                         <WorkOrderCard
                             key={order.id}
@@ -72,6 +76,7 @@ export default function MisOtsPage() {
                     ))}
                 </div>
             )}
-        </div>
+            </div>
+        </section>
     );
 }

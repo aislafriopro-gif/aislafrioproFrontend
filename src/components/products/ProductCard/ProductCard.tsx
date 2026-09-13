@@ -47,7 +47,7 @@ export function ProductCard({
                     Precio referencial
                 </p>
 
-                <p className="mt-xs text-small font-semibold text-secondary">
+                <p className="mt-xs text-small font-semibold text-secondary-strong">
                     {product.price}
                 </p>
                 </div>

@@ -13,6 +13,7 @@ export interface IHeaderProps {
   actions?: ReactNode;
   notifications?: ReactNode;
   onMenuOpen?: () => void;
+  menuOpen?: boolean;
 }
 
 export function Header({
@@ -21,6 +22,7 @@ export function Header({
   actions,
   notifications,
   onMenuOpen,
+  menuOpen = false,
 }: IHeaderProps) {
   const initials = user.name
     .split(" ")
@@ -36,6 +38,8 @@ export function Header({
           <button
             type="button"
             aria-label="Abrir menú lateral"
+            aria-expanded={menuOpen}
+            aria-controls="dashboard-sidebar"
             onClick={onMenuOpen}
             className="inline-flex size-xxl shrink-0 items-center justify-center rounded-md text-gray-700 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary desktop:hidden"
           >

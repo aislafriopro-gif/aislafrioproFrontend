@@ -150,6 +150,7 @@ export default function Page() {
                     ? "Por favor espera un momento mientras se obtienen los datos."
                     : "No se encontraron registros de usuarios en el sistema."
                 }
+                descriptionAlign="left"
               />
             }
           />

@@ -6,7 +6,8 @@ import { IProduct } from "@/interfaces/IProduct";
 import ProductTable from "@/components/products/ProductTable";
 import ProductForm from "@/components/products/ProductForm";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import { PERMISSIONS } from "@/config/permissions";
+import { PageHeader } from "@/components/dashboard/PageHeader/PageHeader";
+import { Button } from "@/components/ui/Button/Button";
 
 export default function ProductsPage() {
     const [products, setProducts] = useState<IProduct[]>([]);
@@ -86,41 +87,41 @@ export default function ProductsPage() {
 
     return (
         <ProtectedRoute allowedRoles={["ADMIN"]}>
-            <div className="max-w-6xl mx-auto p-6 space-y-6">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Panel de Productos</h1>
-                        <p className="text-sm text-gray-500">Gestión completa del inventario y tienda</p>
-                    </div>
-                    {!showForm && (
-                        <button
+            <section aria-labelledby="products-panel-title">
+                <PageHeader
+                    id="products-panel-title"
+                    title="Productos"
+                    description="Gestiona el inventario disponible en la tienda."
+                    actions={!showForm ? (
+                        <Button
                             onClick={handleNewClick}
-                            className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90"
                         >
-                            + Nuevo Producto
-                        </button>
+                            Nuevo producto
+                        </Button>
+                    ) : undefined}
+                />
+
+                <div className="mt-lg">
+                    {showForm ? (
+                        <ProductForm
+                            initialData={selectedProduct}
+                            onSubmit={handleCreateOrUpdate}
+                            onCancel={() => {
+                                setShowForm(false);
+                                setSelectedProduct(null);
+                                setIsEditing(false);
+                            }}
+                            loading={loading}
+                        />
+                    ) : (
+                        <ProductTable
+                            products={products}
+                            onEdit={handleEditClick}
+                            onDelete={handleDelete}
+                        />
                     )}
                 </div>
-
-                {showForm ? (
-                    <ProductForm
-                        initialData={selectedProduct}
-                        onSubmit={handleCreateOrUpdate}
-                        onCancel={() => {
-                            setShowForm(false);
-                            setSelectedProduct(null);
-                            setIsEditing(false);
-                        }}
-                        loading={loading}
-                    />
-                ) : (
-                    <ProductTable
-                        products={products}
-                        onEdit={handleEditClick}
-                        onDelete={handleDelete}
-                    />
-                )}
-            </div>
+            </section>
         </ProtectedRoute>
     );
 }
