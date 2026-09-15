@@ -49,6 +49,7 @@ export async function generateMetadata({
     };
   }
 
+  const productName = product.name || "Producto";
   const url = `/tienda/${product.slug}`;
   const description = product.description || "Explora los detalles de este producto en AislaFrioPro.";
   
@@ -64,10 +65,10 @@ export async function generateMetadata({
   }
 
   return {
-    title: product.name,
+    title: productName,
     description,
     keywords: [
-      product.name,
+      productName,
       "cortinas industriales",
       "cortinas de PVC",
       "AislaFrioPro",
@@ -76,7 +77,7 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
-      title: `${product.name} | AislaFrioPro`,
+      title: `${productName} | AislaFrioPro`,
       description,
       url,
       siteName: "AislaFrioPro",
@@ -85,7 +86,7 @@ export async function generateMetadata({
       images: [
         {
           url: imgSrc,
-          alt: product.name,
+          alt: productName,
         },
       ],
     },
@@ -107,6 +108,8 @@ export default async function Page({
   if (!product) {
     notFound();
   }
+
+  const productName = product.name || "Producto";
 
   let imgSrc = "/images/cotizador/cot1.png";
   const rawImages = (product as unknown as { images?: unknown[] }).images;
@@ -133,7 +136,7 @@ export default async function Page({
           <div className="relative min-h-[24rem] overflow-hidden rounded-lg bg-gray-100 tablet:min-h-[32rem]">
             <Image
               src={imgSrc}
-              alt={product.name || "Detalle de producto"}
+              alt={productName}
               fill
               priority
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -150,7 +153,7 @@ export default async function Page({
               id="product-detail-title"
               className="mt-md text-h3 font-semibold leading-tight text-gray-900 tablet:text-h2 desktop:text-h1"
             >
-              {product.name}
+              {productName}
             </h1>
 
             <div className="mt-lg">
@@ -181,7 +184,7 @@ export default async function Page({
 
             <ProductInterestAction
               productSlug={product.slug || slug}
-              productName={product.name || "Producto"}
+              productName={productName}
               className="mt-xl"
             />
           </div>
