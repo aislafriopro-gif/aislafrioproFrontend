@@ -110,7 +110,8 @@ src/
 │   │   ├── Loading/
 │   │   ├── Pagination/
 │   │   ├── ErrorMessage/
-│   │   └── EmptyState/
+│   │   ├── EmptyState/
+│   │   └── WhatsAppButton/
 │   │
 │   └── ui/
 │       ├── Button/
@@ -181,6 +182,7 @@ src/
 ├── types/
 │
 ├── constants/
+│   └── contact.ts                   # Número y mensajes de WhatsApp
 │
 ├── schemas/
 │   └── register.schema.ts           # Validación Zod para registro
