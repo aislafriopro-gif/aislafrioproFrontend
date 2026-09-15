@@ -165,6 +165,7 @@ export default async function Page({
 
             <ProductInterestAction
               productSlug={product.slug}
+              productName={product.name}
               className="mt-xl"
             />
           </div>

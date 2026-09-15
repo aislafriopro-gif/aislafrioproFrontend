@@ -1,42 +1,29 @@
-"use client";
-
-import { ProductInquiryForm } from "@/components/products/ProductInquiryForm/ProductInquiryForm";
-import { Button } from "@/components/ui/Button/Button";
-import { Modal } from "@/components/ui/Modal/Modal";
-import { useModal } from "@/hooks/useModal";
+import { WhatsAppButton } from "@/components/common/WhatsAppButton/WhatsAppButton";
+import { WHATSAPP_MESSAGES } from "@/constants/contact";
 
 export interface IProductInterestActionProps {
   productSlug: string;
+  productName: string;
   label?: string;
   className?: string;
 }
 
 export function ProductInterestAction({
   productSlug,
-  label = "Me interesa",
+  productName,
+  label = "Consultar por WhatsApp",
   className = "",
 }: IProductInterestActionProps) {
-  const { isOpen, openModal, closeModal } = useModal();
-
   return (
     <div className={className}>
-      <Button
-        type="button"
-        variant="primary"
-        size="lg"
-        animated
-        onClick={openModal}
+      <WhatsAppButton
+        message={WHATSAPP_MESSAGES.product(productName)}
+        aria-label={`Consultar por WhatsApp sobre ${productName}`}
+        data-product-slug={productSlug}
+        className="px-lg py-md text-h6"
       >
         {label}
-      </Button>
-
-      <Modal
-        open={isOpen}
-        onClose={closeModal}
-        title="Consultar sobre este producto"
-      >
-        <ProductInquiryForm productSlug={productSlug} />
-      </Modal>
+      </WhatsAppButton>
     </div>
   );
 }
