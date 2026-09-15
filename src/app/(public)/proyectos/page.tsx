@@ -1,46 +1,15 @@
-import type { Metadata } from "next";
+// src/app/(public)/proyectos/page.tsx
+
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
-import {
-  ProjectGrid,
-} from "@/components/projects/ProjectGrid/ProjectGrid";
-import {
-  TEMPORARY_PROJECTS,
-} from "@/features/projects/data/temporaryProjects";
+import { ProjectGrid } from "@/components/projects/ProjectGrid/ProjectGrid";
+import { useProjects } from "@/hooks/useProjects";
 
-const title = "Proyectos de instalación de cortinas industriales";
-const description =
-  "Conoce proyectos de instalación de cortinas industriales de PVC para separación de espacios y aislamiento térmico.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  keywords: [
-    "cortinas industriales",
-    "instalación de cortinas industriales",
-    "cortinas de PVC",
-    "aislamiento térmico con cortinas industriales",
-  ],
-  alternates: {
-    canonical: "/proyectos",
-  },
-  openGraph: {
-    title: `${title} | AislaFrioPro`,
-    description,
-    url: "/proyectos",
-    siteName: "AislaFrioPro",
-    locale: "es_CO",
-    type: "website",
-    images: [
-      {
-        url: "/images/proyectos/pr1.jpeg",
-        alt: "Proyectos industriales de AislaFrioPro",
-      },
-    ],
-  },
-};
 const PROJECT_CATEGORIES = [
   "Todos",
   "Cortinas industriales",
@@ -49,12 +18,37 @@ const PROJECT_CATEGORIES = [
   "Instalaciones",
 ] as const;
 
-export default function Page() {
+export default function ProjectsPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
+  const { projects, isLoading, isError } = useProjects();
+
+  const filteredProjects = projects.filter((project) => {
+    if (selectedCategory === "Todos") return true;
+    return project.category?.toLowerCase() === selectedCategory.toLowerCase();
+  });
+
+  // Mapeo ajustado para cumplir exactamente con IProjectCardData (incluyendo href y relevantInfo)
+  const formattedProjects = filteredProjects.map((p) => {
+    const projectId = String(p.id || p._id || "");
+    return {
+      id: projectId,
+      name: p.name || "Proyecto sin nombre",
+      summary: p.description || "",
+      category: p.category || "Instalaciones",
+      href: `/proyectos/${projectId}`,
+      image: {
+        src: typeof p.coverImage === "string" ? p.coverImage : "/images/proyectos/pr1.jpeg",
+        alt: p.name || "Proyecto AislaFrioPro",
+      },
+      relevantInfo: [
+        { label: "Categoría", value: p.category || "Instalación general" },
+        { label: "Estado", value: "Completado" },
+      ],
+    };
+  });
+
   return (
-    <Section
-      aria-labelledby="projects-page-title"
-      className="bg-white"
-    >
+    <Section aria-labelledby="projects-page-title" className="bg-white">
       <Container>
         <div className="flex max-w-3xl flex-col items-start gap-md">
           <Badge variant="secondary">Proyectos</Badge>
@@ -67,31 +61,46 @@ export default function Page() {
           </h1>
 
           <p className="text-body text-gray-700">
-            Este espacio presentará los proyectos desarrollados por
-            AislaFrioPro cuando la información oficial esté disponible.
+            Explora los proyectos reales desarrollados por AislaFrioPro con estándares de alta calidad.
           </p>
         </div>
 
         <div
-          aria-label="Categorías previstas para los proyectos"
+          aria-label="Filtrar proyectos por categoría"
           className="mt-lg flex flex-wrap gap-sm"
         >
-          {PROJECT_CATEGORIES.map((category, index) => (
-            <span
-              key={category}
-              className={`rounded-full border px-md py-xs text-small font-medium ${
-                index === 0
-                  ? "border-secondary-strong bg-secondary-strong text-white"
-                  : "border-gray-200 bg-white text-gray-700"
-              }`}
-            >
-              {category}
-            </span>
-          ))}
+          {PROJECT_CATEGORIES.map((category) => {
+            const isSelected = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`rounded-full border px-md py-xs text-small font-medium transition-colors cursor-pointer ${
+                  isSelected
+                    ? "border-secondary-strong bg-secondary-strong text-white"
+                    : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
         </div>
 
         <div className="mt-lg">
-          <ProjectGrid projects={TEMPORARY_PROJECTS} />
+          {isLoading && (
+            <p className="py-xl text-center text-gray-500">Cargando proyectos...</p>
+          )}
+
+          {isError && (
+            <p className="py-xl text-center text-red-500">
+              Hubo un error al cargar los proyectos. Inténtalo de nuevo más tarde.
+            </p>
+          )}
+
+          {!isLoading && !isError && (
+            <ProjectGrid projects={formattedProjects} />
+          )}
         </div>
 
         <div className="mt-xl flex flex-col gap-md rounded-lg bg-secondary/10 p-lg tablet:flex-row tablet:items-center tablet:justify-between">
@@ -101,8 +110,7 @@ export default function Page() {
             </h2>
 
             <p className="mt-xs text-body text-gray-700">
-              Contáctanos para conocer las alternativas disponibles para tu
-              proyecto.
+              Contáctanos para conocer las alternativas disponibles para tu proyecto.
             </p>
           </div>
 
