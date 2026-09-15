@@ -1,9 +1,13 @@
+// src/app/(public)/tienda/page.tsx
+
 import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { ProductGrid } from "@/components/products/ProductGrid/ProductGrid";
 import { Badge } from "@/components/ui/Badge/Badge";
-import { TEMPORARY_PRODUCTS } from "@/features/products/data/temporaryProducts";
+import { productsService } from "@/services/products.service";
+import { IProductCardData } from "@/components/products/ProductCard/ProductCard";
+import { IProduct } from "@/interfaces/IProduct";
 
 const title = "Tienda de cortinas industriales de PVC";
 const description =
@@ -37,7 +41,45 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+// Función de mapeo dinámica para transformar el modelo del backend a la tarjeta
+function mapProductToCardData(product: IProduct): IProductCardData {
+  let imgSrc = "/images/cotizador/cot1.png";
+  
+  const rawImages = (product as unknown as { images?: unknown[] }).images;
+  if (Array.isArray(rawImages) && rawImages.length > 0) {
+    const firstImage = rawImages[0];
+    if (typeof firstImage === "string") {
+      imgSrc = firstImage;
+    } else if (firstImage && typeof firstImage === "object" && "url" in firstImage) {
+      imgSrc = (firstImage as { url: string }).url;
+    }
+  }
+
+  const formattedPrice = product.price
+    ? `$ ${Number(product.price).toLocaleString("es-CO")}`
+    : "Precio a consultar";
+
+  return {
+    slug: product.slug || "",
+    name: product.name || "Producto sin nombre",
+    price: formattedPrice,
+    image: {
+      src: imgSrc,
+      alt: product.name || "Cortina industrial de PVC",
+    },
+  };
+}
+
+export default async function Page() {
+  let mappedProducts: IProductCardData[] = [];
+  
+  try {
+    const rawProducts = await productsService.getAll();
+    mappedProducts = rawProducts.map(mapProductToCardData);
+  } catch (error) {
+    console.error("Error al cargar los productos de la tienda:", error);
+  }
+
   return (
     <Section
       aria-labelledby="store-page-title"
@@ -57,12 +99,12 @@ export default function Page() {
           </h1>
 
           <p className="mt-md text-body leading-relaxed text-gray-700">
-            Explora nuestro catálogo provisional de soluciones industriales.
+            Explora nuestro catálogo de soluciones industriales y encuentra la protección ideal para tus espacios.
           </p>
         </header>
 
         <div className="mt-xl">
-          <ProductGrid products={TEMPORARY_PRODUCTS} />
+          <ProductGrid products={mappedProducts} />
         </div>
       </Container>
     </Section>

@@ -1,20 +1,30 @@
+// src/services/products.service.ts
+
 import { api } from "@/lib/api";
 import { IProduct } from "@/interfaces/IProduct";
 
 export const productsService = {
     async getAll(): Promise<IProduct[]> {
-        const { data } = await api.get("/products/all");
+        const response = await api.get("/products");
+        const responseData = response.data;
+
+        console.log("RESPUESTA REAL DE LA API:", JSON.stringify(responseData, null, 2));
+
         let list: Record<string, unknown>[] = [];
 
-        const typedData = data as Record<string, unknown>;
-        if (Array.isArray(data)) {
-            list = data as Record<string, unknown>[];
-        } else if (typedData && Array.isArray(typedData.data)) {
-            list = typedData.data as Record<string, unknown>[];
-        } else if (typedData && Array.isArray(typedData.products)) {
-            list = typedData.products as Record<string, unknown>[];
-        } else if (typedData) {
-            list = [typedData];
+        // Manejo robusto para arrays directos o respuestas paginadas con { data: [...] }
+        if (Array.isArray(responseData)) {
+            list = responseData as Record<string, unknown>[];
+        } else if (responseData && typeof responseData === "object") {
+            const typedData = responseData as Record<string, unknown>;
+            if (Array.isArray(typedData.data)) {
+                list = typedData.data as Record<string, unknown>[];
+            } else if (Array.isArray(typedData.products)) {
+                list = typedData.products as Record<string, unknown>[];
+            } else {
+                // Si es un objeto único pero válido
+                list = [typedData];
+            }
         }
 
         return list.map((item) => {

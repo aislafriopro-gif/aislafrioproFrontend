@@ -1,3 +1,5 @@
+// src/app/(public)/tienda/[slug]/page.tsx
+
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -5,11 +7,8 @@ import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { ProductInterestAction } from "@/components/products/ProductInterestAction/ProductInterestAction";
 import { Badge } from "@/components/ui/Badge/Badge";
-import { Card } from "@/components/ui/Card/Card";
-import {
-  TEMPORARY_PRODUCTS,
-  findTemporaryProductBySlug,
-} from "@/features/products/data/temporaryProducts";
+import { productsService } from "@/services/products.service";
+import { IProduct } from "@/interfaces/IProduct";
 
 export interface IProductDetailPageProps {
   params: Promise<{
@@ -17,17 +16,28 @@ export interface IProductDetailPageProps {
   }>;
 }
 
-export function generateStaticParams() {
-  return TEMPORARY_PRODUCTS.map((product) => ({
-    slug: product.slug,
-  }));
+export async function generateStaticParams() {
+  try {
+    const products = await productsService.getAll();
+    return products.map((product) => ({
+      slug: product.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
   params,
 }: IProductDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = findTemporaryProductBySlug(slug);
+  
+  let product: IProduct | null = null;
+  try {
+    product = await productsService.getBySlug(slug);
+  } catch {
+    product = null;
+  }
 
   if (!product) {
     return {
@@ -39,13 +49,26 @@ export async function generateMetadata({
     };
   }
 
+  const productName = product.name || "Producto";
   const url = `/tienda/${product.slug}`;
+  const description = product.description || "Explora los detalles de este producto en AislaFrioPro.";
+  
+  let imgSrc = "/images/cotizador/cot1.png";
+  const rawImages = (product as unknown as { images?: unknown[] }).images;
+  if (Array.isArray(rawImages) && rawImages.length > 0) {
+    const firstImage = rawImages[0];
+    if (typeof firstImage === "string") {
+      imgSrc = firstImage;
+    } else if (firstImage && typeof firstImage === "object" && "url" in firstImage) {
+      imgSrc = (firstImage as { url: string }).url;
+    }
+  }
 
   return {
-    title: product.name,
-    description: product.shortDescription,
+    title: productName,
+    description,
     keywords: [
-      product.name,
+      productName,
       "cortinas industriales",
       "cortinas de PVC",
       "AislaFrioPro",
@@ -54,16 +77,16 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
-      title: `${product.name} | AislaFrioPro`,
-      description: product.shortDescription,
+      title: `${productName} | AislaFrioPro`,
+      description,
       url,
       siteName: "AislaFrioPro",
       locale: "es_CO",
       type: "website",
       images: [
         {
-          url: product.image.src,
-          alt: product.image.alt,
+          url: imgSrc,
+          alt: productName,
         },
       ],
     },
@@ -74,11 +97,34 @@ export default async function Page({
   params,
 }: IProductDetailPageProps) {
   const { slug } = await params;
-  const product = findTemporaryProductBySlug(slug);
+
+  let product: IProduct | null = null;
+  try {
+    product = await productsService.getBySlug(slug);
+  } catch {
+    product = null;
+  }
 
   if (!product) {
     notFound();
   }
+
+  const productName = product.name || "Producto";
+
+  let imgSrc = "/images/cotizador/cot1.png";
+  const rawImages = (product as unknown as { images?: unknown[] }).images;
+  if (Array.isArray(rawImages) && rawImages.length > 0) {
+    const firstImage = rawImages[0];
+    if (typeof firstImage === "string") {
+      imgSrc = firstImage;
+    } else if (firstImage && typeof firstImage === "object" && "url" in firstImage) {
+      imgSrc = (firstImage as { url: string }).url;
+    }
+  }
+
+  const formattedPrice = product.price
+    ? `$ ${Number(product.price).toLocaleString("es-CO")}`
+    : "Precio a consultar";
 
   return (
     <Section
@@ -89,8 +135,8 @@ export default async function Page({
         <article className="grid items-start gap-xl desktop:grid-cols-2">
           <div className="relative min-h-[24rem] overflow-hidden rounded-lg bg-gray-100 tablet:min-h-[32rem]">
             <Image
-              src={product.image.src}
-              alt={product.image.alt}
+              src={imgSrc}
+              alt={productName}
               fill
               priority
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -100,19 +146,15 @@ export default async function Page({
 
           <div className="flex flex-col items-start">
             <Badge variant="secondary">
-              Producto provisional
+              Detalle de Producto
             </Badge>
 
             <h1
               id="product-detail-title"
               className="mt-md text-h3 font-semibold leading-tight text-gray-900 tablet:text-h2 desktop:text-h1"
             >
-              {product.name}
+              {productName}
             </h1>
-
-            <p className="mt-md text-body leading-relaxed text-gray-700">
-              {product.shortDescription}
-            </p>
 
             <div className="mt-lg">
               <p className="text-small font-semibold uppercase tracking-wide text-gray-500">
@@ -120,36 +162,13 @@ export default async function Page({
               </p>
 
               <p className="mt-xs text-h3 font-semibold text-primary">
-                {product.price}
+                {formattedPrice}
               </p>
             </div>
 
-            <Card
-              variant="elevated"
-              className="mt-lg w-full"
-            >
-              <h2 className="text-h5 font-semibold text-gray-900">
-                Información del producto
-              </h2>
-
-              <dl className="mt-md grid gap-md tablet:grid-cols-2">
-                {product.details.map((detail) => (
-                  <div key={detail.label}>
-                    <dt className="text-small font-semibold text-gray-500">
-                      {detail.label}
-                    </dt>
-
-                    <dd className="mt-xs text-body text-gray-900">
-                      {detail.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Card>
-
             <section
               aria-labelledby="product-description-title"
-              className="mt-lg"
+              className="mt-lg w-full"
             >
               <h2
                 id="product-description-title"
@@ -159,13 +178,13 @@ export default async function Page({
               </h2>
 
               <p className="mt-sm text-body leading-relaxed text-gray-700">
-                {product.description}
+                {product.description || "Sin descripción disponible para este producto."}
               </p>
             </section>
 
             <ProductInterestAction
-              productSlug={product.slug}
-              productName={product.name}
+              productSlug={product.slug || slug}
+              productName={productName}
               className="mt-xl"
             />
           </div>
