@@ -29,7 +29,7 @@ export default function PDFDownloadButton({ workOrderId, className = "" }: PDFDo
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error al descargar el PDF:", error);
+      //.error("Error al descargar el PDF:", error);
     } finally {
       setIsLoading(false);
     }

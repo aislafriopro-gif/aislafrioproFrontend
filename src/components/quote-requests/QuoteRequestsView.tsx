@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Button } from "@/components/ui/Button/Button";
 import api from "@/lib/api";
+import { notifications } from "@/utils/notifications";
 
 interface QuoteNote {
   id?: string;
@@ -43,7 +44,8 @@ export default function QuoteRequestsView() {
 
       setCotizaciones(list);
     } catch (error) {
-      console.error("Error al cargar las solicitudes de cotización:", error);
+      //.error("Error al cargar las solicitudes de cotización:", error);
+      notifications.showError("Error", "No se pudieron cargar las solicitudes de cotización.");
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +65,8 @@ export default function QuoteRequestsView() {
       setQuoteDetail(data);
       setSelectedStatus(data.status || "NEW");
     } catch (error) {
-      console.error("Error al obtener detalle de la cotización:", error);
+      //.error("Error al obtener detalle de la cotización:", error);
+      notifications.showError("Error", "No se pudo obtener el detalle de la cotización.");
     } finally {
       setIsDetailLoading(false);
     }
@@ -75,12 +78,14 @@ export default function QuoteRequestsView() {
       await api.patch(`/quote-requests/${id}/status`, {
         status: nuevoEstado,
       });
+      notifications.showSuccess("Estado actualizado", "El estado de la cotización se ha modificado con éxito.");
       fetchCotizaciones();
       if (quoteDetail && quoteDetail.id === id) {
         fetchQuoteDetail(id);
       }
     } catch (error) {
-      console.error("Error al actualizar el estado de la cotización:", error);
+      //.error("Error al actualizar el estado de la cotización:", error);
+      notifications.showError("Error", "No se pudo actualizar el estado de la cotización.");
     }
   };
 
@@ -93,9 +98,11 @@ export default function QuoteRequestsView() {
         content: newNote,
       });
       setNewNote("");
+      notifications.showSuccess("Nota guardada", "La nota interna se ha agregado correctamente.");
       await fetchQuoteDetail(id);
     } catch (error) {
-      console.error("Error al agregar nota interna:", error);
+      //.error("Error al agregar nota interna:", error);
+      notifications.showError("Error", "No se pudo agregar la nota interna.");
     }
   };
 
@@ -103,7 +110,7 @@ export default function QuoteRequestsView() {
     <div className="bg-white shadow rounded-lg p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-800">Listado de Solicitudes de Cotización</h2>
-        <Button size="sm" onClick={() => alert("Modal para crear cotización próximamente")}>
+        <Button size="sm" onClick={() => notifications.showSuccess("Próximamente", "Modal para crear cotización próximamente")}>
           Crear cotización
         </Button>
       </div>

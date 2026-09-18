@@ -31,7 +31,7 @@ export default function NewWorkOrderPage() {
                 setTechnicians(techs);
                 setClients(clientList);
             } catch (error) {
-                console.error("Error al cargar datos iniciales:", error);
+                //.error("Error al cargar datos iniciales:", error);
             }
         };
         fetchData();

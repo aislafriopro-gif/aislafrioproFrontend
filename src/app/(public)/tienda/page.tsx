@@ -77,7 +77,7 @@ export default async function Page() {
     const rawProducts = await productsService.getAll();
     mappedProducts = rawProducts.map(mapProductToCardData);
   } catch (error) {
-    console.error("Error al cargar los productos de la tienda:", error);
+    //.error("Error al cargar los productos de la tienda:", error);
   }
 
   return (

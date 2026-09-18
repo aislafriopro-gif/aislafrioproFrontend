@@ -8,7 +8,7 @@ export const productsService = {
         const response = await api.get("/products");
         const responseData = response.data;
 
-        console.log("RESPUESTA REAL DE LA API:", JSON.stringify(responseData, null, 2));
+        //.log("RESPUESTA REAL DE LA API:", JSON.stringify(responseData, null, 2));
 
         let list: Record<string, unknown>[] = [];
 
