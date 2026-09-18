@@ -7,6 +7,7 @@ import { login as loginService } from "@/services/auth.service";
 import { useAuthStore } from "@/store/auth.store";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
+import { PasswordInput } from "@/components/ui/Input/PasswordInput";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -78,20 +79,15 @@ export default function LoginForm() {
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-900" htmlFor="password">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                type="password"
-                required
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              />
-            </div>
+            <PasswordInput
+              id="password"
+              label="Contraseña"
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
 
             <button
               type="submit"
