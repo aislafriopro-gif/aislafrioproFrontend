@@ -1,9 +1,12 @@
+// src/app/(dashboard)/mis-ots/[id]/diligenciar/page.tsx
+
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { workOrdersService } from "@/services/work-orders.service";
 import PhotoUpload from "@/components/work-orders/PhotoUpload";
+import { notifications } from "@/utils/notifications";
 
 interface IMaterialItem {
     name: string;
@@ -32,7 +35,10 @@ export default function DiligenciarWorkOrderPage() {
                     setStatus(typedOrder.status);
                 }
             })
-            .catch((err: unknown) => console.error("Error al cargar la orden:", err));
+            .catch((err: unknown) => {
+                
+                notifications.showError("Error", "No se pudo cargar la información de la orden.");
+            });
     }, [id]);
 
     const handleAddMaterial = () => {
@@ -74,10 +80,14 @@ export default function DiligenciarWorkOrderPage() {
             await workOrdersService.diligenceOrder(id, diligencePayload);
             await workOrdersService.updateStatus(id, status);
 
+            // Notificación de éxito antes de redirigir
+            notifications.showSuccess("¡Éxito!", "La orden de trabajo ha sido diligenciada correctamente.");
+
             router.push("/mis-ots");
         } catch (error: unknown) {
             const err = error as Record<string, unknown>;
-            console.error("Error al guardar la diligencia:", err);
+            
+            notifications.showError("Error", "Ocurrió un error al guardar el diligenciamiento de la orden.");
         } finally {
             setSubmitting(false);
         }

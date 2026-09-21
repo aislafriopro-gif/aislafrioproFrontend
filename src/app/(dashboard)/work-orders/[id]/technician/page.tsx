@@ -61,7 +61,7 @@ export default function TechnicianWorkOrderPage() {
             alert("¡Orden de trabajo procesada exitosamente!");
             router.push("/work-orders");
         } catch (error: unknown) {
-            console.error("Error al procesar la orden:", error);
+            //.error("Error al procesar la orden:", error);
             alert("Hubo un error al procesar la orden.");
         } finally {
             setLoading(false);

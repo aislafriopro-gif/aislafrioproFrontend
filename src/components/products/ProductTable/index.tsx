@@ -1,7 +1,10 @@
+// src/components/products/ProductTable/index.tsx
+
 "use client";
 
 import { IProduct } from "@/interfaces/IProduct";
 import { Badge } from "@/components/ui/Badge/Badge";
+import { notifications } from "@/utils/notifications";
 
 interface ProductTableProps {
     products: IProduct[];
@@ -11,6 +14,19 @@ interface ProductTableProps {
 
 export default function ProductTable({ products, onEdit, onDelete }: ProductTableProps) {
     const productList = Array.isArray(products) ? products : [];
+
+    // Función interna para manejar la confirmación con SweetAlert2 (SCRUM-809)
+    const handleDeleteClick = async (productId: string, productName?: string) => {
+        const isConfirmed = await notifications.showConfirm(
+            "¿Estás seguro?",
+            `¿Deseas eliminar el producto "${productName || 'seleccionado'}"? Esta acción no se puede deshacer.`,
+            "Sí, eliminar"
+        );
+
+        if (isConfirmed) {
+            onDelete(productId);
+        }
+    };
 
     return (
         <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
@@ -52,15 +68,15 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
                                                     isDeleted
                                                         ? "neutral"
                                                         : product.published
-                                                          ? "secondary"
-                                                          : "accent"
+                                                        ? "secondary"
+                                                        : "accent"
                                                 }
                                             >
                                                 {isDeleted
                                                     ? "Eliminado"
                                                     : product.published
-                                                      ? "Publicado"
-                                                      : "Borrador"}
+                                                    ? "Publicado"
+                                                    : "Borrador"}
                                             </Badge>
                                         </dd>
                                     </div>
@@ -78,7 +94,7 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
                                             </button>
                                             <button
                                                 type="button"
-                                                onClick={() => onDelete(productId)}
+                                                onClick={() => handleDeleteClick(productId, product.name)}
                                                 className="rounded-sm font-medium text-accent-strong transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                             >
                                                 Eliminar
@@ -141,7 +157,7 @@ export default function ProductTable({ products, onEdit, onDelete }: ProductTabl
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    onClick={() => onDelete(productId)}
+                                                    onClick={() => handleDeleteClick(productId, product.name)}
                                                     className="rounded-sm font-medium text-accent-strong transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                                 >
                                                     Eliminar

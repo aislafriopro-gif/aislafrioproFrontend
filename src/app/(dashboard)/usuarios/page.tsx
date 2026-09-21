@@ -8,6 +8,8 @@ import { EmptyState } from "@/components/common/EmptyState/EmptyState";
 import { Button } from "@/components/ui/Button/Button";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { PERMISSIONS } from "@/config/permissions";
+import { UserCreateModal, UserCreatePayload } from "@/components/users/UserCreateModal";
+import { usersService } from "@/services/users.service";
 import api from "@/lib/api";
 
 const userColumns = [
@@ -43,6 +45,7 @@ export default function Page() {
   const [users, setUsers] = useState<IDataTableRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingUser, setEditingUser] = useState<ApiUser | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [newRoleId, setNewRoleId] = useState("");
   const [initialRoleId, setInitialRoleId] = useState("");
@@ -89,7 +92,7 @@ export default function Page() {
 
       setUsers(formattedRows);
     } catch (error) {
-      console.error("Error al cargar los usuarios:", error);
+      
     } finally {
       setIsLoading(false);
     }
@@ -100,6 +103,17 @@ export default function Page() {
       fetchUsers();
     });
   }, [fetchUsers]);
+
+  const handleCreateUser = async (payload: UserCreatePayload) => {
+    try {
+      await usersService.create(payload);
+      setIsCreateModalOpen(false);
+      fetchUsers();
+    } catch (error) {
+      //.error("Error al crear usuario:", error);
+      throw error;
+    }
+  };
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +133,7 @@ export default function Page() {
       setEditingUser(null);
       fetchUsers();
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
+      //.error("Error al actualizar usuario:", error);
     }
   };
 
@@ -131,7 +145,7 @@ export default function Page() {
           title="Usuarios"
           description="Administra la información y los permisos de los usuarios del sistema."
           actions={
-            <Button onClick={() => alert("Modal de creación próximamente")}>
+            <Button onClick={() => setIsCreateModalOpen(true)}>
               Agregar usuario
             </Button>
           }
@@ -155,6 +169,12 @@ export default function Page() {
             }
           />
         </div>
+
+        <UserCreateModal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          onSubmit={handleCreateUser}
+        />
 
         {editingUser && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

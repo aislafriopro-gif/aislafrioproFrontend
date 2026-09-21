@@ -49,7 +49,7 @@ export default function WorkOrdersPage() {
             setUsersMap(uMap);
 
         } catch (error: unknown) {
-            console.error("Error al cargar datos:", error);
+            //.error("Error al cargar datos:", error);
         } finally {
             setLoading(false);
         }
@@ -67,7 +67,7 @@ export default function WorkOrdersPage() {
             await workOrdersService.updateStatus(id, "COMPLETED");
             await fetchData();
         } catch (error: unknown) {
-            console.error("Error al completar la orden:", error);
+            //.error("Error al completar la orden:", error);
         } finally {
             setActionLoadingId(null);
         }
