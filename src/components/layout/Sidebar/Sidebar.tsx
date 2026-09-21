@@ -22,15 +22,17 @@ const MENU_BY_ROLE: Record<string, readonly ISidebarItem[]> = {
         { id: "quotes", label: "Cotizaciones", href: "/cotizaciones" },
         { id: "products", label: "Productos", href: "/productos" },
         { id: "settings", label: "Configuración", href: "/configuracion" },
+        { id: "account", label: "Mi Cuenta", href: "/mi-cuenta" },
     ],
     TECHNICIAN: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
         { id: "work-orders", label: "Mis OTs", href: "/mis-ots" },
+        { id: "account", label: "Mi Cuenta", href: "/mi-cuenta" },
     ],
     CLIENT: [
         { id: "dashboard", label: "Resumen", href: "/dashboard" },
         { id: "services", label: "Mis Servicios", href: "/mis-servicios" },
-        { id: "account", label: "Mi Cuenta", disabled: true },
+        { id: "account", label: "Mi Cuenta", href: "/mi-cuenta" },
     ],
 };
 
@@ -83,7 +85,7 @@ export function Sidebar({
         if (logoutStore) {
             logoutStore();
         }
-        router.push("/login");
+        router.push("/");
     };
 
     const role = user?.role?.toUpperCase();

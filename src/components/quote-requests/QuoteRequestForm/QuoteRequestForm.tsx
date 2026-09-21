@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/Textarea/Textarea";
 import { isAxiosError } from "axios";
 import { Toast } from "@/components/ui/Toast/Toast";
 import { createQuoteRequest } from "@/services/quote-requests.service";
+import { Modal } from "@/components/ui/Modal/Modal";
 
 const QUOTE_STEPS = [
   { id: 1, label: "Datos" },
@@ -157,6 +158,8 @@ export function QuoteRequestForm() {
             );
             form.reset();
             setSelectedMaterial("");
+            setSelectedPreviewId(PREVIEW_IMAGES[0].id);
+            setErrors({});
             setCurrentStep(1);
 
             setStatusMessage(
@@ -189,12 +192,33 @@ export function QuoteRequestForm() {
       variant="warning"
       onClose={() => setErrorMessage("")}
     />
-    <Toast
-        open={Boolean(successMessage)}
-        message={successMessage}
-        variant="success"
-        onClose={() => setSuccessMessage("")}
-     />
+    <Modal
+      open={Boolean(successMessage)}
+      onClose={() => setSuccessMessage("")}
+      title="Cotización enviada"
+    >
+      <div className="flex flex-col items-center text-center">
+        <span
+          aria-hidden="true"
+          className="flex size-16 items-center justify-center rounded-full bg-secondary text-h3 font-semibold text-white"
+        >
+          ✓
+        </span>
+
+        <p className="mt-md text-body leading-relaxed text-gray-700">
+          {successMessage}
+        </p>
+
+        <Button
+          type="button"
+          variant="primary"
+          className="mt-lg w-full"
+          onClick={() => setSuccessMessage("")}
+        >
+          Entendido
+        </Button>
+      </div>
+    </Modal>
     <Card variant="dark" className="overflow-hidden !p-0">
       <div className="grid desktop:grid-cols-[0.9fr_1.1fr]">
         <div className="relative min-h-[28rem] overflow-hidden desktop:min-h-full">

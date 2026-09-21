@@ -40,11 +40,11 @@ const HERO_SLIDES: readonly IHeroSlide[] = [
       "Encuentra soluciones adaptadas a las necesidades técnicas de cada espacio.",
     primaryAction: {
       label: "Cotizar ahora",
-      href: "#cotizador",
+      href: "/contacto",
     },
     secondaryAction: {
       label: "Ver productos",
-      href: "#productos",
+      href: "/tienda",
     },
   },
   {
@@ -60,11 +60,11 @@ const HERO_SLIDES: readonly IHeroSlide[] = [
       "Conoce nuestras áreas de servicio y encuentra una alternativa adecuada para tu proyecto.",
     primaryAction: {
       label: "Ver servicios",
-      href: "#servicios",
+      href: "/servicios",
     },
     secondaryAction: {
       label: "¿Por qué elegirnos?",
-      href: "#por-que-elegirnos",
+      href: "#beneficios",
     },
   },
   {
@@ -80,11 +80,11 @@ const HERO_SLIDES: readonly IHeroSlide[] = [
       "Conoce nuestro proceso de trabajo y los proyectos desarrollados por nuestro equipo.",
     primaryAction: {
       label: "Nuestro proceso",
-      href: "#proceso",
+      href: "/nosotros",
     },
     secondaryAction: {
       label: "Ver proyectos",
-      href: "#proyectos",
+      href: "/proyectos",
     },
   },
 ];

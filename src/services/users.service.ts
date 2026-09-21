@@ -1,4 +1,7 @@
+// src/services/users.service.ts
+
 import { api } from "@/lib/api";
+import { UserCreatePayload } from "@/components/users/UserCreateModal";
 
 export interface IUser {
     id: string;
@@ -14,19 +17,20 @@ export const usersService = {
         return response.data;
     },
 
+    async create(payload: UserCreatePayload): Promise<IUser> {
+        const response = await api.post("/users", payload);
+        return response.data;
+    },
+
     async getTechnicians(): Promise<IUser[]> {
         try {
             const response = await api.get("/users");
             const resData = response.data;
             
-            console.log("Respuesta completa de /users:", resData);
-            
             const users: IUser[] = Array.isArray(resData) 
                 ? resData 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 : (resData as any)?.data || (resData as any)?.users || [];
-            
-            console.log("Usuarios totales detectados:", users);
 
             const technicians = users.filter((user) => {
                 let roleValue = "";
@@ -35,14 +39,12 @@ export const usersService = {
                 } else if (user.role && typeof user.role === "object" && "name" in user.role) {
                     roleValue = String((user.role as Record<string, unknown>).name);
                 }
-                
                 return roleValue.toUpperCase() === "TECHNICIAN";
             });
 
-            console.log("Técnicos filtrados:", technicians);
             return technicians;
         } catch (error) {
-            console.error("Error al obtener técnicos en el servicio:", error);
+            //.error("Error al obtener técnicos en el servicio:", error);
             return [];
         }
     },

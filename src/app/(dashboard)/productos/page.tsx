@@ -21,7 +21,7 @@ export default function ProductsPage() {
             const data = await productsService.getAll();
             setProducts(data);
         } catch (error) {
-            console.error("Error al cargar productos:", error);
+            
         }
     };
 
@@ -51,7 +51,7 @@ export default function ProductsPage() {
             setIsEditing(false);
             fetchProducts();
         } catch (error) {
-            console.error("Error al guardar producto:", error);
+            
         } finally {
             setLoading(false);
         }
@@ -69,7 +69,7 @@ export default function ProductsPage() {
             await productsService.remove(id);
             fetchProducts();
         } catch (error) {
-            console.error("Error al eliminar producto:", error);
+            
         }
     };
 

@@ -40,18 +40,23 @@ export const metadata: Metadata = {
 const CONTACT_CHANNELS = [
   {
     id: "phone",
-    title: "Teléfono",
-    description: "Información pendiente de confirmación",
+    title: "WhatsApp",
+    description: "+57 310 402 8805",
   },
   {
     id: "email",
     title: "Correo",
-    description: "Información pendiente de confirmación",
+    description: "aislafriopro@gmail.com",
   },
   {
     id: "location",
-    title: "Ubicación",
-    description: "Información pendiente de confirmación",
+    title: "Modalidad de atención",
+    description: "Atención 100 % en línea",
+  },
+  {
+    id: "schedule",
+    title: "Horario",
+    description: "Lunes a sábado, de 7:00 a. m. a 5:00 p. m.",
   },
 ] as const;
 

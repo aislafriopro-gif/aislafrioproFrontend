@@ -6,6 +6,7 @@ import { isAxiosError } from "axios";
 import { register, RegisterCredentials } from "@/services/auth.service";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
+import { PasswordInput } from "@/components/ui/Input/PasswordInput";
 
 export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterCredentials>({
@@ -123,21 +124,16 @@ export function RegisterForm() {
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-900" htmlFor="password">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                required
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full rounded-md border border-gray-300 px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              />
-            </div>
+            <PasswordInput
+              id="password"
+              label="Contraseña"
+              name="password"
+              required
+              autoComplete="new-password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+            />
 
             <button
               type="submit"
