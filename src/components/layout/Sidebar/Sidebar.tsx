@@ -85,7 +85,7 @@ export function Sidebar({
         if (logoutStore) {
             logoutStore();
         }
-        router.push("/login");
+        router.push("/");
     };
 
     const role = user?.role?.toUpperCase();

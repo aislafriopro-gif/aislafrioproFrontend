@@ -10,6 +10,7 @@ const NAVIGATION_LINKS = [
   { label: "Nosotros", href: ROUTES.about },
   { label: "Servicios", href: ROUTES.services },
   { label: "Proyectos", href: ROUTES.projects },
+  { label: "Tienda", href: "/tienda" },
   { label: "Contacto", href: ROUTES.contact },
 ];
 

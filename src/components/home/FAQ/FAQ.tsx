@@ -1,7 +1,10 @@
+"use client";
+
 import { Container } from "@/components/layout/Container/Container";
 import { Section } from "@/components/layout/Section/Section";
 import { Badge } from "@/components/ui/Badge/Badge";
 import { Card } from "@/components/ui/Card/Card";
+import { useState } from "react";
 
 export interface IFaqItem {
   id: string;
@@ -24,6 +27,14 @@ export function FAQ({
   faqs,
   className = "",
 }: IFaqProps) {
+  const [activeFaqId, setActiveFaqId] = useState<string | null>(null);
+
+  function toggleFaq(faqId: string) {
+    setActiveFaqId((currentId) =>
+      currentId === faqId ? null : faqId,
+    );
+  }
+
   return (
     <Section
       aria-labelledby="faq-title"
@@ -50,26 +61,53 @@ export function FAQ({
         </div>
 
         <div className="mt-xl flex flex-col gap-sm">
-          {faqs.map((faq) => (
-            <Card key={faq.id} animated>
-              <details name="faq-accordion" className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-md rounded-sm text-left text-body font-semibold text-gray-900 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:text-secondary-strong group-open:text-primary motion-reduce:transition-none">
+          {faqs.map((faq) => {
+            const isOpen = activeFaqId === faq.id;
+            const triggerId = `faq-trigger-${faq.id}`;
+            const panelId = `faq-panel-${faq.id}`;
+
+            return (
+              <Card key={faq.id} animated>
+                <button
+                  id={triggerId}
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => toggleFaq(faq.id)}
+                  className="flex w-full cursor-pointer items-center justify-between gap-md rounded-sm text-left text-body font-semibold text-gray-900 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:text-secondary-strong motion-reduce:transition-none"
+                >
                   <span className="min-w-0 break-words">{faq.question}</span>
 
                   <span
                     aria-hidden="true"
-                    className="shrink-0 text-h5 text-primary transition-transform duration-200 ease-out group-open:rotate-45 motion-reduce:transition-none"
+                    className={`shrink-0 text-h5 text-primary transition-transform duration-200 ease-out motion-reduce:transition-none ${
+                      isOpen ? "rotate-45" : "rotate-0"
+                    }`}
                   >
                     +
                   </span>
-                </summary>
+                </button>
 
-                <p className="mt-md border-t border-gray-200 pt-md text-body leading-relaxed text-gray-700">
-                  {faq.answer}
-                </p>
-              </details>
-            </Card>
-          ))}
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={triggerId}
+                  aria-hidden={!isOpen}
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="mt-md border-t border-gray-200 pt-md text-body leading-relaxed text-gray-700">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </Container>
     </Section>
